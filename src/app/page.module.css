@@ -1,0 +1,41 @@
+ /* Keyframes */
+ @keyframes fadeIn{
+  from{
+    opacity: 0;
+  } to {
+    opacity: 1;
+  }
+}
+
+@keyframes moveBg{
+  100% {
+    background-position: 100% 0;
+  }
+}
+/* keyframes */
+
+.entrance{
+ background-color: black;
+ animation: fadeIn 2s ease-in-out;
+ width: 100vw;
+ height: 100vh;
+ padding: 0;
+ margin: 0;
+ box-sizing: border-box;
+ 
+}
+
+.head{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: transparent;
+  background-image: url('misc/oct.jpg');
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-position: center;
+  background-size: 200%;
+  animation: fadeIn 2s ease-in-out, moveBg 10s infinite;
+
+}

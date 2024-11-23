@@ -1,0 +1,11 @@
+Model Information:
+* title:	Exercise Book
+* source:	https://sketchfab.com/3d-models/exercise-book-f4a5d8d975a04777910c7fd1f9b793aa
+* author:	StaticBuffering (https://sketchfab.com/StaticBuffering)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Exercise Book" (https://sketchfab.com/3d-models/exercise-book-f4a5d8d975a04777910c7fd1f9b793aa) by StaticBuffering (https://sketchfab.com/StaticBuffering) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
