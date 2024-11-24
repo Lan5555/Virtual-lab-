@@ -1,6 +1,7 @@
 'use client';
 import Icon from "@/app/components/icons";
 import { faEye, faEyeSlash, faGolfBall, IconDefinition } from "@fortawesome/free-solid-svg-icons";
+import { faGoogle as google} from "@fortawesome/free-brands-svg-icons/faGoogle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
 import { relative } from "path";
@@ -183,7 +184,7 @@ const Login: React.FC = () => {
                     top: '125px',
                     textAlign: 'center',
                 }}>
-                    <FontAwesomeIcon icon={faGolfBall} style={{height:'20px'}}></FontAwesomeIcon>
+                    <FontAwesomeIcon icon={google} style={{height:'20px', color:'white'}} onClick={()=>{}}></FontAwesomeIcon>
                 </p>
                 </div>
                 <p style={{
