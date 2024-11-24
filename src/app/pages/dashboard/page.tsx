@@ -44,7 +44,7 @@ return <div>
     <ListTile leading={<Icon size1={''} iconName={'dashboard'} onPressed={() => { } } color={''}/>} text={'Activities'} trailing={() => {}}/>
     <ListTile leading={<Icon size1={''} iconName={'wallet'} onPressed={() => { } } color={''}/>} text={'Subscription'} trailing={() => {}}/>
     <ListTile leading={<Icon size1={''} iconName={'Computer'} onPressed={() => { } } color={''}/>} text={'Lab'} trailing={ ()=>{ 
-        router.push('/pages/mainpage');
+        router.push('/pages/lab');
         <Spinner/>
     }}/>
     <br></br>
