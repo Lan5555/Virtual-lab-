@@ -31,7 +31,7 @@
   top: 50%;
   transform: translate(-50%, -50%);
   color: transparent;
-  background-image: url('misc/oct.jpg');
+  background-image: url('../misc/oct.jpg');
   background-clip: text;
   -webkit-background-clip: text;
   background-position: center;
