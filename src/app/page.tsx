@@ -1,6 +1,6 @@
 "use client";
 import React, { CSSProperties, useEffect} from "react";
-import styles from './page.module.css'
+import styles from '@/app/css/page.module.css'
 import Router from "next/router";
 import { useRouter } from "next/navigation";
 
@@ -12,7 +12,7 @@ const Intro:React.FC = () => {
         setTimeout(() => {
             router.push('/pages/login');
         }, 4000);
-    },[Intro]);
+    },[router]);
     
     return (
         <div>
