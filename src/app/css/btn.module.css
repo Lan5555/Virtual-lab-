@@ -67,3 +67,13 @@
 .list{
     @apply cursor-pointer hover:text-black transition-transform text-white
 }
+.side-in-x{
+    animation: slide-x 0.3s ease-in-out;
+}
+@keyframes slide-x{
+    from {
+        transform: translateX(400px);
+    } to {
+        transform: translateX(0px);
+    }
+}

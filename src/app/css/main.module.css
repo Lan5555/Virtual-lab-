@@ -1,183 +1,337 @@
-.container{
-    width: 100 vw;
-    height: 100vh;
 
-}
-.header{
-    width: calc(100% - 21.5%);
-    box-shadow: 0 0 2px black;
-    height: 40px;
-    position: absolute;
-    top: 0;
-    border-bottom-right-radius: 20px;
-    /* border-bottom-left-radius: 20px; */
-    background: linear-gradient(to right, black,rgb(9, 43, 123), rgba(0, 0, 0, 0.1));
-    display: flex;
-    gap: 30px;
-    
-}
-.header h1{
-    color: white;
-    margin: 10px;
-    font-size: 14pt;
-    margin-left: 20%;
-    cursor: default;
-}
-
-
-
-.box1 h2{
-    font-size: 11.5pt;
-    color: white;
-    cursor: pointer;
-    transition: all 0.5s ease-in-out;
-}
-.box1 h2:hover{
-    transform: scale(0.8);
-}
-
-
-.sideBar{
-    position: absolute;
-    right: 0;
-    width: 20%;
-    height: 100vh;
-    padding: 10px;
-    box-shadow: 0 0.15rem 1.75rem 0 rgba(33 40 50 / 15%);
-    /* border-top-left-radius: 30px;
-    border-bottom-left-radius: 30px; */
-    overflow-y: auto;
-}
-
-.subject{
-    margin: 20% auto;
-    width: 70%;
-    height: 220px;
-    box-shadow: 0 0.15rem 1.75rem 0 rgba(33 40 50 / 15%);
-    border-radius: 10px;
-    
-}
-.bottomBar{
-    width: calc(100% - 21.5%);
-    box-shadow: 0 0 2px black;
-    height: 40px;
-    position: absolute;
-    bottom: -20px;
-    border-top-right-radius: 20px;
-    /* border-bottom-left-radius: 20px; */
-    background: linear-gradient(to right, black,rgb(9, 43, 123), rgba(0, 0, 0, 0.1));
-    display: flex;
-    gap: 30px;
-    justify-content: flex-start;
-    
-}
-.sideBar h4{
-    text-align: center;
-}
-.sideBar select{
-    box-shadow: 0 0.15rem 1.75rem 0 rgba(33 40 50 / 15%);
-    border: none;
-    padding: 10px;
-    width: 100%;
-    border-radius: 10px;
-    outline: none;
-}
-
-.sideBar input{
-    width: 100%;
-    
-}
-/* Note 65% */
-.progressBar0{
-    width: 15%;
-    background-color: green;
-    height: 8px;
-    display: inline-block;
-    border-radius: 10px;
-    
-}
-.progressBar1{
-    width: 35%;
-   background-color: yellow;
-    height: 8px;
-    display: inline-block;
-    border-radius: 10px;
-    
-}
-.progressBar2{
-    width: 22%;
-   background-color: blueviolet;
-    height: 8px;
-    display: inline-block;
-    border-radius: 10px;
-    
-}
-.progressBar3{
-    width: 55%;
-   background-color: violet;
-    height: 8px;
-    display: inline-block;
-    border-radius: 10px;
-    
-}
-
-.btn{
-    padding: auto;
-    background: linear-gradient(to right, black,rgb(9, 43, 123), rgba(0, 0, 0, 0.1));
-    border-radius: 5px;
-    border: none;
-    height: 30px;
-    margin: 8px;
-    font-size: 12px;
-    color: #FFFFFF;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-.btn:hover{
-    background-color: black;
-    cursor: pointer;
-}
-
-.mainLab{
-    position: absolute;
-    width: 77%;
-    height: 88vh;
-    /* border: 1px solid black; */
-    top:50px;
-    left: 6px;
-    border-radius: 10px;
-    box-shadow: 0 0 1px black, 0 0 1px grey, 0 0 15px black;
-}
-
-.note{
-    height: 100vh;
-    position: absolute;
-    left: 0;
-    width: 70%;
-    animation: slideIn 0.5s ease-in-out;
-    box-shadow: 0 0.15rem 1.75rem 0 rgba(33 40 50 / 15%);
-    z-index: 2;
-    background-color: white;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-}
-.back{
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    padding: 10px;
-    border: none;
-    background-color: black;
-    color: white;
-    border-top-right-radius: 20px;
-}
-.back:hover{
-    background-color: grey;
-    transition: all 0.5s ease;
-}
 @keyframes slideIn{
     from {
         transform: translateX(-800px);
     } to {
         transform: translateX(0px);
+    }
+}
+
+.none{
+    display: none;
+}
+@media (max-height:390px){
+    
+}
+
+@media (min-width: 542px) and (max-width:1024px){
+    .container{
+        width: 100vw;
+        height: 100vh;
+    
+    }
+    .header{
+        width: calc(100%);
+       
+        height: 40px;
+        position: absolute;
+        top: 0;
+        background: linear-gradient(to right, black,rgb(9, 43, 123), rgba(0, 0, 0, 0.1));
+        display: flex;
+        gap: 30px;
+        
+    }
+    .header h1{
+        color: white;
+        margin: 10px;
+        font-size: 12pt;
+        margin-left: 20%;
+        cursor: default;
+    }
+    
+    
+    
+    .box1 h2{
+        font-size: 11.5pt;
+        color: white;
+        cursor: pointer;
+        transition: all 0.5s ease-in-out;
+    }
+    .box1 h2:hover{
+        transform: scale(0.8);
+    }
+    
+    .sideBar{
+        position: absolute;
+        right: 0;
+        width: 20%;
+        height: 100vh;
+        padding: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(33 40 50 / 15%);
+        /* border-top-left-radius: 30px;
+        border-bottom-left-radius: 30px; */
+        overflow-y: auto;
+    }
+    
+    .subject{
+        margin: 20% auto;
+        width: 70%;
+        height: 220px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(33 40 50 / 15%);
+        border-radius: 10px;
+        
+    }
+    .bottomBar{
+        width: calc(100%);
+       z-index: -3;
+        height: 30px;
+        position: fixed;
+        bottom: 0;
+        background: linear-gradient(to right, black,rgb(9, 43, 123), rgba(0, 0, 0, 0.1));
+        display: flex;
+        gap: 30px;
+        justify-content: flex-start;
+        
+    }
+    .sideBar h4{
+        text-align: center;
+    }
+    .sideBar select{
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(33 40 50 / 15%);
+        border: none;
+        padding: 10px;
+        width: 100%;
+        border-radius: 10px;
+        outline: none;
+    }
+    
+    .sideBar input{
+        width: 100%;
+        
+    }
+    
+    
+    .btn{
+        padding: 10px;
+        background: linear-gradient(to right, black,rgb(9, 43, 123), rgba(0, 0, 0, 0.1));
+        border-radius: 5px;
+        border: none;
+        height: 27px;
+        margin: 8px;
+        font-size: 10px;
+        color: #FFFFFF;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        ;
+    }
+    .btn:hover{
+        background-color: black;
+        cursor: pointer;
+    }
+    
+    .mainLab{
+        position: absolute;
+        width: 87%;
+        height: 90vh;
+        /* border: 1px solid black; */
+        top:40px;
+        left: 1px;
+        border-radius: 0px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 1);
+    }
+    
+    .note{
+        height: 100vh;
+        position: absolute;
+        left: 0;
+        width: 70%;
+        animation: slideIn 0.5s ease-in-out;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(33 40 50 / 15%);
+        z-index: 2;
+        background-color: white;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+    .back{
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 10px;
+        border: none;
+        background-color: black;
+        color: white;
+        border-top-right-radius: 20px;
+    }
+    .back:hover{
+        background-color: grey;
+        transition: all 0.5s ease;
+    }
+}
+
+@media (min-width:1024px){
+    .container{
+        width: 100 vw;
+        height: 100vh;
+    
+    }
+    .header{
+        width: calc(100% - 21.5%);
+        box-shadow: 0 0 2px black;
+        height: 40px;
+        position: absolute;
+        top: 0;
+        border-bottom-right-radius: 20px;
+        /* border-bottom-left-radius: 20px; */
+        background: linear-gradient(to right, black,rgb(9, 43, 123), rgba(0, 0, 0, 0.1));
+        display: flex;
+        gap: 30px;
+        
+    }
+    .header h1{
+        color: white;
+        margin: 10px;
+        font-size: 14pt;
+        margin-left: 20%;
+        cursor: default;
+    }
+    
+    
+    
+    .box1 h2{
+        font-size: 11.5pt;
+        color: white;
+        cursor: pointer;
+        transition: all 0.5s ease-in-out;
+    }
+    .box1 h2:hover{
+        transform: scale(0.8);
+    }
+    
+    
+    .sideBar{
+        position: absolute;
+        right: 0;
+        width: 20%;
+        height: 100vh;
+        padding: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(33 40 50 / 15%);
+        /* border-top-left-radius: 30px;
+        border-bottom-left-radius: 30px; */
+        overflow-y: auto;
+    }
+    
+    .subject{
+        margin: 20% auto;
+        width: 70%;
+        height: 220px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(33 40 50 / 15%);
+        border-radius: 10px;
+        
+    }
+    .bottomBar{
+        width: calc(100% - 21.5%);
+        box-shadow: 0 0 2px black;
+        height: 40px;
+        position: absolute;
+        bottom: -20px;
+        border-top-right-radius: 20px;
+        /* border-bottom-left-radius: 20px; */
+        background: linear-gradient(to right, black,rgb(9, 43, 123), rgba(0, 0, 0, 0.1));
+        display: flex;
+        gap: 30px;
+        justify-content: flex-start;
+        
+    }
+    .sideBar h4{
+        text-align: center;
+    }
+    .sideBar select{
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(33 40 50 / 15%);
+        border: none;
+        padding: 10px;
+        width: 100%;
+        border-radius: 10px;
+        outline: none;
+    }
+    
+    .sideBar input{
+        width: 100%;
+        
+    }
+    /* Note 65% */
+    .progressBar0{
+        width: 15%;
+        background-color: green;
+        height: 8px;
+        display: inline-block;
+        border-radius: 10px;
+        
+    }
+    .progressBar1{
+        width: 35%;
+       background-color: yellow;
+        height: 8px;
+        display: inline-block;
+        border-radius: 10px;
+        
+    }
+    .progressBar2{
+        width: 22%;
+       background-color: blueviolet;
+        height: 8px;
+        display: inline-block;
+        border-radius: 10px;
+        
+    }
+    .progressBar3{
+        width: 55%;
+       background-color: violet;
+        height: 8px;
+        display: inline-block;
+        border-radius: 10px;
+        
+    }
+    
+    .btn{
+        padding: auto;
+        background: linear-gradient(to right, black,rgb(9, 43, 123), rgba(0, 0, 0, 0.1));
+        border-radius: 5px;
+        border: none;
+        height: 30px;
+        margin: 8px;
+        font-size: 12px;
+        color: #FFFFFF;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .btn:hover{
+        background-color: black;
+        cursor: pointer;
+    }
+    
+    .mainLab{
+        position: absolute;
+        width: 77%;
+        height: 91.5vh;
+        /* border: 1px solid black; */
+        top:41px;
+        left: 0;
+        border-radius: 10px;
+        box-shadow: 0 0 1px black, 0 0 1px grey, 0 0 15px black;
+    }
+    
+    .note{
+        height: 100vh;
+        position: absolute;
+        left: 0;
+        width: 70%;
+        animation: slideIn 0.5s ease-in-out;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(33 40 50 / 15%);
+        z-index: 2;
+        background-color: white;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+    .back{
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 10px;
+        border: none;
+        background-color: black;
+        color: white;
+        border-top-right-radius: 20px;
+    }
+    .back:hover{
+        background-color: grey;
+        transition: all 0.5s ease;
     }
 }

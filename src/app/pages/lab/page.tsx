@@ -1,28 +1,25 @@
 'use client';
-import React, { CSSProperties, Suspense, useEffect, useRef, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import styles from "@/app/css/main.module.css";
-import { Canvas, MeshProps } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import Model from "@/app/components/model";
 import Background1 from "@/app/components/loadimage";
-//import { Mesh, MeshStandardMaterial, string } from "three/webgpu";
 import { useRouter } from "next/navigation";
 import Walkthrough from "@/app/components/guider";
-import *as THREE from 'three';
-import { Mesh } from "three";
-import FloatingDiv from "@/app/components/box";
-import FullLayout from "@/app/page-layouts/full-layout";
+import PageLayout from "@/app/page-layouts/full-layout";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBarsProgress, faBook, faComputer, faGear, faTachometerAlt, faWarning } from "@fortawesome/free-solid-svg-icons";
 
 
 const Lab: React.FC = () => {
-    
     const [state, setState] = useState('chemInit.jpg');
     const [indexNumber, setIndexNumber]  = useState('Chemistry');
     const [noteindex, setNoteIndex] = useState<boolean>(false);
     const router = useRouter();
     const [isShown, setShown] = useState(false);
     const [selectedItem, setSelectedItem] = useState<string | null>(null);
-    const [subject,setSubject] = useState<string>('chemistry');
+    const [subject, setSubject] = useState<string>('chemistry');
 
     const changePractical = (subject: string, index: number) => {
         const newImagePath = ['chemInit.jpg', 'physics.jpg', 'biology.jpg', 'chemInit.jpg'][index];
@@ -57,7 +54,6 @@ const Lab: React.FC = () => {
         type="list"
         list={list}
         onListItemClick={handleClick}
-        
         /> : null;
     }
     const timer = () => {
@@ -66,15 +62,18 @@ const Lab: React.FC = () => {
         },2000);
         clearInterval(time);
     }
-   
+    const [mediaquery, setMediaQuery] = useState('desktop');
+
     return (
-        <FullLayout>
-            <div className={styles.container}>
+        <PageLayout>
+            {mediaquery!='mobile' ? (<div className={ mediaquery == 'desktop' ? styles.container : mediaquery == 
+                'tablet' ? styles.container : styles.container
+            }>
                 <div className={styles.header}>
                     <h1>Subjects:</h1>
                     {['Chemistry', 'Physics', 'Biology', 'Maths'].map((subject, index) => (
                         <div  key={subject} className={styles.box1} onClick={() => changePractical(subject,index)}  style={{
-                            borderBottom: indexNumber === subject  ? '3px solid blue': 'none',
+                            borderBottom: indexNumber === subject  ? '3px solid plum': 'none',
                             borderBottomLeftRadius:'2px',
                             borderBottomRightRadius:'2px',
                         }}>
@@ -83,11 +82,11 @@ const Lab: React.FC = () => {
                     ))}
                     {selectedItem && <p>{selectedItem}</p>}
                 </div>
-                <div className={styles.sideBar}>
+                {mediaquery == 'desktop' ? (<div className={styles.sideBar}>
                     <div className={styles.subject}></div>
                     <h4>Select practical</h4>
                     <select title="Available practicals">
-                    {indexNumber == 'Chemistry' ?  <option value="">Titration</option> : indexNumber 
+                    {indexNumber == 'Chemistry' ?  <option value="">Test for purity</option> : indexNumber 
                     == 'Physics' ? <option>Moment</option> : indexNumber
                     == 'Biology' ? <option>Inspection</option> : indexNumber == 
                     'Maths' ? <option>Cummulative frequency</option> : null
@@ -105,6 +104,16 @@ const Lab: React.FC = () => {
                         </span>
                     ))}
                 </div>
+                ): null}
+                {mediaquery == 'tablet' ? (
+                    <div className="w-16 h-5/6 absolute right-0 shadow-2xl p-2 flex mt-16 flex-col gap-10" >
+                        <FontAwesomeIcon icon={faBook} style={{height:'35px', color:'lightblue',cursor:'pointer'}} title="Course"></FontAwesomeIcon>
+                        <FontAwesomeIcon icon={faComputer} style={{height:'35px', color:'lightblue',cursor:'pointer'}} title="Practicals"></FontAwesomeIcon>
+                        <FontAwesomeIcon icon={faBarsProgress} style={{height:'35px',color:'lightblue',cursor:'pointer'}} title="Progress"></FontAwesomeIcon>
+                        <FontAwesomeIcon icon={faTachometerAlt} style={{height:'35px',color:'lightblue',cursor:'pointer'}} title="Zoom"></FontAwesomeIcon>
+                        <FontAwesomeIcon icon={faGear} style={{height:'35px',color:'lightblue',cursor:'pointer'}} title="Mini settings"></FontAwesomeIcon>
+                    </div>
+                ):null}
                 <div className={styles.mainLab}>
                     <Canvas>
                         <Suspense fallback={null}>
@@ -146,8 +155,13 @@ const Lab: React.FC = () => {
                         router.push('/pages/dashboard');
                     }}>Dashboard</button>
                 </div>
-            </div>
-        </FullLayout>
+            </div> ): <div className="flex justify-center items-center h-screen bg-slate-200">
+                    <div className="rounded-lg w-44 h-30 bg-slate-700 p-3 animate-pulse flex justify-center items-center flex-col">
+                        <FontAwesomeIcon icon={faWarning} style={{color:'red'}}></FontAwesomeIcon>
+                        <h2 className="text-center text-red-600 text-lg">Please rotate your device</h2>
+                    </div>
+            </div>}
+        </PageLayout>
     );
 };
 

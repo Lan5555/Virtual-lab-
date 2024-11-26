@@ -30,11 +30,11 @@ const Walkthrough: React.FC<Props> = ({ text = '', className = '', textClass = '
 
     const style: CSSProperties = {
         height: type === 'info' ? '300px' : 'auto',
-        width: type === 'info' ? '40%' : '15%',
+        width: type === 'info' ? '40%' : '25%',
         padding: type === 'info' ? '10px' : '5px',
         border: '1px solid rgba(0,0,0,0.1)',
         display: 'flex',
-        justifyContent: type === 'info' ? 'center' : 'start',
+        justifyContent: type === 'info' ? 'center' : 'center',
         alignItems: type === 'info' ? 'center' : 'start',
         flexDirection: 'column',
     };
