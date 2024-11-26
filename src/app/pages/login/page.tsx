@@ -1,7 +1,7 @@
 'use client';
 import Icon from "@/app/components/icons";
-import { faEye, faEyeSlash, faGolfBall, IconDefinition } from "@fortawesome/free-solid-svg-icons";
-import { faGoogle as google} from "@fortawesome/free-brands-svg-icons/faGoogle";
+import { faEye, faEyeSlash, faGolfBall, IconDefinition, IconPrefix } from "@fortawesome/free-solid-svg-icons";
+import { faGoogle, faGoogle as google} from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
 import { relative } from "path";
@@ -18,6 +18,7 @@ const Login: React.FC = () => {
     const [icon,setIcon] = useState<IconDefinition>(faEyeSlash);
     const [Invalid, setInvalid] = useState(false);
     const router = useRouter();
+    const googleIcon:any = faGoogle;
     const updateMediaQuery = () => {
         if (window.matchMedia('(max-width: 600px)').matches) {
             setViewport('mobile');
@@ -193,7 +194,7 @@ const Login: React.FC = () => {
                     top: '125px',
                     textAlign: 'center',
                 }}>
-                    <FontAwesomeIcon icon={google} style={{height:'20px', color:'white'}} onClick={()=>{}}></FontAwesomeIcon>
+                    <FontAwesomeIcon icon={googleIcon} style={{height:'20px', color:'white'}} onClick={()=>{}}></FontAwesomeIcon>
                     
                 </p>
                 </div>

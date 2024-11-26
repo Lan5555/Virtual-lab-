@@ -77,14 +77,7 @@ return <div>
     {mediaquery == 'desktop' ? (<ListTile leading={<Icon size1={''} iconName={'wallet'} onPressed={() => { } } color={''}/>} text={'Subscription'} trailing={() => {}}/>
     ): <FontAwesomeIcon icon={faWallet} className='p-5text-center ml-5 mt-10  text-gray-400  hover:text-black' style={{height:'35px'}} title='Subscribtion'></FontAwesomeIcon>}
     {mediaquery == 'desktop' ? (<ListTile leading={<Icon size1={''} iconName={'Computer'} onPressed={() => { } } color={''}/>} text={'Lab'} trailing={ ()=>{ 
-
-    <ListTile leading={<Icon size1={''} iconName={'Home'} onPressed={() => { } } color={''}/>} text={'Home'} trailing={() => {}}/>
-    <ListTile leading={<Icon size1={''} iconName={'dashboard'} onPressed={() => { } } color={''}/>} text={'Activities'} trailing={() => {}}/>
-    <ListTile leading={<Icon size1={''} iconName={'wallet'} onPressed={() => { } } color={''}/>} text={'Subscription'} trailing={() => {}}/>
-    <ListTile leading={<Icon size1={''} iconName={'Computer'} onPressed={() => { } } color={''}/>} text={'Lab'} trailing={ ()=>{ 
-
-        router.push('/pages/lab');
-        <Spinner/>
+         router.push('/pages/lab');
     }}/>
     ):<FontAwesomeIcon icon={faComputer} className='p-5text-center ml-5 mt-10  text-gray-400  hover:text-black' style={{height:'35px'}} title='Lab' onClick={() => {
         router.push('/pages/lab');
