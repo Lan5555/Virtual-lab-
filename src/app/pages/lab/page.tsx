@@ -7,7 +7,7 @@ import Model from "@/app/components/model";
 import Background1 from "@/app/components/loadimage";
 import { useRouter } from "next/navigation";
 import Walkthrough from "@/app/components/guider";
-import FullLayout from "@/app/page-layouts/full-layout";
+import PageLayout from "@/app/page-layouts/full-layout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBarsProgress, faBook, faComputer, faGear, faTachometerAlt, faWarning } from "@fortawesome/free-solid-svg-icons";
 
@@ -63,33 +63,9 @@ const Lab: React.FC = () => {
         clearInterval(time);
     }
     const [mediaquery, setMediaQuery] = useState('desktop');
-    
 
-    const checkScreen = () => {
-        const desktop = window.matchMedia('(min-width:1242px)');
-        const tablet = window.matchMedia('(min-width:542px)');
-        const mobile = window.matchMedia('(max-width:600px)');
-
-        if (desktop.matches) {
-            setMediaQuery('desktop');
-        } else if (tablet.matches) {
-            setMediaQuery('tablet');
-        } else if (mobile.matches) {
-            setMediaQuery('mobile');
-        } else {
-            setMediaQuery('desktop');
-        }
-    };
-
-    useEffect(() => {
-        checkScreen();
-        const handleResize = () => checkScreen();
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-
-    },[state]);
     return (
-        <FullLayout>
+        <PageLayout>
             {mediaquery!='mobile' ? (<div className={ mediaquery == 'desktop' ? styles.container : mediaquery == 
                 'tablet' ? styles.container : styles.container
             }>
@@ -185,7 +161,7 @@ const Lab: React.FC = () => {
                         <h2 className="text-center text-red-600 text-lg">Please rotate your device</h2>
                     </div>
             </div>}
-        </FullLayout>
+        </PageLayout>
     );
 };
 

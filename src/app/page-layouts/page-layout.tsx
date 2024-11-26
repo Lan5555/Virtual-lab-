@@ -3,6 +3,7 @@ import DropDown from "../components/dropbar";
 import LayoutHead from "./sections/layout-head";
 import LayoutSide from "./sections/layout-side";
 import styles from '@/app/css/dashboard.module.css';
+import React from "react";
 
 
 const PageLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -17,6 +18,13 @@ const PageLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         setState(prevState => !prevState);
     }
 
+    const pageLayoutProps = {
+      state,
+      name,
+      setState,
+      setName,
+    }
+
     return (
       <div className="main-layout">
         <LayoutHead search="" dropdown={state} name={name} setName={handleSetName} setView={toggleState} />
@@ -26,7 +34,11 @@ const PageLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 handleSetName(name);
                  }}/> : null} 
         <LayoutSide dropdown={state} />
-        <div className={styles.content}>{children}</div>
+        <div className={styles.content}>{React.Children.map(children, (child) =>
+          React.isValidElement(child)
+            ? React.cloneElement(child, { ...pageLayoutProps })
+            : child
+        )}</div>
       </div>
     );
 };
