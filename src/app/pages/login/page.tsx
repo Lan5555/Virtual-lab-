@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
 import { relative } from "path";
 import { CSSProperties, useEffect, useState } from "react";
+import Toast from "@/app/components/toast";
+
 
 const Login: React.FC = () => {
     const [isClicked, setClicked] = useState(false);
@@ -14,6 +16,7 @@ const Login: React.FC = () => {
     const [value1, setValue1] = useState('');
     const [viewport, setViewport] = useState('desktop');
     const [icon,setIcon] = useState<IconDefinition>(faEyeSlash);
+    const [Invalid, setInvalid] = useState(false);
     const router = useRouter();
     const updateMediaQuery = () => {
         if (window.matchMedia('(max-width: 600px)').matches) {
@@ -31,6 +34,11 @@ const Login: React.FC = () => {
         return () => window.removeEventListener('resize', updateMediaQuery);
     }, []);
 
+    const showToast = () => {
+        return(
+        <Toast text="Invalid Credentials"></Toast>
+        );
+    }
     const divStyle: CSSProperties = {
         position: 'absolute',
         top: '50%',
@@ -65,7 +73,8 @@ const Login: React.FC = () => {
                     
                     router.push('/pages/dashboard');
                 }else{
-                    alert('Invalid Credentials');
+                    setInvalid(true);
+                    setTimeout(() => setInvalid(false),3000);
                 }
             }}
             style={{display:'flex',
@@ -185,6 +194,7 @@ const Login: React.FC = () => {
                     textAlign: 'center',
                 }}>
                     <FontAwesomeIcon icon={google} style={{height:'20px', color:'white'}} onClick={()=>{}}></FontAwesomeIcon>
+                    
                 </p>
                 </div>
                 <p style={{
@@ -195,6 +205,7 @@ const Login: React.FC = () => {
                 }}>Don't have an account? <a href="#" style={{ fontSize: '10pt',color:'white' }}>Register</a></p>
             </form>
         </div>
+       {Invalid && (<Toast text={'Invalid Credentials'} type="warning" textClass="text-red-500"></Toast>)}
         </div>
     );
 };

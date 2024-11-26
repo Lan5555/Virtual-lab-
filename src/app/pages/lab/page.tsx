@@ -11,6 +11,9 @@ import Walkthrough from "@/app/components/guider";
 import *as THREE from 'three';
 import { Mesh } from "three";
 import FloatingDiv from "@/app/components/box";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBarsProgress, faBook, faComputer, faGear, faGlassCheers, faHouse, faKitMedical, faTachometerAlt, faWarning } from "@fortawesome/free-solid-svg-icons";
+import { faPage4 } from "@fortawesome/free-brands-svg-icons";
 
 
 const Lab: React.FC = () => {
@@ -65,14 +68,42 @@ const Lab: React.FC = () => {
         },2000);
         clearInterval(time);
     }
-   
+    const [mediaquery, setMediaQuery] = useState('desktop');
+    
+
+    const checkScreen = () => {
+        const desktop = window.matchMedia('(min-width:1242px)');
+        const tablet = window.matchMedia('(min-width:542px)');
+        const mobile = window.matchMedia('(max-width:600px)');
+
+        if (desktop.matches) {
+            setMediaQuery('desktop');
+        } else if (tablet.matches) {
+            setMediaQuery('tablet');
+        } else if (mobile.matches) {
+            setMediaQuery('mobile');
+        } else {
+            setMediaQuery('desktop');
+        }
+    };
+
+    useEffect(() => {
+        checkScreen();
+        const handleResize = () => checkScreen();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+
+    },[state]);
     return (
-        <div className={styles.container}>
+        <div>
+        {mediaquery!='mobile' ? (<div className={ mediaquery == 'desktop' ? styles.container : mediaquery == 
+            'tablet' ? styles.container : styles.container
+        }>
             <div className={styles.header}>
                 <h1>Subjects:</h1>
                 {['Chemistry', 'Physics', 'Biology', 'Maths'].map((subject, index) => (
                     <div  key={subject} className={styles.box1} onClick={() => changePractical(subject,index)}  style={{
-                        borderBottom: indexNumber === subject  ? '3px solid blue': 'none',
+                        borderBottom: indexNumber === subject  ? '3px solid plum': 'none',
                         borderBottomLeftRadius:'2px',
                         borderBottomRightRadius:'2px',
                     }}>
@@ -81,11 +112,11 @@ const Lab: React.FC = () => {
                 ))}
                 {selectedItem && <p>{selectedItem}</p>}
             </div>
-            <div className={styles.sideBar}>
+            {mediaquery == 'desktop' ? (<div className={styles.sideBar}>
                 <div className={styles.subject}></div>
                 <h4>Select practical</h4>
                 <select title="Available practicals">
-                  {indexNumber == 'Chemistry' ?  <option value="">Titration</option> : indexNumber 
+                  {indexNumber == 'Chemistry' ?  <option value="">Test for purity</option> : indexNumber 
                   == 'Physics' ? <option>Moment</option> : indexNumber
                   == 'Biology' ? <option>Inspection</option> : indexNumber == 
                   'Maths' ? <option>Cummulative frequency</option> : null
@@ -103,6 +134,16 @@ const Lab: React.FC = () => {
                     </span>
                 ))}
             </div>
+            ): null}
+            {mediaquery == 'tablet' ? (
+                <div className="w-16 h-5/6 absolute right-0 shadow-2xl p-2 flex mt-16 flex-col gap-10" >
+                    <FontAwesomeIcon icon={faBook} style={{height:'35px', color:'lightblue',cursor:'pointer'}} title="Course"></FontAwesomeIcon>
+                    <FontAwesomeIcon icon={faComputer} style={{height:'35px', color:'lightblue',cursor:'pointer'}} title="Practicals"></FontAwesomeIcon>
+                    <FontAwesomeIcon icon={faBarsProgress} style={{height:'35px',color:'lightblue',cursor:'pointer'}} title="Progress"></FontAwesomeIcon>
+                    <FontAwesomeIcon icon={faTachometerAlt} style={{height:'35px',color:'lightblue',cursor:'pointer'}} title="Zoom"></FontAwesomeIcon>
+                    <FontAwesomeIcon icon={faGear} style={{height:'35px',color:'lightblue',cursor:'pointer'}} title="Mini settings"></FontAwesomeIcon>
+                 </div>
+            ):null}
             <div className={styles.mainLab}>
                 <Canvas>
                     <Suspense fallback={null}>
@@ -144,6 +185,12 @@ const Lab: React.FC = () => {
                     router.push('/pages/dashboard');
                 }}>Dashboard</button>
             </div>
+        </div> ): <div className="flex justify-center items-center h-screen bg-slate-200">
+                <div className="rounded-lg w-44 h-30 bg-slate-700 p-3 animate-pulse flex justify-center items-center flex-col">
+                     <FontAwesomeIcon icon={faWarning} style={{color:'red'}}></FontAwesomeIcon>
+                    <h2 className="text-center text-red-600 text-lg">Please rotate your device</h2>
+                </div>
+            </div>}
         </div>
     );
 };

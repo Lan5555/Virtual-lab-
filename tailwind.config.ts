@@ -27,6 +27,23 @@ const config:Config = {
       },
       height:{
         xs:'0.1px'
+      },
+      keyframes:{
+        slidex:{
+          '0%':{
+            transform:'translateX(100%)',
+            opacity:'0'
+          },
+          '100%':{
+            transform:'translateX(0)',
+            opacity:'1'
+          },
+          
+        }
+        
+      },
+      animation:{
+        slidex:'slidex 0.5s ease-out',
       }
     },
   },
