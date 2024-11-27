@@ -169,8 +169,8 @@ const Login: React.FC = () => {
                         top: '90px',
                         boxShadow:'0px 4px 8px rgba(0,0,0,0.1)',
                         color:'black',
-                        fontWeight:'bold'
-                        
+                        fontWeight:'bold',
+                        cursor:'pointer'
                         //left: viewport === 'mobile' ? '45px' : '55px',
                     }}  >Log in</button>
 
