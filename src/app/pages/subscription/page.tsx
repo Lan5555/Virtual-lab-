@@ -13,7 +13,8 @@ const Subscription: React.FC = () => {
             header="Basic Plan"
             Price={5000}
             features={['Test 1', 'Test 2', 'Test 3']}
-            limit="month"></PaymentCard>
+            limit="month"
+            ></PaymentCard>
             </div>
         }>
        
