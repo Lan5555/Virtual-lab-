@@ -25,7 +25,7 @@ const ListTile:React.FC<props> = ({leading,text,trailing}) => {
         color: state ? 'blueviolet' : 'black'
     }
     const lead:CSSProperties = {
-         marginLeft:'190px',
+        marginLeft:'190px',
         marginTop:'15.5px'
     }
     const textStyle:CSSProperties = {

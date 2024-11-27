@@ -19,7 +19,7 @@ const Icon = ({iconName, size1, onPressed,color}:IconProps) => {
         color:color
     }
     if(!icon){
-        return <p>Icon "{iconName} not found</p>
+        return <p>{`Icon "${iconName}" not found`}</p>
     }
     return <FontAwesomeIcon icon={icon} style={style} onClick={onPressed}/>
 }
