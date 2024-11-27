@@ -6,11 +6,11 @@ import { useEffect, useState } from "react";
 import styles from '../css/btn.module.css';
 
 interface props{
-className?:string;
-text:string;
-textClass?:string;
-duration?:number;
-type?:'warning' | 'info' | 'success';
+    className?:string;
+    text:string;
+    textClass?:string;
+    duration?:number;
+    type?:'warning' | 'info' | 'success';
 }
 
 const Toast:React.FC<props> = ({className="fixed top-10 right-2 w-72 h-24 p-2 shadow-2xl rounded bg-white  border-none flex justify-center items-center flex-col animate-slidex", text="Hello world"
