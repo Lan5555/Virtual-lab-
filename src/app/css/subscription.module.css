@@ -1,0 +1,10 @@
+.content{
+   
+    left: 20%;
+    top:30px;
+    padding: 10px;
+    width: 200vh;
+    height: 100vh;
+    background-color: black;
+    overflow: hidden;
+}
