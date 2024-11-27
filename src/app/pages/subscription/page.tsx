@@ -1,13 +1,15 @@
 'use client'
 
+import PaymentCard from "@/app/components/payment-card";
 import PageLayout from "@/app/page-layouts/page-layout";
+import styles from '@/app/css/subscription.module.css';
 
 const Subscription: React.FC = () => {
     return (
-        <PageLayout>
-            <div>
-                <h4>Choose your plan</h4>
-            </div>
+        <PageLayout children={
+            
+        }>
+            
         </PageLayout>
     )
 };
