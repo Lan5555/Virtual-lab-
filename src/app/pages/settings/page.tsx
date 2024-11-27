@@ -5,7 +5,7 @@ import PageLayout from "@/app/page-layouts/page-layout";
 const Settings: React.FC = () => {
     return (
         <PageLayout>
-            <div>
+            <div className="">
                 <h4>Settings</h4>
             </div>
         </PageLayout>
