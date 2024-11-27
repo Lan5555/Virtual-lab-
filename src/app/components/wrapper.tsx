@@ -1,10 +1,11 @@
 import { CSSProperties } from "react"
 
 interface props{
-    content:any
+    content?:React.ReactNode
     color:string
+    classname?:string
 }
-const Wrap:React.FC<props> = ({content,color}) => {
+const Wrap:React.FC<props> = ({content,color,classname}) => {
     const style:CSSProperties = {
         padding:'9px',
         backgroundColor:color,
@@ -16,10 +17,11 @@ const Wrap:React.FC<props> = ({content,color}) => {
         marginTop:'20px',
         opacity:'0.7',
         borderBottomLeftRadius:'10px',
-        borderTopRightRadius:'10px'
+        borderTopRightRadius:'10px',
+        width:'100px'
     }
     return(
-        <div style={style}>
+        <div style={style} className={classname}>
             {content}
         </div>
     )
