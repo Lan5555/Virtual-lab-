@@ -17,7 +17,7 @@ export const Plan:React.FC<PlanProps> = ({ id, title, amount, isCurrent, propert
         color: isCurrent ? 'darkgreen' : 'blueviolet',
     }
     const amountStyle: CSSProperties = {
-        fontSize: '18pt',
+        fontSize: '23pt',
         fontWeight: 'bold',
     }
     return (
