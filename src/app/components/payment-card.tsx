@@ -17,7 +17,7 @@ const PaymentCard:React.FC<props> = ({header,Price,limit,features, onPressed}) =
             </div>
         <div className="flex gap-3">
             <h2 className="relative ml-2">{`N${Price}`}</h2>
-            <p className="text-xxs relative top-5 opacity-50">{limit}</p>
+            <p className="text-xxs relative top-5 opacity-50">{`/${limit}`}</p>
         </div>
         <div>
         {features?.map((element,index) => (
@@ -27,7 +27,7 @@ const PaymentCard:React.FC<props> = ({header,Price,limit,features, onPressed}) =
         ))}
         </div>
         <br></br>
-        <button  className="p-3 w-full text-center bg-green-700 text-white rounded-lg border-none hover:bg-gray-500 shadow-sm cursor-pointer">
+        <button  className="p-3 w-full text-center bg-green-700 text-white rounded-lg border-none hover:bg-gray-500 shadow-sm cursor-pointer" onClick={onPressed}>
             Get Plan
         </button>
         </div>
