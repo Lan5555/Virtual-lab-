@@ -7,7 +7,10 @@ import PageLayout from '@/app/page-layouts/page-layout';
 const Dashboard:React.FC = () => {
     return (
         <PageLayout>
-            <div className={styles.content}>
+            <div className="">
+                <h3>Dashboard</h3>
+            </div>
+            <div>
                 <div className={styles.barContainer}>
                     <div className={styles.bars}>
                     <Wrap color='white' content={<h3 style={{fontSize:'13pt'}}><Icon size1={''}
