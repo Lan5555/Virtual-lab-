@@ -27,16 +27,18 @@ const Subscription: React.FC = () => {
                 <h3>Choose your plan</h3>
             </div>
 
-            <div className="flex justify-center items-center">
+            <div className="flex flex-wrap">
 
                 { plans.map((it) => (
-                    <PaymentCard 
-                        key={it.header}
-                        header={it.header}
-                        price={it.price}
-                        features={it.features}
-                        limit={it.limit}>
-                    </PaymentCard>
+                    <div className="w-1/3">
+                        <PaymentCard 
+                            key={it.header}
+                            header={it.header}
+                            price={it.price}
+                            features={it.features}
+                            limit={it.limit}>
+                        </PaymentCard>
+                    </div>
                 ))}
                 
             </div>
