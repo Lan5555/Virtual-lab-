@@ -40,13 +40,15 @@ const Subscription: React.FC = () => {
                 <button className="w-auto h-auto p-2 rounded-md bg-green-400 border-none shadow cursor-pointer hover:bg-slate-600">Query transaction</button>
                 </div>
                 { plans.map((it) => (
-                    <PaymentCard 
-                        key={it.header}
-                        header={it.header}
-                        price={it.price}
-                        features={it.features}
-                        limit={it.limit}>
-                    </PaymentCard>
+                    <div className="w-1/3">
+                        <PaymentCard 
+                            key={it.header}
+                            header={it.header}
+                            price={it.price}
+                            features={it.features}
+                            limit={it.limit}>
+                        </PaymentCard>
+                    </div>
                 ))}
                 
             </div>
