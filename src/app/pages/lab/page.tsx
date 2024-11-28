@@ -18,6 +18,19 @@ import Wrap from "@/app/components/wrapper";
 import PaymentCard from "@/app/components/payment-card";
 import Card from "@/app/components/card";
 import Toast from "@/app/components/toast";
+import { Line } from "react-chartjs-2";
+import {
+    Chart as ChartJS,
+    LineElement,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    Tooltip,
+    Legend,
+  } from 'chart.js';
+  
+  // Register required Chart.js components
+  ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend);
 
 
 const Lab: React.FC = () => {
@@ -172,7 +185,11 @@ const Lab: React.FC = () => {
                        },3000);
                 }}></Card>
                 </div>)}
-                {settingState == 'Change Practical' && indexNumber == 'Physics' && (<div className="absolute left-64 w-8/12 h-full top-0 p-1 flex justify-center items-center flex-col overflow-auto">
+                {settingState == 'Change Practical' && indexNumber == 'Physics' && (<div className="absolute left-64 w-8/12 h-full top-0 p-1 flex justify-center items-center flex-col overflow-auto" style={{
+                    backgroundImage:'url(/misc/competition/images/biology.jpg)',
+                    backgroundRepeat:'no-repeat',
+                    
+                }}>
                 <Card color="linear-gradient(to right,grey,white,rgba(0,0,0,0.2))" header="Science" name="Moment" small="Virtual Physics lab" onPressed={()=>{
                     setToast(true);
                     setTimeout(() => {
@@ -180,7 +197,11 @@ const Lab: React.FC = () => {
                        },3000);
                 }}></Card>
                 </div>)}
-                {settingState == 'Change Practical' && indexNumber == 'Biology' && (<div className="absolute left-64 w-8/12 h-full top-0 p-1 flex justify-center items-center flex-col overflow-auto">
+                {settingState == 'Change Practical' && indexNumber == 'Biology' && (<div className="absolute left-64 w-8/12 h-full top-0 p-1 flex justify-center items-center flex-col overflow-auto" style={{
+                    backgroundImage:'url(/misc/competition/images/biology.jpg)',
+                    backgroundRepeat:'no-repeat',
+                    
+                }}>
                 <Card color="linear-gradient(to right,grey,white,rgba(0,0,0,0.2))" header="Science" name="Inspection" small="Virtual Physics lab" onPressed={()=>{
                     setToast(true);
                     setTimeout(() => {
@@ -188,7 +209,11 @@ const Lab: React.FC = () => {
                        },3000);
                 }}></Card>
                 </div>)}
-                {settingState == 'Change Practical' && indexNumber == 'Maths' && (<div className="absolute left-64 w-8/12 h-full top-0 p-1 flex justify-center items-center flex-col overflow-auto">
+                {settingState == 'Change Practical' && indexNumber == 'Maths' && (<div className="absolute left-64 w-8/12 h-full top-0 p-1 flex justify-center items-center flex-col overflow-auto" style={{
+                    backgroundImage:'url(/misc/competition/images/biology.jpg)',
+                    backgroundRepeat:'no-repeat',
+                    
+                }}>
                 <Card color="linear-gradient(to right,grey,white,rgba(0,0,0,0.2))" header="Science" name="Cummulative Frequency" small="Virtual Physics lab" onPressed={()=>{
                     setToast(true);
                     setTimeout(() => {
@@ -200,11 +225,57 @@ const Lab: React.FC = () => {
                     backgroundImage:'url(/misc/competition/images/biology.jpg)',
                     backgroundRepeat:'no-repeat',
                     
-                }} className="absolute left-64 w-8/12 h-full top-0 p-1 flex justify-center items-center flex-col overflow-auto"></div>}
+                }} className="absolute left-64 w-8/12 h-full top-0 p-1 flex justify-center items-center flex-col overflow-auto">
+                    <Line data={data} options={options} />
+                    </div>}
                 {toast && showToast()}
             </div>
         );
     }
+    
+    const data = {
+        labels: ['Chemistry','Physics','Biology','Maths'], // X-axis labels
+        datasets: [
+          {
+            label: 'Progress',
+            data: [65, 19, 80, 81], // Y-axis data points
+            borderColor: 'rgba(75, 192, 192, 1)', // Line color
+            backgroundColor: 'rgba(75, 192, 192, 0.2)', // Fill color under the line
+            tension: 0.4, // Smoothness of the curve (0: sharp lines, 1: very smooth)
+            pointBackgroundColor: 'rgba(75, 192, 192, 1)', // Color of the points
+            pointBorderColor: '#fff', // Border color of the points
+            pointHoverRadius: 5, // Size of the points when hovered
+          },
+        ],
+      };
+    
+      // Chart options
+      const options:any = {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          tooltip: {
+            enabled: true,
+            backgroundColor: '#333',
+            titleColor: '#fff',
+            bodyColor: '#fff',
+            displayColors: false,
+          },
+        },
+        scales: {
+          x: {
+            grid: {
+              display: false, // Hide vertical grid lines
+            },
+          },
+          y: {
+            beginAtZero: true, // Start the Y-axis at 0
+          },
+        },
+      };
+
     return (
         <PageLayout>
             {mediaquery!='mobile' ? (<div className={ mediaquery == 'desktop' ? styles.container : mediaquery == 
@@ -234,16 +305,8 @@ const Lab: React.FC = () => {
                     }
                     
                     </select>
-                    <h4>Zoom</h4>
-                    <input type="range" min="1" max="100" />
-                    <h4>Progress</h4>
-                    {['Biology', 'Chemistry', 'Physics', 'Maths'].map((subject, index) => (
-                        <span key={subject}>
-                            {subject} <div className={styles[`progressBar${index}`]}></div>
-                            <span style={{ position: "absolute", right: '10px' }}>20%</span>
-                            <br />
-                        </span>
-                    ))}
+                    <h4>Statistics</h4>
+                    <Line data={data} options={options}></Line>
                 </div>
                 ): null}
                 {/* {mediaquery == 'tablet' ? (
@@ -297,7 +360,7 @@ const Lab: React.FC = () => {
                                 <FontAwesomeIcon icon={faBars} className="text-white" onClick={()=>setVisible(true)}></FontAwesomeIcon>
                                 </div>
                         ):null}
-                        { display && labSettings()}
+                        { display && mediaquery != 'desktop' && labSettings()}
                 </div>
                 {noteSpace()}
                {mediaquery == 'desktop' ? ( <div className={styles.bottomBar}>
