@@ -63,7 +63,21 @@ const Lab: React.FC = () => {
         clearInterval(time);
     }
     const [mediaquery, setMediaQuery] = useState('desktop');
-
+    const updateMediaQuery = () => {
+        if (window.matchMedia('(max-width: 600px)').matches) {
+          setMediaQuery('mobile');
+        } else if (window.matchMedia('(min-width: 548px) and (max-width:1140px)').matches) {
+          setMediaQuery('tablet');
+        } else {
+          setMediaQuery('desktop');
+        }
+      };
+    
+      useEffect(() => {
+        updateMediaQuery();
+        window.addEventListener('resize', updateMediaQuery);
+        return () => window.removeEventListener('resize', updateMediaQuery);
+      }, []);
     return (
         <PageLayout>
             {mediaquery!='mobile' ? (<div className={ mediaquery == 'desktop' ? styles.container : mediaquery == 
@@ -150,7 +164,9 @@ const Lab: React.FC = () => {
                 <div className={styles.bottomBar}>
                     <button className={styles.btn}>Walkthrough</button>
                     <button className={styles.btn}>Restart</button>
-                    <button className={styles.btn}>Quizzes</button>
+                    <button className={styles.btn} onClick={()=>{
+                        router.push('/pages/Quiz');
+                    }}>Quizzes</button>
                     <button className={styles.btn} onClick={() => {
                         router.push('/pages/dashboard');
                     }}>Dashboard</button>
