@@ -16,7 +16,7 @@
 @layer base{
   @font-face{
     font-family: 'Juniper';
-    src:url('/fonts/JuniperRegular.otf') 
+    src:url('/Fonts/Juniper.otf') 
     format('opentype');
     font-weight: normal;
     font-style: normal;

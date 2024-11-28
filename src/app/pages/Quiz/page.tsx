@@ -1,12 +1,15 @@
 'use client'
+import HoverBar from "@/app/components/hover-bar";
 import Quzzies from "@/app/components/quiz";
-import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { faInfoCircle, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const QuizPage:React.FC = () => {
   const [viewport, setViewport] = useState('desktop');
   const [shown, setShown] = useState(false);
+  const router = useRouter();
   const updateMediaQuery = () => {
     if (window.matchMedia('(max-width: 600px)').matches) {
       setViewport('mobile');
@@ -97,6 +100,9 @@ const QuizPage:React.FC = () => {
       {!shown && overlay()}
       {!shown && initialMessage()}
         {shown && (<Quzzies questions={questions} />)}
+       {shown && (<HoverBar items={[faSignOutAlt]} iconClass="text-white" 
+        runFunc1={()=> router.push('/pages/lab')}
+        title="Back to lab"></HoverBar>)}
     </div>
     );
 }

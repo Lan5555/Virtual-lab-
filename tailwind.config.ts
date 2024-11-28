@@ -45,6 +45,7 @@ const config:Config = {
       animation:{
         slidex:'slidex 0.5s ease-out',
       }
+    
     },
   },
   

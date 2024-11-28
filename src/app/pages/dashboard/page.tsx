@@ -13,7 +13,7 @@ const Dashboard:React.FC = () => {
             <div>
                 <div className={styles.barContainer}>
                     <div className={styles.bars}>
-                    <Wrap color='white' content={<h3 style={{fontSize:'13pt'}}><Icon size1={''}
+                    <Wrap color='white' content={<h3 style={{fontSize:'10pt'}}><Icon size1={''}
                         iconName={'wallet'}
                         onPressed={() => { } }
                             color={'grey'} /> Points earned</h3>}

@@ -12,7 +12,7 @@ interface props{
 const PaymentCard:React.FC<props> = ({header,price,limit,features, currencySymbol, onPressed}) => {
     const symbol = currencySymbol ? currencySymbol : "₦";
     return (
-        <div className="p-4 my-2 mr-5 flex justify-start flex-col shadow-2xl gap-0 w-52 rounded-xl bg-white hover:shadow-slate-400">
+        <div className="p-4 my-2 mr-5 flex justify-start flex-col shadow-2xl gap-0 w-52 rounded-xl bg-white hover:shadow-slate-400 flex-shrink-0">
             <div className="flex gap-2 relative top-8">
                     <FontAwesomeIcon icon={faInfoCircle} className="text-blue-500"></FontAwesomeIcon>
                     <h6 className="relative -top-5 text-blue-700 animate-pulse">{header}</h6>
