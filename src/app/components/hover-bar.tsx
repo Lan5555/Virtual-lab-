@@ -6,10 +6,12 @@ interface Props {
   items?: IconDefinition[];
   className?: string;
   iconClass?: string;
+  title?:string
   runFunc1?: () => void;
   runFunc2?: () => void;
   runFunc3?: () => void;
   runFunc4?: () => void;
+
 }
 
 const HoverBar: React.FC<Props> = ({
@@ -19,7 +21,8 @@ const HoverBar: React.FC<Props> = ({
   runFunc1,
   runFunc2,
   runFunc3,
-  runFunc4
+  runFunc4,
+  title
 }) => {
   const handlePressed = (index: number) => {
     if (index === 0 && runFunc1) {
@@ -42,6 +45,7 @@ const HoverBar: React.FC<Props> = ({
             icon={element}
             className={iconClass}
             onClick={() => handlePressed(index)}
+            title={title}
           />
         ))}
       </div>

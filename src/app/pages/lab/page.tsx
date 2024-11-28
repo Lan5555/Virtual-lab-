@@ -289,6 +289,8 @@ const Lab: React.FC = () => {
                             items={[faSignOutAlt,faTachometerAlt,faBook,faGear]}
                              iconClass="text-white hover:text-red-500"
                             runFunc1={()=> setVisible(false)}
+                            runFunc2={()=> router.push('/pages/dashboard')}
+                            runFunc3={()=> router.push('/pages/Quiz')}
                             runFunc4={() => setDisplay(true)}
                              >
                             </HoverBar> : <div className="fixed right-5 bottom-5 w-auto h-auto p-2 rounded bg-black opacity-50">
