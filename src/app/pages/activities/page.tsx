@@ -2,6 +2,7 @@
 
 import ActivityCard from "@/app/components/activity-card";
 import TablePane from "@/app/components/table";
+import Wrap from "@/app/components/wrapper";
 import PageLayout from "@/app/page-layouts/page-layout";
 import { faTachometer } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -37,7 +38,10 @@ const Activities: React.FC = () => {
     return (
         <PageLayout>
             <div className="">
-                <h4>Activities</h4>
+                <Wrap color={"black"} content={
+                <h4 className="text-white">Activities</h4>
+                }>
+                </Wrap>
             </div>
             <div className="flex -mx-2">
                 <div className="w-1/3">
