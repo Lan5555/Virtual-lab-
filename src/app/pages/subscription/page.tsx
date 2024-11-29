@@ -33,7 +33,7 @@ const Subscription: React.FC = () => {
             <div className="flex justify-center items-center gap-16  shadow-2xl p-28 rounded-3xl" style={{
                 background:'linear-gradient(to right, white,green)'
             }}>
-                <h3 className="absolute top-32 left-80 ml-5 ">Choose your plan</h3>
+                <h3 className="absolute top-32 left-80 ml-5  ">Choose your plan</h3>
                 <small className="absolute top-44 left-80 ml-5 opacity-50 text-xxs">Term&apos;s and conditions applies</small>
                 <div className="absolute right-20 top-32 flex gap-4">
                 <button className="w-auto h-auto p-2 rounded-md bg-white border-none border-green-500 shadow-2xl cursor-pointer hover:bg-slate-600">Add ons</button>

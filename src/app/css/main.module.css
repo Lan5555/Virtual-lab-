@@ -10,8 +10,10 @@
 .none{
     display: none;
 }
-@media (max-height:390px){
-    
+@media screen and (width:1024px) and (height:600px){
+    .mainLab{
+        @apply w-full h-screen p-0 m-0
+    }
 }
 
 @media (min-width: 542px) and (max-width:1024px){
@@ -119,14 +121,7 @@
     }
     
     .mainLab{
-        position: absolute;
-        width: 87%;
-        height: 90vh;
-        /* border: 1px solid black; */
-        top:40px;
-        left: 1px;
-        border-radius: 0px;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 1);
+        @apply w-full h-screen p-0 m-0
     }
     
     .note{
@@ -300,9 +295,9 @@
     .mainLab{
         position: absolute;
         width: 77%;
-        height: 91.5vh;
+        height: 90vh;
         /* border: 1px solid black; */
-        top:41px;
+        top:44px;
         left: 0;
         border-radius: 10px;
         box-shadow: 0 0 1px black, 0 0 1px grey, 0 0 15px black;

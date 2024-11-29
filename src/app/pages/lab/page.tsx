@@ -9,7 +9,28 @@ import { useRouter } from "next/navigation";
 import Walkthrough from "@/app/components/guider";
 import PageLayout from "@/app/page-layouts/full-layout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBarsProgress, faBook, faComputer, faGear, faTachometerAlt, faWarning } from "@fortawesome/free-solid-svg-icons";
+import { faBarChart, faBars, faBarsProgress, faBook, faClose, faClosedCaptioning, faComputer, faDoorClosed, faGear, faRemove, faSignOutAlt, faTachometerAlt, faWarning, IconDefinition } from "@fortawesome/free-solid-svg-icons";
+import HoverBar from "@/app/components/hover-bar";
+import { faBackward } from "@fortawesome/free-solid-svg-icons/faBackward";
+import { faRemoveFormat } from "@fortawesome/free-solid-svg-icons/faRemoveFormat";
+import AnimatedText from "@/app/components/movingtext";
+import Wrap from "@/app/components/wrapper";
+import PaymentCard from "@/app/components/payment-card";
+import Card from "@/app/components/card";
+import Toast from "@/app/components/toast";
+import { Line } from "react-chartjs-2";
+import {
+    Chart as ChartJS,
+    LineElement,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    Tooltip,
+    Legend,
+  } from 'chart.js';
+  
+  // Register required Chart.js components
+  ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend);
 
 
 const Lab: React.FC = () => {
@@ -20,6 +41,10 @@ const Lab: React.FC = () => {
     const [isShown, setShown] = useState(false);
     const [selectedItem, setSelectedItem] = useState<string | null>(null);
     const [subject, setSubject] = useState<string>('chemistry');
+    const [isVisible, setVisible] = useState<boolean>(true);
+    const [display, setDisplay] = useState(false);
+    const [settingState, setSettingState] = useState('Change Subject');
+    const [toast,setToast] = useState(false);
 
     const changePractical = (subject: string, index: number) => {
         const newImagePath = ['chemInit.jpg', 'physics.jpg', 'biology.jpg', 'chemInit.jpg'][index];
@@ -46,6 +71,8 @@ const Lab: React.FC = () => {
         setSelectedItem(item);
         
     }
+
+
     const info = (text:string) => {
         return isShown && indexNumber == 'Chemistry' ? <Walkthrough className="absolute top-24 right-48 rotate-2 bg-slate-700
         shadow-2xl rounded-xl opacity-70 p-4"
@@ -78,12 +105,183 @@ const Lab: React.FC = () => {
         window.addEventListener('resize', updateMediaQuery);
         return () => window.removeEventListener('resize', updateMediaQuery);
       }, []);
+
+      const showToast = () => {
+        return (
+            <Toast text={"Switched successfully"}></Toast>
+        )
+      }
+    //   settings
+    const labSettings = () => {
+        return(
+            <div className="w-full h-screen bg-slate-600 p-2 fixed top-0">
+               <div className="w-60 h-full bg-slate-700"> 
+                <header className="w-full h-32 flex justify-center items-center">
+                    <Wrap color="black" content={
+                    <AnimatedText text={'Virtual lab'} position={undefined} size={20} icon={undefined}></AnimatedText>
+                    } classname="shadow-2xl">
+                    </Wrap>
+                </header>
+                <ul className="list-none text-white absolute top-40 grid gap-7">
+                <li className="cursor-pointer" onClick={()=> setSettingState('Change Subject')}><FontAwesomeIcon icon={faBook} className="text-white"></FontAwesomeIcon> Change Subject</li>
+                <li className="cursor-pointer" onClick={()=> setSettingState('Change Practical')}><FontAwesomeIcon icon={faComputer} className="text-white"></FontAwesomeIcon> Switch Practical</li>
+                <li className="cursor-pointer" onClick={()=> setSettingState('Progress')}><FontAwesomeIcon icon={faBarChart} className="text-white"></FontAwesomeIcon> Progress</li>
+                <li className="cursor-pointer" onClick={()=> setDisplay(false)}><FontAwesomeIcon icon={faSignOutAlt} className="text-white"></FontAwesomeIcon></li>
+                </ul>
+                </div>
+
+                {settingState == 'Change Subject' && (<div className="absolute left-64 w-8/12 h-full top-0 p-1 flex justify-center items-center flex-col overflow-auto"
+                style={{
+                    backgroundImage:'url(/misc/competition/images/biology.jpg)',
+                    backgroundRepeat:'no-repeat',
+                    
+                }}
+                >
+                <div className="flex gap-2">
+                <Card color="linear-gradient(to right,blueviolet,white,rgba(0,0,0,0.2))" header="Science" name="Chemistry" small="Virtual chemistry lab" onPressed={()=>{setIndexNumber('Chemistry')
+                    setToast(true);
+                    changePractical('Chemistry',0);
+                    setTimeout(() => {
+                     setToast(false);
+                    },3000);
+                }}></Card>
+                <Card color="linear-gradient(to right,grey,white,rgba(0,0,0,0.2))" header="Science" name="Physics" small="Virtual Physics lab" onPressed={()=>{setIndexNumber('Physics')
+                    setToast(true);
+                    changePractical('Physics',1);
+                    setTimeout(() => {
+                        setToast(false);
+                       },3000);
+                }}></Card>
+                </div>
+                <div className="flex gap-2">
+                <Card color="linear-gradient(to right,grey,white,rgba(0,0,0,0.2))" header="Science" name="Biology" small="Virtual Bio lab" onPressed={()=>{setIndexNumber('Biology')
+                    setToast(true);
+                    changePractical('Biology',2);
+                    setTimeout(() => {
+                        setToast(false);
+                       },3000);
+                }}></Card>
+                <Card color="linear-gradient(to right,blueviolet,white,rgba(0,0,0,0.2))" header="Science" name="Mathematics" small="Virtual Math lab" onPressed={()=>{setIndexNumber('Maths')
+                    setToast(true);
+                    changePractical('Maths',3);
+                    setTimeout(() => {
+                        setToast(false);
+                       },3000);
+                }}></Card>
+                </div>
+                
+                </div> )}
+                 {/* Pacticals */}
+                {settingState == 'Change Practical' && indexNumber == 'Chemistry' && (<div className="absolute left-64 w-8/12 h-full top-0 p-1 flex justify-center items-center flex-col overflow-auto"
+                style={{
+                    backgroundImage:'url(/misc/competition/images/biology.jpg)',
+                    backgroundRepeat:'no-repeat',
+                    
+                }}>
+                <Card color="linear-gradient(to right,grey,white,rgba(0,0,0,0.2))" header="Science" name="Test for purity" small="Virtual Physics lab" onPressed={()=>{
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                       },3000);
+                }}></Card>
+                </div>)}
+                {settingState == 'Change Practical' && indexNumber == 'Physics' && (<div className="absolute left-64 w-8/12 h-full top-0 p-1 flex justify-center items-center flex-col overflow-auto" style={{
+                    backgroundImage:'url(/misc/competition/images/biology.jpg)',
+                    backgroundRepeat:'no-repeat',
+                    
+                }}>
+                <Card color="linear-gradient(to right,grey,white,rgba(0,0,0,0.2))" header="Science" name="Moment" small="Virtual Physics lab" onPressed={()=>{
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                       },3000);
+                }}></Card>
+                </div>)}
+                {settingState == 'Change Practical' && indexNumber == 'Biology' && (<div className="absolute left-64 w-8/12 h-full top-0 p-1 flex justify-center items-center flex-col overflow-auto" style={{
+                    backgroundImage:'url(/misc/competition/images/biology.jpg)',
+                    backgroundRepeat:'no-repeat',
+                    
+                }}>
+                <Card color="linear-gradient(to right,grey,white,rgba(0,0,0,0.2))" header="Science" name="Inspection" small="Virtual Physics lab" onPressed={()=>{
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                       },3000);
+                }}></Card>
+                </div>)}
+                {settingState == 'Change Practical' && indexNumber == 'Maths' && (<div className="absolute left-64 w-8/12 h-full top-0 p-1 flex justify-center items-center flex-col overflow-auto" style={{
+                    backgroundImage:'url(/misc/competition/images/biology.jpg)',
+                    backgroundRepeat:'no-repeat',
+                    
+                }}>
+                <Card color="linear-gradient(to right,grey,white,rgba(0,0,0,0.2))" header="Science" name="Cummulative Frequency" small="Virtual Physics lab" onPressed={()=>{
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                       },3000);
+                }}></Card>
+                </div>)}       
+                {settingState == 'Progress' && <div style={{
+                    backgroundImage:'url(/misc/competition/images/biology.jpg)',
+                    backgroundRepeat:'no-repeat',
+                    
+                }} className="absolute left-64 w-8/12 h-full top-0 p-1 flex justify-center items-center flex-col overflow-auto">
+                    <Line data={data} options={options} />
+                    </div>}
+                {toast && showToast()}
+            </div>
+        );
+    }
+    
+    const data = {
+        labels: ['Chemistry','Physics','Biology','Maths'], // X-axis labels
+        datasets: [
+          {
+            label: 'Progress',
+            data: [65, 19, 80, 81], // Y-axis data points
+            borderColor: 'rgba(75, 192, 192, 1)', // Line color
+            backgroundColor: 'rgba(75, 192, 192, 0.2)', // Fill color under the line
+            tension: 0.4, // Smoothness of the curve (0: sharp lines, 1: very smooth)
+            pointBackgroundColor: 'rgba(75, 192, 192, 1)', // Color of the points
+            pointBorderColor: '#fff', // Border color of the points
+            pointHoverRadius: 5, // Size of the points when hovered
+          },
+        ],
+      };
+    
+      // Chart options
+      const options:any = {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          tooltip: {
+            enabled: true,
+            backgroundColor: '#333',
+            titleColor: '#fff',
+            bodyColor: '#fff',
+            displayColors: false,
+          },
+        },
+        scales: {
+          x: {
+            grid: {
+              display: false, // Hide vertical grid lines
+            },
+          },
+          y: {
+            beginAtZero: true, // Start the Y-axis at 0
+          },
+        },
+      };
+
     return (
         <PageLayout>
             {mediaquery!='mobile' ? (<div className={ mediaquery == 'desktop' ? styles.container : mediaquery == 
                 'tablet' ? styles.container : styles.container
             }>
-                <div className={styles.header}>
+                {mediaquery == 'desktop' ? (<div className={styles.header}>
                     <h1>Subjects:</h1>
                     {['Chemistry', 'Physics', 'Biology', 'Maths'].map((subject, index) => (
                         <div  key={subject} className={styles.box1} onClick={() => changePractical(subject,index)}  style={{
@@ -95,7 +293,7 @@ const Lab: React.FC = () => {
                         </div>
                     ))}
                     {selectedItem && <p>{selectedItem}</p>}
-                </div>
+                </div>):null}
                 {mediaquery == 'desktop' ? (<div className={styles.sideBar}>
                     <div className={styles.subject}></div>
                     <h4>Select practical</h4>
@@ -107,19 +305,11 @@ const Lab: React.FC = () => {
                     }
                     
                     </select>
-                    <h4>Zoom</h4>
-                    <input type="range" min="1" max="100" />
-                    <h4>Progress</h4>
-                    {['Biology', 'Chemistry', 'Physics', 'Maths'].map((subject, index) => (
-                        <span key={subject}>
-                            {subject} <div className={styles[`progressBar${index}`]}></div>
-                            <span style={{ position: "absolute", right: '10px' }}>20%</span>
-                            <br />
-                        </span>
-                    ))}
+                    <h4>Statistics</h4>
+                    <Line data={data} options={options}></Line>
                 </div>
                 ): null}
-                {mediaquery == 'tablet' ? (
+                {/* {mediaquery == 'tablet' ? (
                     <div className="w-16 h-5/6 absolute right-0 shadow-2xl p-2 flex mt-16 flex-col gap-10" >
                         <FontAwesomeIcon icon={faBook} style={{height:'35px', color:'lightblue',cursor:'pointer'}} title="Course"></FontAwesomeIcon>
                         <FontAwesomeIcon icon={faComputer} style={{height:'35px', color:'lightblue',cursor:'pointer'}} title="Practicals"></FontAwesomeIcon>
@@ -127,7 +317,7 @@ const Lab: React.FC = () => {
                         <FontAwesomeIcon icon={faTachometerAlt} style={{height:'35px',color:'lightblue',cursor:'pointer'}} title="Zoom"></FontAwesomeIcon>
                         <FontAwesomeIcon icon={faGear} style={{height:'35px',color:'lightblue',cursor:'pointer'}} title="Mini settings"></FontAwesomeIcon>
                     </div>
-                ):null}
+                ):null} */}
                 <div className={styles.mainLab}>
                     <Canvas>
                         <Suspense fallback={null}>
@@ -157,11 +347,23 @@ const Lab: React.FC = () => {
                         onClick={()=>{indexNumber == 'Biology' ? alert('Skeleton clicked'):null}}
                         ></div>
 
-                        {/* {items} */}
+                        {mediaquery != 'desktop' ? (
+                           isVisible ? <HoverBar 
+                            items={[faSignOutAlt,faTachometerAlt,faBook,faGear]}
+                             iconClass="text-white hover:text-red-500"
+                            runFunc1={()=> setVisible(false)}
+                            runFunc2={()=> router.push('/pages/dashboard')}
+                            runFunc3={()=> router.push('/pages/Quiz')}
+                            runFunc4={() => setDisplay(true)}
+                             >
+                            </HoverBar> : <div className="fixed right-5 bottom-5 w-auto h-auto p-2 rounded bg-black opacity-50">
+                                <FontAwesomeIcon icon={faBars} className="text-white" onClick={()=>setVisible(true)}></FontAwesomeIcon>
+                                </div>
+                        ):null}
+                        { display && mediaquery != 'desktop' && labSettings()}
                 </div>
                 {noteSpace()}
-                
-                <div className={styles.bottomBar}>
+               {mediaquery == 'desktop' ? ( <div className={styles.bottomBar}>
                     <button className={styles.btn}>Walkthrough</button>
                     <button className={styles.btn}>Restart</button>
                     <button className={styles.btn} onClick={()=>{
@@ -170,7 +372,7 @@ const Lab: React.FC = () => {
                     <button className={styles.btn} onClick={() => {
                         router.push('/pages/dashboard');
                     }}>Dashboard</button>
-                </div>
+                </div> ):null}
             </div> ): <div className="flex justify-center items-center h-screen bg-slate-200">
                     <div className="rounded-lg w-44 h-30 bg-slate-700 p-3 animate-pulse flex justify-center items-center flex-col">
                         <FontAwesomeIcon icon={faWarning} style={{color:'red'}}></FontAwesomeIcon>

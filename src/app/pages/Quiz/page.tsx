@@ -1,12 +1,18 @@
 'use client'
+import HoverBar from "@/app/components/hover-bar";
 import Quzzies from "@/app/components/quiz";
-import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { faInfoCircle, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import anime from "animejs";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+
 
 const QuizPage:React.FC = () => {
   const [viewport, setViewport] = useState('desktop');
   const [shown, setShown] = useState(false);
+  const router = useRouter();
+  
   const updateMediaQuery = () => {
     if (window.matchMedia('(max-width: 600px)').matches) {
       setViewport('mobile');
@@ -22,6 +28,16 @@ const QuizPage:React.FC = () => {
     window.addEventListener('resize', updateMediaQuery);
     return () => window.removeEventListener('resize', updateMediaQuery);
   }, []);
+    useEffect(()=> {
+      anime({
+        targets:'.text',
+        opacity:[0,1],
+        duration:5000,
+        easing:'linear',
+        delay:anime.stagger(50),
+        loop:true
+      })
+    })
     const questions = [
         {
           subject: "Math",
@@ -86,6 +102,7 @@ const QuizPage:React.FC = () => {
           </div>
         )
       }
+      
     return( 
     <div style={{
       backgroundImage:'url(/misc/competition/images/biology.jpg)',
@@ -94,9 +111,13 @@ const QuizPage:React.FC = () => {
       backgroundRepeat:'no-repeat',
       overflow:'hidden'
     }}>
+      
       {!shown && overlay()}
       {!shown && initialMessage()}
         {shown && (<Quzzies questions={questions} />)}
+       {shown && (<HoverBar items={[faSignOutAlt]} iconClass="text-white" 
+        runFunc1={()=> router.push('/pages/lab')}
+        title="Back to lab"></HoverBar>)}
     </div>
     );
 }

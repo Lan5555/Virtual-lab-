@@ -43,8 +43,9 @@ const config:Config = {
         
       },
       animation:{
-        slidex:'slidex 0.5s ease-out',
+        slidex:'slidex 0.3s ease-out',
       }
+    
     },
   },
   
