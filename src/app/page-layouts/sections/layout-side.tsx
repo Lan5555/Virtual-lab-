@@ -71,7 +71,7 @@ const LayoutSide:React.FC<SidebarProps> = ({ sideIsOpen, toggleShowBars }) => {
                 ): <><FontAwesomeIcon icon={faGear} className='text-center my-4 ml-2 text-gray-400  hover:text-black' style={{ height: '30px' }} title='Settings' onClick={() => { router.push('/pages/settings'); } }></FontAwesomeIcon><br /></>}
                 {mediaquery == 'desktop' ? (
                 <div className={styles.advert}>
-                    <img src='/misc/oct.jpg'></img>
+                    <img src='/misc/oct.jpg' alt=""></img>
                     <h2>Octopath traveler</h2>
                 <p>Play now</p>
                 </div>

@@ -1,25 +1,17 @@
 import React, { CSSProperties, ReactElement, ReactNode } from "react";
 
 interface TableProps {
-    fields: string[];
+    fields: { label: string; key: string, render?: string }[];
     items: Record<string, any>[];
     onSelect: (item: Record<string, any>) => void;
-    children: React.ReactNode;
+    render?: (item: Record<string, any>, key: string, render?: string) => React.ReactNode;
 }
 
-const TablePane:React.FC<TableProps> = ({ fields, items, onSelect, children }) => {
+const TablePane:React.FC<TableProps> = ({ fields, items, onSelect, render }) => {
 
     const tdStyles: CSSProperties = {
         cursor: "pointer",
         color: "darkblue",
-    }
-    
-    // pass modifying slot element for a column
-    const slotElement = (name: string) => (data: any) => {
-        const child = React.Children.toArray(children).find(
-            (el) => React.isValidElement(el) && el.props.slot === name
-        );
-        return child ? React.cloneElement(child as React.ReactElement, { children: data }) : null;
     }
 
     return (
@@ -27,15 +19,15 @@ const TablePane:React.FC<TableProps> = ({ fields, items, onSelect, children }) =
             <table className="w-full min-w-max table-auto text-left">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr className="">
-                        { fields.map((it, index) => <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4" key={`f${index}`}>{it}</th>)}
+                        { fields.map((it) => <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-2" key={it.key}>{it.label}</th>)}
                     </tr>
                 </thead>
                 <tbody>
                     { 
                         items.map((obj, index) => (
-                            <tr className="" key={`io${index}`}>
+                            <tr className="" key={`io${index}`} onClick={ () => onSelect(obj) } >
                                 { Object.keys(obj).map((k, i) => (
-                                    <td className="p-4 border-b border-blue-gray-50" style={tdStyles} onClick={ () => onSelect(obj[k]) } key={`i${i}`}>{ slotElement(k)(obj[k]) ?? obj[k] }</td>
+                                    <td className="p-2 border-b border-blue-gray-50" style={tdStyles} key={`i${i}`}>{ render && fields[i].render === k && render(obj, k, fields[i].render) ? render(obj, k, fields[i].render) : obj[k] }</td>
                                 ))}
                             </tr>
                         ))  

@@ -34,13 +34,6 @@ const PageLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       showSideBars(val);
     }
 
-    const pageLayoutProps = {
-      state,
-      name,
-      setState,
-      setName,
-    }
-
     return (
       <div className="main-layout">
         {state ? <DropDown category={'avatar'} src={'/misc/oct.jpg'} content='You are currently on a free plan'
@@ -54,7 +47,7 @@ const PageLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             <div>
               {React.Children.map(children, (child) =>
                 React.isValidElement(child)
-                  ? React.cloneElement(child, { ...pageLayoutProps })
+                  ? React.cloneElement(child)
                   : child
               )}
             </div>

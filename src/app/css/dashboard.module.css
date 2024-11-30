@@ -19,50 +19,6 @@
     transition: margin-left 0.3s ease;
 }
 
-/* For screens 1024px and larger */
-@media (min-width: 1024px) {
-    .sidebar {
-      width: 18rem;
-    }
-    .content {
-      margin-left: 18rem;
-    }
-}
-
-/* For screens between 768px and 1024px */
-@media (min-width: 768px) and (max-width: 1023px) {
-    .sidebar {
-      width: 15rem;
-    }
-    .content {
-      margin-left: 15rem;
-    }
-}
-
-/* For screens between 543px and 767px */
-@media (min-width: 543px) and (max-width: 767px) {
-    .sidebar {
-      width: 3.5rem;
-    }
-    .content {
-      margin-left: 3.5rem;
-    }
-}
-
-/* For screens smaller than 542px */
-@media screen and (max-width: 542px) {
-    .sidebar {
-        transform: translateX(-100%);
-        position: absolute;
-    }
-    .content {
-        margin-left: 0;
-    }
-    .sidebar.open {
-        transform: translateX(0);
-    }
-}
-
 .smallSidebar{
     width: 15rem;
     padding: 0;
@@ -273,4 +229,48 @@
     height: 160px;
     padding: 10px;
     border-radius: 5px;
+}
+
+/* For screens 1024px and larger */
+@media (min-width: 1024px) {
+    .sidebar {
+      width: 18rem;
+    }
+    .content {
+      margin-left: 18rem;
+    }
+}
+
+/* For screens between 768px and 1024px */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .sidebar {
+      width: 15rem;
+    }
+    .content {
+      margin-left: 15rem;
+    }
+}
+
+/* For screens between 543px and 767px */
+@media (min-width: 543px) and (max-width: 767px) {
+    .sidebar {
+      width: 3.5rem;
+    }
+    .content {
+      margin-left: 3.5rem;
+    }
+}
+
+/* For screens smaller than 542px */
+@media screen and (max-width: 542px) {
+    .sidebar {
+        transform: translateX(-100%);
+        position: absolute;
+    }
+    .content {
+        margin-left: 0;
+    }
+    .sidebar.open {
+        transform: translateX(0);
+    }
 }
