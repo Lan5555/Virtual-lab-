@@ -83,6 +83,7 @@
     box-shadow: 0 0.15rem 1.75rem 0 rgba(33 40 50 / 15%);
     width: 93%;
     background-color: #fff;
+    z-index: 20;
 }
 
 .header input{

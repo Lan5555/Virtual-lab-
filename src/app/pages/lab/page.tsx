@@ -36,6 +36,10 @@ import VideoBackground from "@/app/components/load-video";
 import Sound from "@/app/components/play-audio";
 import anime from "animejs";
 import Pop from "@/app/components/pop-element";
+import { Tippy as Tip } from "tippy.js";
+import 'tippy.js/dist/tippy.css';
+import Tippy from "@tippyjs/react";
+import Tile from "@/app/components/border-div";
   
   // Register required Chart.js components
   ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend);
@@ -309,6 +313,61 @@ const Lab: React.FC = () => {
             </Pop>
         )
       }
+      const sandMenu = (
+        <div className="flex flex-col gap-0">
+            <ul className="list-none relative -left-5">
+                <li onClick={()=>setDishState(true)}>Fetch some sand</li>
+                <li onClick={()=>{setDishState(false);setDish('empty.png')}}>Dispose</li>
+            </ul>
+        </div>
+      );
+      //practical hooks
+      const [dishState, setDishState] = useState(false);
+      const [dish,setDish] = useState('empty.png');
+      const [isAsking, setAsked] = useState(false);
+      const [dishMenu, setDishContent] = useState((
+        !isAsking ? (<div className="flex flex-col">
+            <ul className="list-none relative -left-5">
+                <li onClick={()=>{
+                    setAsked(true);
+                    setDishContent(
+                        <div className="flex flex-col">
+                            <p className="text-white text-center">What lab?</p>
+                            <ul className="list-none relative -left-5">
+                                <li onClick={()=>{}}>Chemistry</li>
+                                <li onClick={()=>{}}>Physics</li>
+                                <li onClick={()=>{}}>Biology</li>
+                                <li onClick={()=>{}}>Maths</li>
+                                <li onClick={()=>{
+                                    setAsked(false);
+                                }}>Back</li>
+                            </ul>
+                        </div>
+                    )
+                }}>Take to lab</li>
+                <li onClick={()=>{setAsked(false)}}>Back</li>
+            </ul>
+        </div>)
+        : <div className="flex flex-col">
+            <ul className="list-none relative -left-5">
+                <li onClick={()=>setAsked(false)}></li>
+            </ul>
+        </div>
+      ));
+      const ShowDish = () => {
+        setTimeout(() => {
+            setDish('dish.png');
+        },2000);
+        
+        return (
+            <Tippy content={dishMenu} interactive={true} placement="left">
+            <img src={`/misc/competition/practical/${dish}`}
+             alt=""
+             className="h-20 w-20 absolute bottom-8 left-64 brightness-50 animate-pulse">
+             </img>
+             </Tippy>
+        );
+      }
     return (
         <PageLayout>
             {mediaquery!='mobile' ? (<div className={ mediaquery == 'desktop' ? styles.container : mediaquery == 
@@ -379,14 +438,14 @@ const Lab: React.FC = () => {
                         }}> 
                         </div>
 
-                        <HoverBar items={[!isOutside ? faSignOutAlt : faSignInAlt]} iconClass="text-white"
+                        <HoverBar items={[!isOutside ? faSignOutAlt : faSignInAlt]} iconClass="text-white cursor-pointer"
                          className="absolute top-56 right-10 w-auto h-auto p-3 bg-black flex gap-3 flex-grow justify-center  animate-pulse rounded-lg shadow-xl"
                           runFunc1={()=>
                             goOutside(prev => !prev)
                         } title= {isOutside ? "Go back" : "Go outside"}></HoverBar>
 
                         <div className="w-20 h-48 absolute top-48 right-60"
-                        onClick={()=>{indexNumber == 'Biology' ? showSkeleton(true):null}}
+                        onClick={()=>{indexNumber == 'Biology' ? showSkeleton(prev => !prev):null}}
                         ></div>
                         {skeleton && viewSkeleton()}
                         {mediaquery != 'desktop' ? (
@@ -403,9 +462,14 @@ const Lab: React.FC = () => {
                                 </div>
                         ):null}
                         { display && mediaquery != 'desktop' && labSettings()}
-                        {isOutside && (<img src="/misc/competition/practical/bag.png" alt="sand"
-                         className="absolute bottom-8 left-10 h-64 brightness-75 cursor-grab" title="Fetch some sand?">
-                        </img>)}
+
+                        {isOutside && (<Tippy content={sandMenu} interactive={true} placement="right">
+                        <img src="/misc/competition/practical/bag.png" alt="sand"
+                         className="absolute bottom-2 left-10 h-60 brightness-75 cursor-grab" title="Fetch some sand?">
+                        </img>
+                        </Tippy>
+                        )}
+                        {dishState && ShowDish()}
 
                         {/* Chemistry */}
 
