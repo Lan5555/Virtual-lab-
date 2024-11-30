@@ -8,7 +8,20 @@ import { faTachometer } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Activities: React.FC = () => {
-    const fields = ["id", "name", "action"];
+    const fields = [
+        {
+            label: "id",
+            key: "id",
+            render: "id",
+
+        },{
+            label: "name",
+            key: "name",
+            render: "name",
+        },{
+            label: "action",
+            key: "action",
+        }];
     const items = [
         {
             id: 1,
@@ -39,7 +52,7 @@ const Activities: React.FC = () => {
         <PageLayout>
             <div className="">
                 <Wrap color={"black"} content={
-                <h4 className="text-white">Activities</h4>
+                    <h4 className="text-white">Activities</h4>
                 }>
                 </Wrap>
             </div>
@@ -52,9 +65,14 @@ const Activities: React.FC = () => {
                         fields={fields} 
                         items={items} 
                         onSelect={() => null }
+                        render={(data, key, render) => {
+                            if (render === 'name') {
+                                return <div className="text-blue-700">{data[key]}</div>
+                            } else if (render === 'id') {
+                                return <div className="text-red-700">{data[key]}</div>
+                            }
+                        }}
                     >
-                        <div className="text-blue-700" slot="name"></div>
-                        <div className="text-red-700" slot="id"></div>
                     </TablePane>
                 </div>
             </div>

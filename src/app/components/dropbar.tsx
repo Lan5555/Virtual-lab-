@@ -44,7 +44,7 @@ const DropDown:React.FC<props> = ({category, src, content, onPressed1,onPressed2
     }
     const checkCategory = () => {
         return category == 'avatar' ? <div style={imageHolder}>
-        <img src={src} style={avatar}></img>
+        <img src={src} style={avatar} alt=""></img>
         </div> : null
     }
     const contentStyle:CSSProperties = {
