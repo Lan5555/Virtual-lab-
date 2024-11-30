@@ -91,9 +91,7 @@ const Dashboard:React.FC = () => {
 
     return (
         <PageLayout>
-            <div className="">
-                <h3>Dashboard</h3>
-            </div>
+                <Wrap content={<h3 className='text-white'>Dashboard</h3>} color='rgba(75,192,192,0.6)' classname='-z-10'/>
             <div>
                 <div className={styles.barContainer}>
                     <div className={styles.bars}>

@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -23,5 +24,34 @@
   }
 }
 
+::-webkit-scrollbar{
+  width:12px;
+}
+::-webkit-scrollbar-track{
+  background: linear-gradient(45deg,#1e1e2f,#3a3a5f);
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb{
+  background: linear-gradient(45deg,lightblue,darkred,rgba(0,0,0,0.1));
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover{
+  background: linear-gradient(45deg,#ff4500,rgba(0,0,0,0.1));
+  
+}
 
 
+.tippy-content li{
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+.tippy-content li:hover{
+  background: linear-gradient(to right,rgba(0,0,0,0.1), blueviolet);
+  padding: 5px;
+}
+.centered{
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+}
