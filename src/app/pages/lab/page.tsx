@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 import React, { Suspense, useEffect, useState } from "react";
 import styles from "@/app/css/main.module.css";
@@ -9,7 +10,10 @@ import { useRouter } from "next/navigation";
 import Walkthrough from "@/app/components/guider";
 import PageLayout from "@/app/page-layouts/full-layout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBarChart, faBars, faBarsProgress, faBook, faClose, faClosedCaptioning, faComputer, faDoorClosed, faGear, faRemove, faSignOutAlt, faTachometerAlt, faWarning, IconDefinition } from "@fortawesome/free-solid-svg-icons";
+import { faBarChart, faBars, faBarsProgress, faBook, faClose,
+     faClosedCaptioning, faComputer, faDoorClosed, faGear,
+     faRemove, faSignInAlt, faSignOutAlt, faTachometerAlt,
+      faWarning, IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import HoverBar from "@/app/components/hover-bar";
 import { faBackward } from "@fortawesome/free-solid-svg-icons/faBackward";
 import { faRemoveFormat } from "@fortawesome/free-solid-svg-icons/faRemoveFormat";
@@ -28,6 +32,14 @@ import {
     Tooltip,
     Legend,
   } from 'chart.js';
+import VideoBackground from "@/app/components/load-video";
+import Sound from "@/app/components/play-audio";
+import anime from "animejs";
+import Pop from "@/app/components/pop-element";
+import { Tippy as Tip } from "tippy.js";
+import 'tippy.js/dist/tippy.css';
+import Tippy from "@tippyjs/react";
+import Tile from "@/app/components/border-div";
   
   // Register required Chart.js components
   ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend);
@@ -45,10 +57,13 @@ const Lab: React.FC = () => {
     const [display, setDisplay] = useState(false);
     const [settingState, setSettingState] = useState('Change Subject');
     const [toast,setToast] = useState(false);
+    const [isOutside, goOutside] = useState(false);
+    const [environment,setEnvironment] = useState('forest.gif')
+    const [skeleton, showSkeleton] = useState(false);
 
     const changePractical = (subject: string, index: number) => {
         const newImagePath = ['chemInit.jpg', 'physics.jpg', 'biology.jpg', 'chemInit.jpg'][index];
-        setState(newImagePath);
+        setState(newImagePath)
         setIndexNumber(subject);
         setSubject(subject);
     };
@@ -275,7 +290,84 @@ const Lab: React.FC = () => {
           },
         },
       };
+      const GoBack = () => {
+        goOutside(true);
+        return(
+            <HoverBar title="Go back" items={[faSignOutAlt]} iconClass="text-white" runFunc1={()=> goOutside(false)}></HoverBar>
+        )
+      }
+      useEffect(() => {
+        anime({
+           targets:'image',
+           duration:2000,
+           easing:'easeInOut',
+           opacity:[0,1]
+        })
+      });
 
+      const viewSkeleton = () => {
+        return (
+            <Pop element={<img src="/misc/competition/practical/skeleton.jpg" className="w-full h-full object-cover rounded"
+            alt="photo"
+            ></img>}>
+            </Pop>
+        )
+      }
+      const sandMenu = (
+        <div className="flex flex-col gap-0">
+            <ul className="list-none relative -left-5">
+                <li onClick={()=>setDishState(true)}>Fetch some sand</li>
+                <li onClick={()=>{setDishState(false);setDish('empty.png')}}>Dispose</li>
+            </ul>
+        </div>
+      );
+      //practical hooks
+      const [dishState, setDishState] = useState(false);
+      const [dish,setDish] = useState('empty.png');
+      const [isAsking, setAsked] = useState(false);
+      const [dishMenu, setDishContent] = useState((
+        !isAsking ? (<div className="flex flex-col">
+            <ul className="list-none relative -left-5">
+                <li onClick={()=>{
+                    setAsked(true);
+                    setDishContent(
+                        <div className="flex flex-col">
+                            <p className="text-white text-center">What lab?</p>
+                            <ul className="list-none relative -left-5">
+                                <li onClick={()=>{}}>Chemistry</li>
+                                <li onClick={()=>{}}>Physics</li>
+                                <li onClick={()=>{}}>Biology</li>
+                                <li onClick={()=>{}}>Maths</li>
+                                <li onClick={()=>{
+                                    setAsked(false);
+                                }}>Back</li>
+                            </ul>
+                        </div>
+                    )
+                }}>Take to lab</li>
+                <li onClick={()=>{setAsked(false)}}>Back</li>
+            </ul>
+        </div>)
+        : <div className="flex flex-col">
+            <ul className="list-none relative -left-5">
+                <li onClick={()=>setAsked(false)}></li>
+            </ul>
+        </div>
+      ));
+      const ShowDish = () => {
+        setTimeout(() => {
+            setDish('dish.png');
+        },2000);
+        
+        return (
+            <Tippy content={dishMenu} interactive={true} placement="left">
+            <img src={`/misc/competition/practical/${dish}`}
+             alt=""
+             className="h-20 w-20 absolute bottom-8 left-64 brightness-50 animate-pulse">
+             </img>
+             </Tippy>
+        );
+      }
     return (
         <PageLayout>
             {mediaquery!='mobile' ? (<div className={ mediaquery == 'desktop' ? styles.container : mediaquery == 
@@ -321,20 +413,22 @@ const Lab: React.FC = () => {
                 <div className={styles.mainLab}>
                     <Canvas>
                         <Suspense fallback={null}>
-                            <Background1 imageUrl={`/misc/competition/images/${state}`} />
-                        
-                            <Model modelPath='/misc/competition/models/exercise_book/book.glb'
+                            {!isOutside ? (<Background1 imageUrl={`/misc/competition/images/${state}`} />) : 
+                            (<VideoBackground path="/misc/competition/practical/forest-3463.mp4"></VideoBackground>)}
+                            {isOutside && (<Sound path="/misc/competition/practical/forest.mp3"/>)}
+                            {!isOutside && (<Model modelPath='/misc/competition/models/exercise_book/book.glb'
                                 position={[-5.5, -1, 0]}
                                 scale={[0.5, 0.5, 1]}
                                 rotation={[1, 1, 1]}
                                 onClick={()=> checkNote()}
-                            />
+                            />)}
                             <OrbitControls enableRotate={false} enableZoom={false} />
                             <ambientLight intensity={0.5} />
                             <directionalLight position={[5, 5, 5]} intensity={1} />
                         </Suspense>
                     </Canvas>
                     {info("How are you doing boss this is the virtual lab where practicals can be performed in real time please stay tuned")}
+
                     {/* items */}
                     <div className="relative h-36 w-72 -top-3/4 left-20" onClick={()=>{
                         setShown(prev => !prev);
@@ -343,10 +437,17 @@ const Lab: React.FC = () => {
                             indexNumber == 'Biology' ? alert('microscope clicked') : null
                         }}> 
                         </div>
-                        <div className="w-20 h-48 absolute top-48 right-60"
-                        onClick={()=>{indexNumber == 'Biology' ? alert('Skeleton clicked'):null}}
-                        ></div>
 
+                        <HoverBar items={[!isOutside ? faSignOutAlt : faSignInAlt]} iconClass="text-white cursor-pointer"
+                         className="absolute top-56 right-10 w-auto h-auto p-3 bg-black flex gap-3 flex-grow justify-center  animate-pulse rounded-lg shadow-xl"
+                          runFunc1={()=>
+                            goOutside(prev => !prev)
+                        } title= {isOutside ? "Go back" : "Go outside"}></HoverBar>
+
+                        <div className="w-20 h-48 absolute top-48 right-60"
+                        onClick={()=>{indexNumber == 'Biology' ? showSkeleton(prev => !prev):null}}
+                        ></div>
+                        {skeleton && viewSkeleton()}
                         {mediaquery != 'desktop' ? (
                            isVisible ? <HoverBar 
                             items={[faSignOutAlt,faTachometerAlt,faBook,faGear]}
@@ -361,7 +462,24 @@ const Lab: React.FC = () => {
                                 </div>
                         ):null}
                         { display && mediaquery != 'desktop' && labSettings()}
+
+                        {isOutside && (<Tippy content={sandMenu} interactive={true} placement="right">
+                        <img src="/misc/competition/practical/bag.png" alt="sand"
+                         className="absolute bottom-2 left-10 h-60 brightness-75 cursor-grab" title="Fetch some sand?">
+                        </img>
+                        </Tippy>
+                        )}
+                        {dishState && ShowDish()}
+
+                        {/* Chemistry */}
+
+                        {/* Physics */}
+
+                        {/* biology */}
+
+                        {/* Mathematics */}
                 </div>
+                {/* Items */}
                 {noteSpace()}
                {mediaquery == 'desktop' ? ( <div className={styles.bottomBar}>
                     <button className={styles.btn}>Walkthrough</button>

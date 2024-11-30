@@ -39,11 +39,20 @@ const config:Config = {
             opacity:'1'
           },
           
+        },
+        fadeIn:{
+          from:{
+            opacity:'0'
+          },
+          to:{
+            opacity:'1'
+          }
         }
         
       },
       animation:{
         slidex:'slidex 0.3s ease-out',
+        fadeIn:'fadeIn 0.8s ease-in-out',
       }
     
     },
