@@ -1,8 +1,11 @@
 'use client'
 
+import { AboutCard } from "@/app/components/about-card";
 import { Feedback } from "@/app/components/feedback";
 import { UsersCard } from "@/app/components/users-card";
 import PageLayout from "@/app/page-layouts/page-layout";
+import { title } from "process";
+import { useState } from "react";
 
 const Settings: React.FC = () => {
     const userFields = [
@@ -49,6 +52,8 @@ const Settings: React.FC = () => {
             comment: "Very good work, keep it up",
         }
     ];
+    const [about, setAbout] = useState({ title: "", text: "" })
+    
     return (
         <PageLayout>
             <div className="">
@@ -68,7 +73,7 @@ const Settings: React.FC = () => {
                     </div>
                 </div>
                 <div>
-                    <h6>About</h6>
+                    <AboutCard about={about} onSave={setAbout} />
                 </div>
             </div>
         </PageLayout>
