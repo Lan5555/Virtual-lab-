@@ -10,8 +10,8 @@ interface props {
 
 export const UsersCard:React.FC<props> = ({ fields, items, onSelected }) => {
     return (
-        <div className="p-1 m-1 bg-white text-black">
-            <h6>Users</h6>
+        <div className="p-1 m-1 bg-white text-black shadow-2xl mt-5 hover:shadow-gray-900">
+            <h5 className="ml-4">Users</h5>
             <TablePane 
                 fields={fields} 
                 items={items} 

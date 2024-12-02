@@ -1,4 +1,5 @@
 import React from "react";
+import Wrap from "./wrapper";
 
 interface props {
     items: { name: string; comment: string }[]
@@ -6,8 +7,8 @@ interface props {
 
 export const Feedback:React.FC<props> = ({ items }) => {
     return (
-        <div>
-            <h6>Feedback</h6>
+        <div className="shadow-2xl">
+            <Wrap content={<h6 className="text-white">Feedback</h6>} color="black"></Wrap>
             <div className="flex flex-col p-1">
                 {
                     items.map((obj, index) => (

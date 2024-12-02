@@ -5,8 +5,8 @@ interface props{
 }
 const Pop:React.FC<props> = ({element}) => {
     return(
-        <div className="flex justify-center items-center  fixed rounded centered animate-fadeIn">
-            <div className="w-10/12 h-3/5 rounded">
+        <div className="flex justify-center items-center  rounded centered animate-fadeIn">
+            <div className="w-full h-full rounded">
             {element}
             </div>
         </div>
