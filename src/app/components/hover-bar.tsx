@@ -41,7 +41,7 @@ const HoverBar: React.FC<Props> = ({
       <div className={className}>
         {items?.map((element: any, index: number) => (
           <FontAwesomeIcon
-            key={element}
+            key={`${element}${index}`}
             icon={element}
             className={iconClass}
             onClick={() => handlePressed(index)}
