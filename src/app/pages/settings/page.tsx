@@ -3,6 +3,7 @@
 import { AboutCard } from "@/app/components/about-card";
 import { Feedback } from "@/app/components/feedback";
 import { UsersCard } from "@/app/components/users-card";
+import Wrap from "@/app/components/wrapper";
 import PageLayout from "@/app/page-layouts/page-layout";
 import { title } from "process";
 import { useState } from "react";
@@ -57,12 +58,20 @@ const Settings: React.FC = () => {
     return (
         <PageLayout>
             <div className="">
-                <h4>Settings</h4>
+                <h1 className="font-bold mb-2">Settings</h1>
             </div>
 
             <div className="flex flex-col">
-                <div>
-                    <h6>Create Lab</h6>
+                <div className="flex gap-3 rounded w-80 h-12 shadow justify-evenly items-center ml-2">
+                    <div className="rounded shadow bg-slate-600 w-auto h-7 flex justify-center items-center p-1">
+                    <h6 className="text-white cursor-pointer">Create Lab</h6>
+                    </div>
+                    <div className="rounded shadow-2xl w-auto h-7 flex justify-center items-center p-1">
+                    <h6 className="text-black cursor-pointer">Workspace</h6>
+                    </div>
+                    <div className="rounded shadow-2xl w-auto h-7 flex justify-center items-center p-1">
+                    <h6 className="text-black cursor-pointer">Calculate points</h6>
+                    </div>
                 </div>
                 <div className="flex flex-row flex-wrap">
                     <div className="basis-2/3">

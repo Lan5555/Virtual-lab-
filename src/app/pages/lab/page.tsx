@@ -129,7 +129,7 @@ const Lab: React.FC = () => {
     //   settings
     const labSettings = () => {
         return(
-            <div className="w-full h-screen bg-slate-600 p-2 fixed top-0">
+            <div className="w-full h-screen bg-slate-600 p-2 fixed top-0 z-10">
                <div className="w-60 h-full bg-slate-700"> 
                 <header className="w-full h-32 flex justify-center items-center">
                     <Wrap color="black" content={
@@ -316,7 +316,8 @@ const Lab: React.FC = () => {
       const sandMenu = (
         <div className="flex flex-col gap-0">
             <ul className="list-none relative -left-5">
-                <li onClick={()=>setDishState(true)}>Fetch some sand</li>
+                <li onClick={()=>{setDishState(true)
+                     setLabState(true)}}>Fetch some sand</li>
                 <li onClick={()=>{setDishState(false);setDish('empty.png')}}>Dispose</li>
             </ul>
         </div>
@@ -324,35 +325,45 @@ const Lab: React.FC = () => {
       //practical hooks
       const [dishState, setDishState] = useState(false);
       const [dish,setDish] = useState('empty.png');
-      const [isAsking, setAsked] = useState(false);
+      const [lab1, setLabState] = useState(true);
+      const [activeDish, enableDish] = useState(true);
+      const [dishLocation, setDisLocation] = useState('');
+      const [soilState,setSoilState] = useState(false);
       const [dishMenu, setDishContent] = useState((
-        !isAsking ? (<div className="flex flex-col">
+        (<div className="flex flex-col">
             <ul className="list-none relative -left-5">
                 <li onClick={()=>{
-                    setAsked(true);
+                    
                     setDishContent(
                         <div className="flex flex-col">
                             <p className="text-white text-center">What lab?</p>
                             <ul className="list-none relative -left-5">
-                                <li onClick={()=>{}}>Chemistry</li>
-                                <li onClick={()=>{}}>Physics</li>
-                                <li onClick={()=>{}}>Biology</li>
-                                <li onClick={()=>{}}>Maths</li>
                                 <li onClick={()=>{
-                                    setAsked(false);
+                                    setLabState(false);
+                                    setDisLocation('Chemistry');
+                                }}>Chemistry</li>
+                                <li onClick={()=>{
+                                    setLabState(false);
+                                    setDisLocation('Physics');
+                                }}>Physics</li>
+                                <li onClick={()=>{
+                                    setLabState(false);
+                                    setDisLocation('Biology');
+                                }}>Biology</li>
+                                <li onClick={()=>{
+                                    setLabState(false);
+                                    setDisLocation('Maths');
+                                }}>Maths</li>
+                                <li onClick={()=>{
+                                    enableDish(false);
                                 }}>Back</li>
                             </ul>
                         </div>
                     )
                 }}>Take to lab</li>
-                <li onClick={()=>{setAsked(false)}}>Back</li>
+                <li onClick={()=>{enableDish(false)}}>Back</li>
             </ul>
         </div>)
-        : <div className="flex flex-col">
-            <ul className="list-none relative -left-5">
-                <li onClick={()=>setAsked(false)}></li>
-            </ul>
-        </div>
       ));
       const ShowDish = () => {
         setTimeout(() => {
@@ -360,14 +371,57 @@ const Lab: React.FC = () => {
         },2000);
         
         return (
-            <Tippy content={dishMenu} interactive={true} placement="left">
+            lab1 && <Tippy content={activeDish ? dishMenu : null} interactive={true} placement="top">
             <img src={`/misc/competition/practical/${dish}`}
              alt=""
-             className="h-20 w-20 absolute bottom-8 left-64 brightness-50 animate-pulse">
-             </img>
+             className="h-20 w-20 absolute bottom-8 left-64 brightness-50 animate-pulse" onMouseEnter={()=>enableDish(true)}>
+             </img> 
              </Tippy>
         );
       }
+
+      const lookInMicroscope = () => {
+        return(
+        mediaquery == 'desktop' && !isOutside && indexNumber=='Biology'?  (<img src={`/misc/competition/practical/dish.png`}
+        alt=""
+        className="h-10 w-16 absolute bottom-64 right-48 brightness-50 opacity-90" onMouseEnter={()=>enableDish(true)}>
+        </img> ) : mediaquery == 'tablet' && !isOutside && indexNumber=='Biology' ? (<img src={`/misc/competition/practical/dish.png`}
+        alt=""
+        className="h-10 w-16 absolute bottom-72 right-28 brightness-50 opacity-90" onMouseEnter={()=>enableDish(true)}>
+        </img> ) : null
+        );
+      }
+      const microscope = (
+        <div className="flex flex-col gap-0">
+            <ul className="list-none relative -left-5">
+                <li onClick={()=>{
+                        setSoilState(true);
+                }}>Look</li>
+            </ul>
+        </div>
+      )
+      const showSoil = () => {
+        const menu = (
+            <div className="flex flex-col">
+                <ul className="list-none relative -left-5">
+                    <li onClick={()=>{setSoilState(false)}}>Close</li>
+                </ul>
+            </div>
+        )
+       return(
+        
+        <Pop element={
+            <Tippy content={menu} interactive={true} placement="top">
+            <img src="/misc/competition/practical/soil.gif" className="w-full h-full object-cover rounded cursor-pointer"
+            alt="photo"
+            ></img>
+            </Tippy>
+            }
+            >
+            </Pop> 
+       );
+      }
+
     return (
         <PageLayout>
             {mediaquery!='mobile' ? (<div className={ mediaquery == 'desktop' ? styles.container : mediaquery == 
@@ -433,10 +487,22 @@ const Lab: React.FC = () => {
                     <div className="relative h-36 w-72 -top-3/4 left-20" onClick={()=>{
                         setShown(prev => !prev);
                         }}></div>
-                    <div className="w-40 h-48 absolute top-60 right-16" onClick={()=>{
-                            indexNumber == 'Biology' ? alert('microscope clicked') : null
-                        }}> 
+                    {mediaquery == 'desktop' ? (
+                        dishLocation == 'Biology' ? (<Tippy content={microscope} interactive={true} placement="left">
+                        <div className="w-40 h-48 absolute top-60 right-16 cursor-pointer" onClick={()=>{
+                            indexNumber == 'Biology' ? alert('microscope') : null
+                            }}> 
                         </div>
+                        </Tippy>) : (<div className="w-40 h-48 absolute top-60 right-16 cursor-pointer" onClick={()=>{
+                            indexNumber == 'Biology' ? alert('microscope') : null
+                            }}> </div>)
+                    ):mediaquery == 'tablet' ? (
+                        dishLocation == 'Biology' && indexNumber == "Biology" ? (<Tippy content={microscope} interactive={true} placement="top">
+                        <div className="w-28 h-48 absolute top-72 right-10 cursor-pointer" onClick={()=>{
+                        indexNumber == 'Biology' ? alert('microscope') : null
+                        }}> </div>
+                        </Tippy>):null
+                        ):null}
 
                         <HoverBar items={[!isOutside ? faSignOutAlt : faSignInAlt]} iconClass="text-white cursor-pointer"
                          className="absolute top-56 right-10 w-auto h-auto p-3 bg-black flex gap-3 flex-grow justify-center  animate-pulse rounded-lg shadow-xl"
@@ -444,10 +510,15 @@ const Lab: React.FC = () => {
                             goOutside(prev => !prev)
                         } title= {isOutside ? "Go back" : "Go outside"}></HoverBar>
 
-                        <div className="w-20 h-48 absolute top-48 right-60"
+                        {mediaquery== "desktop" ? (<div className="w-20 h-48 absolute top-48 right-60"
                         onClick={()=>{indexNumber == 'Biology' ? showSkeleton(prev => !prev):null}}
-                        ></div>
-                        {skeleton && viewSkeleton()}
+                        ></div>):mediaquery == "tablet" ? (<div className="w-10 h-48 absolute top-60 right-44"
+                            onClick={()=>{indexNumber == 'Biology' ? showSkeleton(prev => !prev):null}}
+                            ></div>):null}
+
+                        {skeleton && indexNumber == "Biology" && viewSkeleton()}
+                        {soilState && !isOutside && indexNumber == "Biology" && showSoil()}
+                        
                         {mediaquery != 'desktop' ? (
                            isVisible ? <HoverBar 
                             items={[faSignOutAlt,faTachometerAlt,faBook,faGear]}
@@ -463,9 +534,9 @@ const Lab: React.FC = () => {
                         ):null}
                         { display && mediaquery != 'desktop' && labSettings()}
 
-                        {isOutside && (<Tippy content={sandMenu} interactive={true} placement="right">
-                        <img src="/misc/competition/practical/bag.png" alt="sand"
-                         className="absolute bottom-2 left-10 h-60 brightness-75 cursor-grab" title="Fetch some sand?">
+                        {isOutside && !display && (<Tippy content={sandMenu} interactive={true} placement="right">
+                         <img src="/misc/competition/practical/bag.png" alt="sand"
+                         className="absolute bottom-2 left-10 h-60 brightness-75 cursor-grab">
                         </img>
                         </Tippy>
                         )}
@@ -476,7 +547,11 @@ const Lab: React.FC = () => {
                         {/* Physics */}
 
                         {/* biology */}
-
+                        {dishLocation == 'Biology' && mediaquery == 'desktop' ? lookInMicroscope(): 
+                            dishLocation == 'Biology' && mediaquery == 'tablet' ? lookInMicroscope()
+                            : null
+                        }
+                        
                         {/* Mathematics */}
                 </div>
                 {/* Items */}

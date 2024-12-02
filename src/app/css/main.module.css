@@ -12,7 +12,7 @@
 }
 @media screen and (width:1024px) and (height:600px){
     .mainLab{
-        @apply w-full h-screen p-0 m-0
+        @apply w-screen h-screen p-0 m-0
     }
 }
 
@@ -20,7 +20,7 @@
     .container{
         width: 100vw;
         height: 100vh;
-    
+        overflow: hidden;
     }
     .header{
         width: calc(100%);
@@ -121,7 +121,7 @@
     }
     
     .mainLab{
-        @apply w-full h-screen p-0 m-0
+        @apply w-screen h-screen p-0 m-0 overflow-hidden
     }
     
     .note{
@@ -154,9 +154,9 @@
 
 @media (min-width:1024px){
     .container{
-        width: 100 vw;
+        width: 100%;
         height: 100vh;
-    
+        
     }
     .header{
         width: calc(100% - 21.5%);
