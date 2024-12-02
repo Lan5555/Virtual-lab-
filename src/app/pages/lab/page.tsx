@@ -422,6 +422,66 @@ const Lab: React.FC = () => {
        );
       }
 
+      //chemistry
+      const [beakerState,setBeakerState] = useState('empty-beaker.png');
+      const [track,setTrack] = useState(false);
+      anime({
+        targets:'.box2',
+        translateY:'-100',
+        easing:'easeOutElastic(1,0.3)',
+        duration:1000
+        });
+      const showBeacker = () => {
+        return(
+            <img src={`/misc/competition/practical/${beakerState}`} alt="beaker"
+             className={beakerState == "empty-beaker.png" ? "absolute bottom-64 right-96 h-28 w-32 brightness-50 cursor-pointer" :
+                 "absolute bottom-68 right-98 h-28 w-24 brightness-50 cursor-pointer"} title={beakerState == "empty-beaker.png"? 'Mixture of sugar and caustic soda solution':'Result'}></img>
+        )
+      }
+      const [mixtureState,setMixtureState] = useState(true);
+      const [showMix,setShowMix] = useState(false);
+      const Potassium = (
+        <div className="flex flex-col">
+            <ul className="list-none relative -left-5">
+                <li onClick={()=>{
+                    setTrack(true)
+                    setShowMix(true);
+                    setMixtureState(true);
+                }}>Pour into beaker</li>
+            </ul>
+        </div>
+      )
+      const showMixture = () => {
+        setTimeout(() => {
+            setMixtureState(false);
+            setShowMix(false);
+            setBeakerState('full-beaker.png')
+        },7000);
+        const menu = (
+            <div className="flex flex-col">
+                <ul className="list-none relative -left-5">
+                    <li onClick={()=>{
+                        setBeakerState('full-beaker.png')
+                        setMixtureState(false);
+                    }}>Close</li>
+                </ul>
+            </div>
+        )
+        return(
+            mixtureState && <Tippy content={menu} interactive={true} placement="top">
+            <Pop element={<img src="/misc/competition/practical/mixture.gif" alt="" className="box2 z-20"></img>}></Pop>
+            </Tippy>
+        )
+      }
+      const menu2 = (
+        <div className="flex flex-col">
+            <ul className="list-none relative -left-5">
+                <li onClick={()=>{
+                    setBeakerState('empty-beaker.png')
+                }}>Dispose</li>
+            </ul>
+        </div>
+    )
     return (
         <PageLayout>
             {mediaquery!='mobile' ? (<div className={ mediaquery == 'desktop' ? styles.container : mediaquery == 
@@ -544,6 +604,22 @@ const Lab: React.FC = () => {
 
                         {/* Chemistry */}
 
+                        {indexNumber == "Chemistry" && (<Tippy content={menu2} placement="left" interactive={true}> 
+                        <img src="/misc/competition/practical/stirrer.png" alt="stir"
+                         className="absolute bottom-44 right-96 h-32 w-32 brightness-75 cursor-pointer" title="Magnetic stirrer"></img></Tippy>)}
+
+                         {indexNumber == "Chemistry" && showBeacker()}
+                         {indexNumber == "Chemistry" && mediaquery == "desktop" ? (<Tippy content={Potassium} interactive={true} placement="top">
+                         <img src="/misc/competition/practical/manganate.png" alt="manganate"
+                         className="absolute bottom-48 left-80 h-24 w-24 brightness-50 cursor-pointer"
+                         title="Potassium manganate"></img>
+                         </Tippy>):indexNumber == "Chemistry" && mediaquery == "tablet" ?
+                         (<Tippy content={Potassium} interactive={true} placement="top">
+                            <img src="/misc/competition/practical/manganate.png" alt="manganate"
+                            className="absolute bottom-48 right-48 h-24 w-24 brightness-50 cursor-pointer"
+                            title="Potassium manganate"></img>
+                            </Tippy>):null}
+                         {indexNumber == "Chemistry" && showMix && showMixture()}
                         {/* Physics */}
 
                         {/* biology */}

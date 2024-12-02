@@ -53,7 +53,8 @@ const config:Config = {
       animation:{
         slidex:'slidex 0.3s ease-out',
         fadeIn:'fadeIn 0.8s ease-in-out',
-      }
+      },
+      
     
     },
   },
