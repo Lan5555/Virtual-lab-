@@ -40,6 +40,8 @@ import { Tippy as Tip } from "tippy.js";
 import 'tippy.js/dist/tippy.css';
 import Tippy from "@tippyjs/react";
 import Tile from "@/app/components/border-div";
+import Avatar from "@/app/components/attendee";
+import Model2 from "@/app/components/attendee";
   
   // Register required Chart.js components
   ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend);
@@ -431,6 +433,8 @@ const Lab: React.FC = () => {
         easing:'easeOutElastic(1,0.3)',
         duration:1000
         });
+        
+      const showBeacker = () => {
         anime({
             targets:'.box3',
             translateY:[-100,0],
@@ -438,7 +442,6 @@ const Lab: React.FC = () => {
             duration:1000
             
         });
-      const showBeacker = () => {
         return(
             <img src={`/misc/competition/practical/${beakerState}`} alt="beaker"
              className={beakerState == "empty-beaker.png" ? "absolute bottom-64 right-96 h-28 w-32 brightness-50 cursor-pointer" :
@@ -489,6 +492,8 @@ const Lab: React.FC = () => {
             </ul>
         </div>
     )
+    const [isMoving,setMoving] = useState('/misc/competition/ley/animations/idle/attendee_idle.glb');
+    
     return (
         <PageLayout>
             {mediaquery!='mobile' ? (<div className={ mediaquery == 'desktop' ? styles.container : mediaquery == 
@@ -543,6 +548,12 @@ const Lab: React.FC = () => {
                                 rotation={[1, 1, 1]}
                                 onClick={()=> checkNote()}
                             />)}
+                           
+                            {!isOutside && indexNumber == "Chemistry" && <Model2 url={'/misc/competition/ley/animations/idle/attendee_idle.glb'}
+                             scale={0.03}
+                             rotation={[0,0.85,0]}
+                             position={[-2,0.5,0]}
+                             ></Model2>}
                             <OrbitControls enableRotate={false} enableZoom={false} />
                             <ambientLight intensity={0.5} />
                             <directionalLight position={[5, 5, 5]} intensity={1} />
@@ -553,11 +564,13 @@ const Lab: React.FC = () => {
                     {/* items */}
                     <div className="relative h-36 w-72 -top-3/4 left-20" onClick={()=>{
                         setShown(prev => !prev);
+                       
                         }}></div>
                     {mediaquery == 'desktop' ? (
                         dishLocation == 'Biology' ? (<Tippy content={microscope} interactive={true} placement="left">
                         <div className="w-40 h-48 absolute top-60 right-16 cursor-pointer" onClick={()=>{
                             indexNumber == 'Biology' ? alert('microscope') : null
+
                             }}> 
                         </div>
                         </Tippy>) : (<div className="w-40 h-48 absolute top-60 right-16 cursor-pointer" onClick={()=>{
