@@ -374,7 +374,7 @@ const Lab: React.FC = () => {
             lab1 && <Tippy content={activeDish ? dishMenu : null} interactive={true} placement="top">
             <img src={`/misc/competition/practical/${dish}`}
              alt=""
-             className="h-20 w-20 absolute bottom-8 left-64 brightness-50 animate-pulse" onMouseEnter={()=>enableDish(true)}>
+             className="h-20 w-20 absolute bottom-8 left-64 brightness-50 animate-pulse box2" onMouseEnter={()=>enableDish(true)}>
              </img> 
              </Tippy>
         );
@@ -431,11 +431,18 @@ const Lab: React.FC = () => {
         easing:'easeOutElastic(1,0.3)',
         duration:1000
         });
+        anime({
+            targets:'.box3',
+            translateY:[-100,0],
+            easing:'easeOutElastic(1,0.3)',
+            duration:1000
+            
+        });
       const showBeacker = () => {
         return(
             <img src={`/misc/competition/practical/${beakerState}`} alt="beaker"
              className={beakerState == "empty-beaker.png" ? "absolute bottom-64 right-96 h-28 w-32 brightness-50 cursor-pointer" :
-                 "absolute bottom-68 right-98 h-28 w-24 brightness-50 cursor-pointer"} title={beakerState == "empty-beaker.png"? 'Mixture of sugar and caustic soda solution':'Result'}></img>
+                 "absolute bottom-68 right-98 h-28 w-24 brightness-50 cursor-pointer box3"} title={beakerState == "empty-beaker.png"? 'Mixture of sugar and caustic soda solution':'Result'}></img>
         )
       }
       const [mixtureState,setMixtureState] = useState(true);
@@ -570,11 +577,11 @@ const Lab: React.FC = () => {
                             goOutside(prev => !prev)
                         } title= {isOutside ? "Go back" : "Go outside"}></HoverBar>
 
-                        {mediaquery== "desktop" ? (<div className="w-20 h-48 absolute top-48 right-60"
+                        {mediaquery== "desktop" ? (<div className="w-20 h-48 absolute top-48 right-60 cursor-pointer"
                         onClick={()=>{indexNumber == 'Biology' ? showSkeleton(prev => !prev):null}}
-                        ></div>):mediaquery == "tablet" ? (<div className="w-10 h-48 absolute top-60 right-44"
+                        title="Skeleton"></div>):mediaquery == "tablet" ? (<div className="w-10 h-48 absolute top-60 right-44 cursor-pointer"
                             onClick={()=>{indexNumber == 'Biology' ? showSkeleton(prev => !prev):null}}
-                            ></div>):null}
+                            title="Skeletop"></div>):null}
 
                         {skeleton && indexNumber == "Biology" && viewSkeleton()}
                         {soilState && !isOutside && indexNumber == "Biology" && showSoil()}
@@ -604,16 +611,16 @@ const Lab: React.FC = () => {
 
                         {/* Chemistry */}
 
-                        {indexNumber == "Chemistry" && (<Tippy content={menu2} placement="left" interactive={true}> 
+                        {indexNumber == "Chemistry" && !isOutside && (<Tippy content={menu2} placement="left" interactive={true}> 
                         <img src="/misc/competition/practical/stirrer.png" alt="stir"
                          className="absolute bottom-44 right-96 h-32 w-32 brightness-75 cursor-pointer" title="Magnetic stirrer"></img></Tippy>)}
 
-                         {indexNumber == "Chemistry" && showBeacker()}
-                         {indexNumber == "Chemistry" && mediaquery == "desktop" ? (<Tippy content={Potassium} interactive={true} placement="top">
+                         {indexNumber == "Chemistry" && !isOutside && showBeacker()}
+                         {indexNumber == "Chemistry" && mediaquery == "desktop" && !isOutside ? (<Tippy content={Potassium} interactive={true} placement="top">
                          <img src="/misc/competition/practical/manganate.png" alt="manganate"
                          className="absolute bottom-48 left-80 h-24 w-24 brightness-50 cursor-pointer"
                          title="Potassium manganate"></img>
-                         </Tippy>):indexNumber == "Chemistry" && mediaquery == "tablet" ?
+                         </Tippy>):indexNumber == "Chemistry" && mediaquery == "tablet" && !isOutside ?
                          (<Tippy content={Potassium} interactive={true} placement="top">
                             <img src="/misc/competition/practical/manganate.png" alt="manganate"
                             className="absolute bottom-48 right-48 h-24 w-24 brightness-50 cursor-pointer"

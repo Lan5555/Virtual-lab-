@@ -61,3 +61,24 @@
 .bottom-68{
   bottom: 17rem ;
 }
+.r-b-g{
+  border-right: 3px solid green;
+}
+.r-b-r{
+  border-right: 3px solid red;
+}
+.r-b-b{
+  border-right: 3px solid black;
+}
+.l-b-g{
+  border-left: 3px solid green;
+}
+.l-b-r{
+  border-left: 3px solid red;
+}
+.l-b-b{
+  border-left: 3px solid black;
+}
+.half-vh{
+  height:50vh;
+}
