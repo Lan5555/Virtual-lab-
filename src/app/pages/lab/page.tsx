@@ -581,11 +581,11 @@ const Lab: React.FC = () => {
                                 onClick={()=> checkNote()}
                             />)}
                            
-                            {!isOutside && indexNumber == "Chemistry" && <Model2 url={'/misc/competition/ley/animations/idle/attendee_idle.glb'}
+                            {!isOutside && indexNumber === "Chemistry"  ? (<Model2 url={'/misc/competition/ley/animations/idle/attendee_idle.glb'}
                              scale={0.03}
                              rotation={[0,0.85,0]}
                              position={[-2,0.5,0]}
-                             ></Model2>}
+                             ></Model2>):null}
                             <OrbitControls enableRotate={false} enableZoom={false} />
                             <ambientLight intensity={0.5} />
                             <directionalLight position={[5, 5, 5]} intensity={1} />

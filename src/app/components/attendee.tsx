@@ -43,7 +43,7 @@ const Model2: React.FC<ModelProps> = ({ url, scale = 0.1, position = [0, 0, 0], 
       update: () => {
         // Ensure that the model updates during the animation
         if (modelRef.current) {
-          modelRef.current.position.x = modelRef.current.position.x;
+          modelRef.current.position.x = modelRef.current.position.x 
         }
       },
     })
