@@ -42,10 +42,11 @@ import Tippy from "@tippyjs/react";
 import Tile from "@/app/components/border-div";
 import Avatar from "@/app/components/attendee";
 import Model2 from "@/app/components/attendee";
-  
+import { VRButton } from "three/examples/jsm/Addons.js";
   // Register required Chart.js components
   ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend);
-
+import *as THREE from "three";
+import { XRButton } from "three/examples/jsm/Addons.js";
 
 const Lab: React.FC = () => {
     const [state, setState] = useState('chemInit.jpg');
@@ -493,7 +494,11 @@ const Lab: React.FC = () => {
         </div>
     )
     const [isMoving,setMoving] = useState('/misc/competition/ley/animations/idle/attendee_idle.glb');
-    
+    useEffect(()=>{
+        const renderer = new THREE.WebGLRenderer();
+        renderer.xr.enabled = true;
+        document.body.appendChild(VRButton.createButton(renderer));
+    },[]);
     return (
         <PageLayout>
             {mediaquery!='mobile' ? (<div className={ mediaquery == 'desktop' ? styles.container : mediaquery == 
@@ -536,8 +541,11 @@ const Lab: React.FC = () => {
                         <FontAwesomeIcon icon={faGear} style={{height:'35px',color:'lightblue',cursor:'pointer'}} title="Mini settings"></FontAwesomeIcon>
                     </div>
                 ):null} */}
+                
                 <div className={styles.mainLab}>
+                
                     <Canvas>
+                       
                         <Suspense fallback={null}>
                             {!isOutside ? (<Background1 imageUrl={`/misc/competition/images/${state}`} />) : 
                             (<VideoBackground path="/misc/competition/practical/forest-3463.mp4"></VideoBackground>)}
@@ -558,6 +566,7 @@ const Lab: React.FC = () => {
                             <ambientLight intensity={0.5} />
                             <directionalLight position={[5, 5, 5]} intensity={1} />
                         </Suspense>
+                        
                     </Canvas>
                     {info("How are you doing boss this is the virtual lab where practicals can be performed in real time please stay tuned")}
 
