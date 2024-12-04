@@ -8,18 +8,25 @@ import { relative } from "path";
 import { CSSProperties, useEffect, useState } from "react";
 import Toast from "@/app/components/toast";
 import FullLayout from "@/app/page-layouts/full-layout";
+import { useFirebase } from "@/app/hooks/firebase";
 
 
 const Login: React.FC = () => {
+    const { signIn, createUser, logActivity } = useFirebase(() => {});
+
     const [isClicked, setClicked] = useState(false);
     const [isClicked1, setClicked1] = useState(false);
-    const [value, setValue] = useState('');
-    const [value1, setValue1] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [viewport, setViewport] = useState('desktop');
     const [icon,setIcon] = useState<IconDefinition>(faEyeSlash);
     const [Invalid, setInvalid] = useState(false);
+    const [view, setView] = useState('login');
+
     const router = useRouter();
+
     const googleIcon:any = faGoogle;
+
     const updateMediaQuery = () => {
         if (window.matchMedia('(max-width: 600px)').matches) {
             setViewport('mobile');
@@ -70,14 +77,26 @@ const Login: React.FC = () => {
             }}>
             <div style={divStyle}>
                 <form 
-                onSubmit={(event:any)=>{
+                onSubmit={ async (event:any)=>{
                     event.preventDefault();
-                    if(value == 'lan' && value1 == '6984'){
+                    // if (value == 'lan' && value1 == '6984'){
                         
-                        router.push('/pages/dashboard');
-                    }else{
-                        setInvalid(true);
-                        setTimeout(() => setInvalid(false),3000);
+                    //     router.push('/pages/dashboard');
+                    // } else {
+                    //     setInvalid(true);
+                    //     setTimeout(() => setInvalid(false),3000);
+                    // }
+                    if (view === 'login') {
+                        const res = await signIn(email, password);
+                        if (res && res?.user) {
+                            router.push('/pages/dashboard');
+                            logActivity(`${new Date().toISOString()}: ${res?.user.displayName} logged in`);
+                        }
+                    } else {
+                        const res = await createUser(email, password);
+                        if (res && res?.user) {
+                            router.push('/pages/dashboard');
+                        }
                     }
                 }}
                 style={{display:'flex',
@@ -86,7 +105,7 @@ const Login: React.FC = () => {
                     <h2 style={{ textAlign: 'center',
                         fontSize:'30px'
                     }}>
-                        <Icon iconName='signIn' color="black" size1={undefined} onPressed={() => {}} /> Login
+                        <Icon iconName='signIn' color="black" size1={undefined} onPressed={() => {}} /> {view === 'login' ? 'Login' : 'Register'}
                     </h2>
                     <label 
                         htmlFor='email' 
@@ -97,7 +116,7 @@ const Login: React.FC = () => {
                             zIndex: 1,
                             transition: 'all 0.3s ease-in-out',
                             transform: isClicked ? 'translateY(-24px)' : '',
-                            display: value === '' ? 'block' : 'none',
+                            display: email === '' ? 'block' : 'none',
                         }}>
                         Email
                     </label>
@@ -106,7 +125,7 @@ const Login: React.FC = () => {
                         type="text" 
                         onFocus={() => setClicked(true)} 
                         onBlur={() => setClicked(false)} 
-                        onChange={(e) => setValue(e.target.value)} 
+                        onChange={(e) => setEmail(e.target.value)} 
                         style={{
                             width: '80%',
                             padding: '8px',
@@ -130,7 +149,7 @@ const Login: React.FC = () => {
                             zIndex: 1,
                             transition: 'all 0.3s ease-in-out',
                             transform: isClicked1 ? 'translateY(-26px)' : '',
-                            display: value1 === '' ? 'block' : 'none',
+                            display: password === '' ? 'block' : 'none',
                         }}>
                         Password
                     </label>
@@ -139,7 +158,7 @@ const Login: React.FC = () => {
                         type= {icon == faEyeSlash ? "password" : "text"}
                         onFocus={() => setClicked1(true)} 
                         onBlur={() => setClicked1(false)} 
-                        onChange={(e) => setValue1(e.target.value)} 
+                        onChange={(e) => setPassword(e.target.value)} 
                         style={{
                             width: '80%',
                             padding: '8px',
@@ -172,7 +191,7 @@ const Login: React.FC = () => {
                         fontWeight:'bold',
                         cursor:'pointer'
                         //left: viewport === 'mobile' ? '45px' : '55px',
-                    }}  >Log in</button>
+                    }}  >{view === 'login' ? 'Log in' : 'Create User'}</button>
 
                     <p style={{
                         fontSize: '10pt',
@@ -200,12 +219,12 @@ const Login: React.FC = () => {
                         
                     </p>
                     </div>
-                    <p style={{
+                    <div onClick={ () => setView(view === 'login' ? 'register' : 'login') }><p style={{
                         fontSize: '10pt',
                         position: 'relative',
                         top: '15px',
                         textAlign: 'center',
-                    }}>Don&apos;t have an account? <a href="#" style={{ fontSize: '10pt',color:'white' }}>Register</a></p>
+                    }}>{`${ view === 'login' ? "Don't" : "Already"} have an account?`}<a href="#" style={{ fontSize: '10pt',color:'white' }}>{`${view === 'login' ? 'Register' : 'Sign in'}`}</a></p></div>
                 </form>
             </div>
         {Invalid && (<Toast text={'Invalid Credentials'} type="warning" textClass="text-red-500"></Toast>)}
