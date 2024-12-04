@@ -52,7 +52,7 @@ import { createStore } from "@react-three/fiber/dist/declarations/src/core/store
 import { Controller } from "three/examples/jsm/libs/lil-gui.module.min.js";
 
 const Lab: React.FC = () => {
-    const [state, setState] = useState('chem-init.jpg');
+    const [state, setState] = useState('chem-1.jpg');
     const [indexNumber, setIndexNumber]  = useState('Chemistry');
     const [noteindex, setNoteIndex] = useState<boolean>(false);
     const router = useRouter();
@@ -68,7 +68,7 @@ const Lab: React.FC = () => {
     const [skeleton, showSkeleton] = useState(false);
 
     const changePractical = (subject: string, index: number) => {
-        const newImagePath = ['chem-init.jpg', 'physics.jpg', 'bio.jpg', 'chemInit.jpg'][index];
+        const newImagePath = ['chem-1.jpg', 'physics.jpg', 'bio-1.jpg', 'chemInit.jpg'][index];
         setState(newImagePath)
         setIndexNumber(subject);
         setSubject(subject);
@@ -390,10 +390,10 @@ const Lab: React.FC = () => {
         return(
         mediaquery == 'desktop' && !isOutside && indexNumber=='Biology'?  (<img src={`/misc/competition/practical/dish.png`}
         alt=""
-        className="h-10 w-16 absolute bottom-64 right-48 brightness-50 opacity-90" onMouseEnter={()=>enableDish(true)}>
+        className="h-10 w-16 absolute bottom-64 right-72 brightness-50 opacity-90 z-10" onMouseEnter={()=>enableDish(true)}>
         </img> ) : mediaquery == 'tablet' && !isOutside && indexNumber=='Biology' ? (<img src={`/misc/competition/practical/dish.png`}
         alt=""
-        className="h-10 w-16 absolute bottom-72 right-28 brightness-50 opacity-90" onMouseEnter={()=>enableDish(true)}>
+        className="h-10 w-16 absolute bottom-72 right-44 brightness-50 opacity-90 z-10" onMouseEnter={()=>enableDish(true)}>
         </img> ) : null
         );
       }
@@ -451,10 +451,10 @@ const Lab: React.FC = () => {
         
         return(
             <img src={`/misc/competition/practical/${beakerState}`} alt="beaker"
-             className={beakerState == "empty-beaker.png" && mediaquery == "desktop" ? "absolute bottom-64 right-96 h-28 w-32 brightness-50 cursor-pointer" :
-                mediaquery == "tablet" && beakerState == "empty-beaker.png" ? "absolute bottom-64 left-44 h-28 w-32 brightness-50 cursor-pointer"
-                : mediaquery == "desktop" && beakerState == "full-beaker.png" ? "absolute bottom-68 right-98 h-28 w-24 brightness-50 cursor-pointer box3":
-                mediaquery == "tablet" && beakerState == "full-beaker.png" ? "absolute bottom-68 left-44 h-28 w-24 brightness-50 cursor-pointer box3" : ''
+             className={beakerState == "empty-beaker.png" && mediaquery == "desktop" ? "absolute bottom-64 right-96 h-28 w-32 cursor-pointer" :
+                mediaquery == "tablet" && beakerState == "empty-beaker.png" ? "absolute bottom-52 right-72 h-20 w-20   cursor-pointer"
+                : mediaquery == "desktop" && beakerState == "full-beaker.png" ? "absolute bottom-68 right-98 h-28 w-24  cursor-pointer box3":
+                mediaquery == "tablet" && beakerState == "full-beaker.png" ? "absolute bottom-56 right-72 h-20 w-20  cursor-pointer box3" : ''
             }
                  title={beakerState == "empty-beaker.png"? 'Mixture of sugar and caustic soda solution':'Result'}></img>
         )
@@ -581,11 +581,15 @@ const Lab: React.FC = () => {
                                 onClick={()=> checkNote()}
                             />)}
                            
-                            {!isOutside && indexNumber === "Chemistry"  ? (<Model2 url={'/misc/competition/ley/animations/idle/attendee_idle.glb'}
+                            {!isOutside && indexNumber === "Chemistry" && mediaquery === 'desktop'  ? (<Model2 url={'/misc/competition/ley/animations/idle/attendee_idle.glb'}
                              scale={0.03}
                              rotation={[0,0.85,0]}
-                             position={[-2,0.5,0]}
-                             ></Model2>):null}
+                             position={[-1.65,-1.3,0]}
+                             ></Model2>):!isOutside && indexNumber === "Chemistry" && mediaquery === 'tablet' ? (<Model2 url={'/misc/competition/ley/animations/idle/attendee_idle.glb'}
+                                scale={0.03}
+                                rotation={[0,0.85,0]}
+                                position={[-1.1,-1.4,0]}
+                                ></Model2>):null }
                             <OrbitControls enableRotate={false} enableZoom={false} />
                             <ambientLight intensity={0.5} />
                             <directionalLight position={[5, 5, 5]} intensity={1} />
@@ -603,17 +607,17 @@ const Lab: React.FC = () => {
                         }}></div>
                     {mediaquery == 'desktop' ? (
                         dishLocation == 'Biology' ? (<Tippy content={microscope} interactive={true} placement="left">
-                        <div className="w-40 h-48 absolute top-60 right-16 cursor-pointer" onClick={()=>{
+                        <div className="w-40 h-48 absolute top-60 right-44 cursor-pointer" onClick={()=>{
                             indexNumber == 'Biology' ? alert('microscope') : null
 
                             }}> 
                         </div>
-                        </Tippy>) : (<div className="w-40 h-48 absolute top-60 right-16 cursor-pointer" onClick={()=>{
+                        </Tippy>) : (<div className="w-40 h-48 absolute top-60 right-44 cursor-pointer" onClick={()=>{
                             indexNumber == 'Biology' ? alert('microscope') : null
                             }}> </div>)
                     ):mediaquery == 'tablet' ? (
                         dishLocation == 'Biology' && indexNumber == "Biology" ? (<Tippy content={microscope} interactive={true} placement="top">
-                        <div className="w-28 h-48 absolute top-72 right-10 cursor-pointer" onClick={()=>{
+                        <div className="w-28 h-48 absolute top-72 right-28 cursor-pointer" onClick={()=>{
                         indexNumber == 'Biology' ? alert('microscope') : null
                         }}> </div>
                         </Tippy>):null
@@ -625,11 +629,11 @@ const Lab: React.FC = () => {
                             goOutside(prev => !prev)
                         } title= {isOutside ? "Go back" : "Go outside"}></HoverBar>
 
-                        {mediaquery== "desktop" ? (<div className="w-20 h-48 absolute top-48 right-60 cursor-pointer"
+                        {mediaquery== "desktop" ? (<div className="w-24 h-72 absolute top-28 left-64 cursor-pointer"
                         onClick={()=>{indexNumber == 'Biology' ? showSkeleton(prev => !prev):null}}
-                        title="Skeleton"></div>):mediaquery == "tablet" ? (<div className="w-10 h-48 absolute top-60 right-44 cursor-pointer"
+                        title="Skeleton"></div>):mediaquery == "tablet" ? (<div className="w-20 h-72 absolute top-40 left-44 cursor-pointer"
                             onClick={()=>{indexNumber == 'Biology' ? showSkeleton(prev => !prev):null}}
-                            title="Skeletop"></div>):null}
+                            title="Skeleton"></div>):null}
 
                         {skeleton && indexNumber == "Biology" && viewSkeleton()}
                         {soilState && !isOutside && indexNumber == "Biology" && showSoil()}
@@ -664,19 +668,19 @@ const Lab: React.FC = () => {
                          className="absolute bottom-44 right-96 h-32 w-32 brightness-75 cursor-pointer" title="Magnetic stirrer"></img></Tippy>)
                         :indexNumber == "Chemistry" && !isOutside && mediaquery == "tablet" ? (<Tippy content={menu2} placement="left" interactive={true}> 
                             <img src="/misc/competition/practical/stirrer.png" alt="stir"
-                             className="absolute bottom-44 left-44 h-32 w-32 brightness-75 cursor-pointer" title="Magnetic stirrer"></img></Tippy>)
+                             className="absolute bottom-40 right-72 h-20 w-20 brightness-75 cursor-pointer" title="Magnetic stirrer"></img></Tippy>)
                              : null
                         }
 
                          {indexNumber == "Chemistry" && !isOutside && showBeacker()}
                          {indexNumber == "Chemistry" && mediaquery == "desktop" && !isOutside ? (<Tippy content={Potassium} interactive={true} placement="top">
                          <img src="/misc/competition/practical/manganate.png" alt="manganate"
-                         className="absolute bottom-48 left-80 h-24 w-24 brightness-50 cursor-pointer"
+                         className="absolute bottom-40 left-80 h-24 w-24 brightness-50 cursor-pointer"
                          title="Potassium manganate"></img>
                          </Tippy>):indexNumber == "Chemistry" && mediaquery == "tablet" && !isOutside ?
                          (<Tippy content={Potassium} interactive={true} placement="top">
                             <img src="/misc/competition/practical/manganate.png" alt="manganate"
-                            className="absolute bottom-48 right-48 h-24 w-24 brightness-50 cursor-pointer"
+                            className="absolute bottom-48 right-32 h-24 w-24 brightness-50 cursor-pointer"
                             title="Potassium manganate"></img>
                             </Tippy>):null}
                          {indexNumber == "Chemistry" && showMix && showMixture()}
