@@ -51,7 +51,7 @@ const Login: React.FC = () => {
         height: viewport === 'mobile' ? '70vh' : viewport === 'tablet' ? '65vh' : '63.5vh',
         width: viewport === 'mobile' ? '80%' : viewport === 'tablet' ? '65%' : '40%',
         padding: '10px',
-        border:'1px solid rgba(0,0,0,0.1)',
+        border:'1px solid rgba(255, 255, 255, 0.3)',
        backdropFilter:'blur(30px)'
         
     };
@@ -205,7 +205,7 @@ const Login: React.FC = () => {
                         position: 'relative',
                         top: '15px',
                         textAlign: 'center',
-                    }}>Don&apos;t have an account? <a href="#" style={{ fontSize: '10pt',color:'white' }}>Register</a></p>
+                    }}>Don&apos;t have an account? <a href="/pages/create-account" style={{ fontSize: '10pt',color:'white' }}>Register</a></p>
                 </form>
             </div>
         {Invalid && (<Toast text={'Invalid Credentials'} type="warning" textClass="text-red-500"></Toast>)}
