@@ -28,17 +28,17 @@ const Subscription: React.FC = () => {
     const plans = [{
         header: "Basic Plan",
         price: 5000,
-        features: ['Test 1', 'Test 2', 'Test 3'],
+        features: ['Early access', '30 days plan', 'limited access to lab features'],
         limit: "month",
     }, {
         header: "Premium Plan",
         price: 10000,
-        features: ['Test 1', 'Test 2', 'Test 3'],
+        features: ['Enjoy perks', '30 days plan', 'Manual creation of lab space'],
         limit: "month",
     }, {
         header: "Exclusive Plan",
         price: 50000,
-        features: ['Test 1', 'Test 2', 'Test 3'],
+        features: ['Exciting features available', '30 days plan', 'Full access to lab features'],
         limit: "month",
     }];
 
@@ -46,12 +46,12 @@ const Subscription: React.FC = () => {
         <PageLayout>
             <div className="">
                 <Wrap 
-                    content={<h3 className=" text-white text-sm font-bold">Subscription</h3>} color={"green"} classname="ml-2 mb-2">
+                    content={<h3 className=" text-white text-sm font-bold">Subscription</h3>} color={"black"} classname="ml-2 mb-2">
                 </Wrap>
             </div>
 
             { mediaquery == "desktop" || mediaquery == "tablet" ? (<div className="flex justify-center items-center gap-16  shadow-2xl p-28 rounded-3xl" style={{
-                background:'linear-gradient(to right, white,green)'
+                background:'linear-gradient(to right, white,blueviolet)'
             }}>
                 <h3 className={
                     mediaquery == "desktop" ? "absolute top-32 left-80 ml-5"
@@ -63,7 +63,7 @@ const Subscription: React.FC = () => {
                 }>Term&apos;s and conditions applies</small>
                 <div className="absolute right-20 top-32 flex gap-4">
                 <button className="w-auto h-auto p-2 rounded-md bg-white border-none border-green-500 shadow-2xl cursor-pointer hover:bg-slate-600">Add ons</button>
-                <button className="w-auto h-auto p-2 rounded-md bg-green-400 border-none shadow cursor-pointer hover:bg-slate-600">Query transaction</button>
+                <button className="w-auto h-auto p-2 rounded-md bg-black text-white border-none shadow cursor-pointer hover:bg-slate-600">Query transaction</button>
                 </div>
                 { plans.map((it, index) => (
                     <div key={index} className="w-1/3">
@@ -87,7 +87,7 @@ const Subscription: React.FC = () => {
                 <div className="">
                     <h3>5000/<small>month</small></h3>
                 </div>
-                <button className="p-2 rounded bg-green-500 border-none">Purchace</button>
+                <button className="p-2 rounded bg-black border-none">Purchace</button>
                 </div>
                 
                 <div className="w-96 h-32 shadow-2xl rounded flex gap-4 justify-evenly items-center p-1 ml-1 l-b-r r-b-r hover:shadow">

@@ -16,22 +16,37 @@ interface HeaderProps {
 }
 
 const LayoutHead:React.FC<HeaderProps> = ({ search, dropdown, showBars, name, toggleSideOpen, setView, setSearch, setName }) => {
-
+    const [mediaquery, setMediaQuery] = useState('desktop');
+    const updateMediaQuery = () => {
+        if (window.matchMedia('(max-width: 600px)').matches) {
+          setMediaQuery('mobile');
+        } else if (window.matchMedia('(min-width: 548px) and (max-width:1140px)').matches) {
+          setMediaQuery('tablet');
+        } else {
+          setMediaQuery('desktop');
+        }
+      };
+    
+      useEffect(() => {
+        updateMediaQuery();
+        window.addEventListener('resize', updateMediaQuery);
+        return () => window.removeEventListener('resize', updateMediaQuery);
+      }, []);
     return (
         <div className={styles.header}>
-            { showBars ? (<FontAwesomeIcon icon={faBars} className='mr-1 my-4' style={{ height: '25px' }} title='Open' onClick={ () => toggleSideOpen(true) }></FontAwesomeIcon>) : (<span></span>) }
+            { showBars ? (<FontAwesomeIcon icon={faBars} className='mr-1 my-4 ml-3' style={{ height: '25px' }} title='Open' onClick={ () => toggleSideOpen(true) }></FontAwesomeIcon>) : (<span></span>) }
             <input type='search' placeholder='Search...' onInput={(e: any) => setSearch(e.target.value)}></input>
-            <div className={styles.Avatar1}>
+            {mediaquery != 'mobile' && <div className={styles.Avatar1}>
                 <Icon iconName={'bell'} size1={'14pt'} onPressed={() => { } } color={''}/>
-                <div className={styles.Avatar}>
+                {mediaquery != 'mobile' && <div className={styles.Avatar}>
                     <img src='/misc/oct.jpg' alt=''></img>
-                </div>
-                <p>Nicholas johnson</p>
+                </div>}
+                {mediaquery != 'mobile' && <p>Nicholas johnson</p>}
                 <Icon iconName={`${name}`} size1={'15px'} onPressed={() => {
                     setView(!dropdown);
                     setName(name == 'angleDown' ? 'close' : 'angleDown');
                 } } color={''}></Icon>
-            </div>
+            </div>}
         </div>
     )
 }

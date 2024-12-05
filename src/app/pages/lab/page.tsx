@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import styles from "@/app/css/main.module.css";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
@@ -34,7 +34,7 @@ import {
   } from 'chart.js';
 import VideoBackground from "@/app/components/load-video";
 import Sound from "@/app/components/play-audio";
-import anime from "animejs";
+import anime, { remove } from "animejs";
 import Pop from "@/app/components/pop-element";
 import { Tippy as Tip } from "tippy.js";
 import 'tippy.js/dist/tippy.css';
@@ -50,6 +50,7 @@ import { XRButton } from "three/examples/jsm/Addons.js";
 import { createXRStore, XR } from "@react-three/xr";
 import { createStore } from "@react-three/fiber/dist/declarations/src/core/store";
 import { Controller } from "three/examples/jsm/libs/lil-gui.module.min.js";
+import Notebook from "@/app/components/note-book";
 
 const Lab: React.FC = () => {
     const [state, setState] = useState('chem-1.jpg');
@@ -75,12 +76,23 @@ const Lab: React.FC = () => {
     };
 
     useEffect(() => {}, [state]);
-    
+    const noteData = (
+        <div className="flex flex-col">
+            <ul className="list-none relative -left-5">
+                <li>Take notes</li>
+            </ul>
+        </div>
+    )
     const noteSpace = () => {
         return (
-           !noteindex ? null : <div className={styles.note}>
+            
+           !noteindex ? null :
+           
+            <div className={styles.note}>
+            <Notebook text="Text goes here..." />
             <button className={styles.back} onClick={() => checkNote()}>Back</button>
             </div>
+            
         );
     }
     const checkNote = () => {
@@ -504,10 +516,15 @@ const Lab: React.FC = () => {
         </div>
     )
     const [isMoving,setMoving] = useState('/misc/competition/ley/animations/idle/attendee_idle.glb');
+    const ref = useRef<HTMLDivElement | null>(null);
     useEffect(()=>{
         const renderer = new THREE.WebGLRenderer({antialias:true});
         renderer.xr.enabled = true;
-        document.body.appendChild(VRButton.createButton(renderer));
+        const vrButton:any = VRButton.createButton(renderer);
+        //document.body.appendChild(vrButton);
+        if(ref.current){
+            ref.current.appendChild(vrButton);
+        }
     },[]);
     const store = createXRStore();
     
@@ -574,9 +591,10 @@ const Lab: React.FC = () => {
                             {!isOutside ? (<Background1 imageUrl={`/misc/competition/images/${state}`} />) : 
                             (<VideoBackground path="/misc/competition/practical/forest-3463.mp4"></VideoBackground>)}
                             {isOutside && (<Sound path="/misc/competition/practical/forest.mp3"/>)}
-                            {!isOutside && (<Model modelPath='/misc/competition/models/exercise_book/book.glb'
-                                position={[-5.5, -1, 0]}
-                                scale={[0.5, 0.5, 1]}
+                            {!isOutside && (
+                                <Model modelPath='/misc/competition/models/exercise_book/book.glb'
+                                position={[-5.5, -2, 0]}
+                                scale={[0.3, 0.2, 0.7]}
                                 rotation={[1, 1, 1]}
                                 onClick={()=> checkNote()}
                             />)}
@@ -712,6 +730,10 @@ const Lab: React.FC = () => {
                         <h2 className="text-center text-red-600 text-lg">Please rotate your device</h2>
                     </div>
             </div>}
+            <div className={mediaquery == 'tablet' ? "fixed right-20 h-auto w-auto":
+                mediaquery == 'desktop' ? "fixed bottom-10 left-44 h-auto w-auto": ''}
+                ref={ref}>
+            </div>
         </PageLayout>
     );
 };
