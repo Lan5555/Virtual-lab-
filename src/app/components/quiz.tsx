@@ -5,6 +5,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import AnimatedText from "./movingtext";
 import { useRouter } from "next/navigation";
 import { useTimer } from "react-timer-hook";
+import { useScore } from "./points";
 
 interface Option {
   text: string;
@@ -23,7 +24,8 @@ const Quzzies: React.FC<{ questions: Question[] }> = ({ questions }) => {
   const [state, setState] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string>('');
-  const [score, setScore] = useState(0);
+  const [score,setScore1] = useState(0);
+  const {setScore} = useScore();
   const [waiting, isFinished] = useState(false);
   const router = useRouter();
   const updateMediaQuery = () => {
@@ -38,6 +40,7 @@ const Quzzies: React.FC<{ questions: Question[] }> = ({ questions }) => {
 
   useEffect(() => {
     updateMediaQuery();
+    setScore(score);
     window.addEventListener('resize', updateMediaQuery);
     return () => window.removeEventListener('resize', updateMediaQuery);
   }, []);
@@ -47,7 +50,7 @@ const Quzzies: React.FC<{ questions: Question[] }> = ({ questions }) => {
     const currentQuestion = questions[currentQuestionIndex];
     const correctOption = currentQuestion.options.find(option => option.correct);
     if (correctOption?.text === answer) {
-      setScore(prev => prev + 1);
+      setScore1(prev => prev + 1);
     }
   };
 
@@ -221,6 +224,7 @@ const Quzzies: React.FC<{ questions: Question[] }> = ({ questions }) => {
           </div>
         )}
         {waiting && showToast()}
+        
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComputer, faGear, faHome, faTachometer, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from "react";
+import Wrap from "@/app/components/wrapper";
 
 interface SidebarProps {
     sideIsOpen: boolean;
@@ -71,9 +72,9 @@ const LayoutSide:React.FC<SidebarProps> = ({ sideIsOpen, toggleShowBars }) => {
                 ): <><FontAwesomeIcon icon={faGear} className='text-center my-4 ml-2 text-gray-400  hover:text-black' style={{ height: '30px' }} title='Settings' onClick={() => { router.push('/pages/settings'); } }></FontAwesomeIcon><br /></>}
                 {mediaquery == 'desktop' ? (
                 <div className={styles.advert}>
-                    <img src='/misc/oct.jpg' alt=""></img>
-                    <h2>Octopath traveler</h2>
-                <p>Play now</p>
+                    <img src='/misc/competition/images/bio-1.jpg' alt=""></img>
+                    <Wrap content={<h2>Biology</h2>} color="black"></Wrap>
+                <p>Now Available</p>
                 </div>
                 ):<div></div>}
             </div>) : (<div className={styles.smallSidebar}>
