@@ -40,13 +40,19 @@ import { Tippy as Tip } from "tippy.js";
 import 'tippy.js/dist/tippy.css';
 import Tippy from "@tippyjs/react";
 import Tile from "@/app/components/border-div";
-  
+import Avatar from "@/app/components/attendee";
+import Model2 from "@/app/components/attendee";
+import { VRButton } from "three/examples/jsm/Addons.js";
   // Register required Chart.js components
   ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend);
-
+import *as THREE from "three";
+import { XRButton } from "three/examples/jsm/Addons.js";
+import { createXRStore, XR } from "@react-three/xr";
+import { createStore } from "@react-three/fiber/dist/declarations/src/core/store";
+import { Controller } from "three/examples/jsm/libs/lil-gui.module.min.js";
 
 const Lab: React.FC = () => {
-    const [state, setState] = useState('chemInit.jpg');
+    const [state, setState] = useState('chem-1.jpg');
     const [indexNumber, setIndexNumber]  = useState('Chemistry');
     const [noteindex, setNoteIndex] = useState<boolean>(false);
     const router = useRouter();
@@ -62,7 +68,7 @@ const Lab: React.FC = () => {
     const [skeleton, showSkeleton] = useState(false);
 
     const changePractical = (subject: string, index: number) => {
-        const newImagePath = ['chemInit.jpg', 'physics.jpg', 'biology.jpg', 'chemInit.jpg'][index];
+        const newImagePath = ['chem-1.jpg', 'physics.jpg', 'bio-1.jpg', 'chemInit.jpg'][index];
         setState(newImagePath)
         setIndexNumber(subject);
         setSubject(subject);
@@ -384,10 +390,10 @@ const Lab: React.FC = () => {
         return(
         mediaquery == 'desktop' && !isOutside && indexNumber=='Biology'?  (<img src={`/misc/competition/practical/dish.png`}
         alt=""
-        className="h-10 w-16 absolute bottom-64 right-48 brightness-50 opacity-90" onMouseEnter={()=>enableDish(true)}>
+        className="h-10 w-16 absolute bottom-64 right-72 brightness-50 opacity-90 z-10" onMouseEnter={()=>enableDish(true)}>
         </img> ) : mediaquery == 'tablet' && !isOutside && indexNumber=='Biology' ? (<img src={`/misc/competition/practical/dish.png`}
         alt=""
-        className="h-10 w-16 absolute bottom-72 right-28 brightness-50 opacity-90" onMouseEnter={()=>enableDish(true)}>
+        className="h-10 w-16 absolute bottom-72 right-44 brightness-50 opacity-90 z-10" onMouseEnter={()=>enableDish(true)}>
         </img> ) : null
         );
       }
@@ -425,24 +431,32 @@ const Lab: React.FC = () => {
       //chemistry
       const [beakerState,setBeakerState] = useState('empty-beaker.png');
       const [track,setTrack] = useState(false);
-      anime({
-        targets:'.box2',
-        translateY:'-100',
-        easing:'easeOutElastic(1,0.3)',
-        duration:1000
-        });
+      useEffect(()=>{
         anime({
-            targets:'.box3',
-            translateY:[-100,0],
+            targets:'.box2',
+            translateY:'-100',
             easing:'easeOutElastic(1,0.3)',
             duration:1000
-            
-        });
+            });
+
+            anime({
+                targets:'.box3',
+                translateY:[-100,0],
+                easing:'easeOutElastic(1,0.3)',
+                duration:1000
+                
+            });
+      })
       const showBeacker = () => {
+        
         return(
             <img src={`/misc/competition/practical/${beakerState}`} alt="beaker"
-             className={beakerState == "empty-beaker.png" ? "absolute bottom-64 right-96 h-28 w-32 brightness-50 cursor-pointer" :
-                 "absolute bottom-68 right-98 h-28 w-24 brightness-50 cursor-pointer box3"} title={beakerState == "empty-beaker.png"? 'Mixture of sugar and caustic soda solution':'Result'}></img>
+             className={beakerState == "empty-beaker.png" && mediaquery == "desktop" ? "absolute bottom-64 right-96 h-28 w-32 cursor-pointer" :
+                mediaquery == "tablet" && beakerState == "empty-beaker.png" ? "absolute bottom-52 right-72 h-20 w-20   cursor-pointer"
+                : mediaquery == "desktop" && beakerState == "full-beaker.png" ? "absolute bottom-68 right-98 h-28 w-24  cursor-pointer box3":
+                mediaquery == "tablet" && beakerState == "full-beaker.png" ? "absolute bottom-56 right-72 h-20 w-20  cursor-pointer box3" : ''
+            }
+                 title={beakerState == "empty-beaker.png"? 'Mixture of sugar and caustic soda solution':'Result'}></img>
         )
       }
       const [mixtureState,setMixtureState] = useState(true);
@@ -489,6 +503,15 @@ const Lab: React.FC = () => {
             </ul>
         </div>
     )
+    const [isMoving,setMoving] = useState('/misc/competition/ley/animations/idle/attendee_idle.glb');
+    useEffect(()=>{
+        const renderer = new THREE.WebGLRenderer({antialias:true});
+        renderer.xr.enabled = true;
+        document.body.appendChild(VRButton.createButton(renderer));
+    },[]);
+    const store = createXRStore();
+    
+    
     return (
         <PageLayout>
             {mediaquery!='mobile' ? (<div className={ mediaquery == 'desktop' ? styles.container : mediaquery == 
@@ -497,7 +520,10 @@ const Lab: React.FC = () => {
                 {mediaquery == 'desktop' ? (<div className={styles.header}>
                     <h1>Subjects:</h1>
                     {['Chemistry', 'Physics', 'Biology', 'Maths'].map((subject, index) => (
-                        <div  key={subject} className={styles.box1} onClick={() => changePractical(subject,index)}  style={{
+                        <div  key={subject} className={styles.box1} onClick={() => {changePractical(subject,index)
+                           
+                        }
+                        }  style={{
                             borderBottom: indexNumber === subject  ? '3px solid plum': 'none',
                             borderBottomLeftRadius:'2px',
                             borderBottomRightRadius:'2px',
@@ -508,10 +534,18 @@ const Lab: React.FC = () => {
                     {selectedItem && <p>{selectedItem}</p>}
                 </div>):null}
                 {mediaquery == 'desktop' ? (<div className={styles.sideBar}>
-                    <div className={styles.subject}></div>
+                    <div className={styles.subject}>
+
+                        {indexNumber == 'Chemistry' ? (<img className="w-full h-full object-cover rounded" alt="" src={`/misc/competition/practical/iodine.png`}></img>
+                        ):
+                        indexNumber == 'Biology' ? (<img className="w-full h-full object-cover rounded" alt="" src={`/misc/competition/practical/bio-logy.png`}></img>):
+                        indexNumber == 'Physics' ? (<img className="w-full h-full object-cover rounded" alt="" src={`/misc/competition/practical/iodine.png`}></img>):
+                        indexNumber == 'Math' ? (<img className="w-full h-full object-cover rounded" alt="" src={`/misc/competition/practical/bio-logy.png`}></img>):null}
+                        {indexNumber == "Chemistry" && <p className="p-1 bg-black animate-pulse text-white text-center absolute top-40 rounded">Chemistry</p>}
+                    </div>
                     <h4>Select practical</h4>
                     <select title="Available practicals">
-                    {indexNumber == 'Chemistry' ?  <option value="">Test for purity</option> : indexNumber 
+                    {indexNumber == 'Chemistry' ?  <option value="">Mixture between two chemicals</option> : indexNumber 
                     == 'Physics' ? <option>Moment</option> : indexNumber
                     == 'Biology' ? <option>Inspection</option> : indexNumber == 
                     'Maths' ? <option>Cummulative frequency</option> : null
@@ -531,8 +565,11 @@ const Lab: React.FC = () => {
                         <FontAwesomeIcon icon={faGear} style={{height:'35px',color:'lightblue',cursor:'pointer'}} title="Mini settings"></FontAwesomeIcon>
                     </div>
                 ):null} */}
+                
                 <div className={styles.mainLab}>
+                    <button onClick={()=> store.enterVR()} className="p-2 bg-black animate-pulse rounded shadow text-white cursor-pointer absolute top-5 z-30 border-none">Enter VR</button>
                     <Canvas>
+                       <XR store={store}>
                         <Suspense fallback={null}>
                             {!isOutside ? (<Background1 imageUrl={`/misc/competition/images/${state}`} />) : 
                             (<VideoBackground path="/misc/competition/practical/forest-3463.mp4"></VideoBackground>)}
@@ -543,29 +580,44 @@ const Lab: React.FC = () => {
                                 rotation={[1, 1, 1]}
                                 onClick={()=> checkNote()}
                             />)}
+                           
+                            {!isOutside && indexNumber === "Chemistry" && mediaquery === 'desktop'  ? (<Model2 url={'/misc/competition/ley/animations/idle/attendee_idle.glb'}
+                             scale={0.03}
+                             rotation={[0,0.85,0]}
+                             position={[-1.65,-1.3,0]}
+                             ></Model2>):!isOutside && indexNumber === "Chemistry" && mediaquery === 'tablet' ? (<Model2 url={'/misc/competition/ley/animations/idle/attendee_idle.glb'}
+                                scale={0.03}
+                                rotation={[0,0.85,0]}
+                                position={[-1.1,-1.4,0]}
+                                ></Model2>):null }
                             <OrbitControls enableRotate={false} enableZoom={false} />
                             <ambientLight intensity={0.5} />
                             <directionalLight position={[5, 5, 5]} intensity={1} />
                         </Suspense>
+                        
+                        </XR>
                     </Canvas>
+                    
                     {info("How are you doing boss this is the virtual lab where practicals can be performed in real time please stay tuned")}
 
                     {/* items */}
                     <div className="relative h-36 w-72 -top-3/4 left-20" onClick={()=>{
                         setShown(prev => !prev);
+                       
                         }}></div>
                     {mediaquery == 'desktop' ? (
                         dishLocation == 'Biology' ? (<Tippy content={microscope} interactive={true} placement="left">
-                        <div className="w-40 h-48 absolute top-60 right-16 cursor-pointer" onClick={()=>{
+                        <div className="w-40 h-48 absolute top-60 right-44 cursor-pointer" onClick={()=>{
                             indexNumber == 'Biology' ? alert('microscope') : null
+
                             }}> 
                         </div>
-                        </Tippy>) : (<div className="w-40 h-48 absolute top-60 right-16 cursor-pointer" onClick={()=>{
+                        </Tippy>) : (<div className="w-40 h-48 absolute top-60 right-44 cursor-pointer" onClick={()=>{
                             indexNumber == 'Biology' ? alert('microscope') : null
                             }}> </div>)
                     ):mediaquery == 'tablet' ? (
                         dishLocation == 'Biology' && indexNumber == "Biology" ? (<Tippy content={microscope} interactive={true} placement="top">
-                        <div className="w-28 h-48 absolute top-72 right-10 cursor-pointer" onClick={()=>{
+                        <div className="w-28 h-48 absolute top-72 right-28 cursor-pointer" onClick={()=>{
                         indexNumber == 'Biology' ? alert('microscope') : null
                         }}> </div>
                         </Tippy>):null
@@ -577,11 +629,11 @@ const Lab: React.FC = () => {
                             goOutside(prev => !prev)
                         } title= {isOutside ? "Go back" : "Go outside"}></HoverBar>
 
-                        {mediaquery== "desktop" ? (<div className="w-20 h-48 absolute top-48 right-60 cursor-pointer"
+                        {mediaquery== "desktop" ? (<div className="w-24 h-72 absolute top-28 left-64 cursor-pointer"
                         onClick={()=>{indexNumber == 'Biology' ? showSkeleton(prev => !prev):null}}
-                        title="Skeleton"></div>):mediaquery == "tablet" ? (<div className="w-10 h-48 absolute top-60 right-44 cursor-pointer"
+                        title="Skeleton"></div>):mediaquery == "tablet" ? (<div className="w-20 h-72 absolute top-40 left-44 cursor-pointer"
                             onClick={()=>{indexNumber == 'Biology' ? showSkeleton(prev => !prev):null}}
-                            title="Skeletop"></div>):null}
+                            title="Skeleton"></div>):null}
 
                         {skeleton && indexNumber == "Biology" && viewSkeleton()}
                         {soilState && !isOutside && indexNumber == "Biology" && showSoil()}
@@ -611,19 +663,24 @@ const Lab: React.FC = () => {
 
                         {/* Chemistry */}
 
-                        {indexNumber == "Chemistry" && !isOutside && (<Tippy content={menu2} placement="left" interactive={true}> 
+                        {indexNumber == "Chemistry" && !isOutside && mediaquery == "desktop" ? (<Tippy content={menu2} placement="left" interactive={true}> 
                         <img src="/misc/competition/practical/stirrer.png" alt="stir"
-                         className="absolute bottom-44 right-96 h-32 w-32 brightness-75 cursor-pointer" title="Magnetic stirrer"></img></Tippy>)}
+                         className="absolute bottom-44 right-96 h-32 w-32 brightness-75 cursor-pointer" title="Magnetic stirrer"></img></Tippy>)
+                        :indexNumber == "Chemistry" && !isOutside && mediaquery == "tablet" ? (<Tippy content={menu2} placement="left" interactive={true}> 
+                            <img src="/misc/competition/practical/stirrer.png" alt="stir"
+                             className="absolute bottom-40 right-72 h-20 w-20 brightness-75 cursor-pointer" title="Magnetic stirrer"></img></Tippy>)
+                             : null
+                        }
 
                          {indexNumber == "Chemistry" && !isOutside && showBeacker()}
                          {indexNumber == "Chemistry" && mediaquery == "desktop" && !isOutside ? (<Tippy content={Potassium} interactive={true} placement="top">
                          <img src="/misc/competition/practical/manganate.png" alt="manganate"
-                         className="absolute bottom-48 left-80 h-24 w-24 brightness-50 cursor-pointer"
+                         className="absolute bottom-40 left-80 h-24 w-24 brightness-50 cursor-pointer"
                          title="Potassium manganate"></img>
                          </Tippy>):indexNumber == "Chemistry" && mediaquery == "tablet" && !isOutside ?
                          (<Tippy content={Potassium} interactive={true} placement="top">
                             <img src="/misc/competition/practical/manganate.png" alt="manganate"
-                            className="absolute bottom-48 right-48 h-24 w-24 brightness-50 cursor-pointer"
+                            className="absolute bottom-48 right-32 h-24 w-24 brightness-50 cursor-pointer"
                             title="Potassium manganate"></img>
                             </Tippy>):null}
                          {indexNumber == "Chemistry" && showMix && showMixture()}

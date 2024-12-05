@@ -58,7 +58,7 @@ const Login: React.FC = () => {
         height: viewport === 'mobile' ? '70vh' : viewport === 'tablet' ? '65vh' : '63.5vh',
         width: viewport === 'mobile' ? '80%' : viewport === 'tablet' ? '65%' : '40%',
         padding: '10px',
-        border:'1px solid rgba(0,0,0,0.1)',
+        border:'1px solid rgba(255, 255, 255, 0.3)',
        backdropFilter:'blur(30px)'
         
     };
