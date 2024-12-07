@@ -27,7 +27,7 @@ const TablePane:React.FC<TableProps> = ({ fields, items, onSelect, render }) => 
                         items.map((obj, index) => (
                             <tr className="" key={`io${index}`} onClick={ () => onSelect(obj) } >
                                 { Object.keys(obj).map((k, i) => (
-                                    <td className="p-2 border-b border-blue-gray-50" style={tdStyles} key={`i${i}`}>{ render && fields[i].render === k && render(obj, k, fields[i].render) ? render(obj, k, fields[i].render) : obj[k] }</td>
+                                    <td className="p-2 border-b border-blue-gray-50" style={tdStyles} key={`i${i}`}>{ render && fields[i] && fields[i].render === k && render(obj, k, fields[i].render) ? render(obj, k, fields[i].render) : obj[k] }</td>
                                 ))}
                             </tr>
                         ))  
