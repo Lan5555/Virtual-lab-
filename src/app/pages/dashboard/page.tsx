@@ -21,6 +21,8 @@ import { faArrowCircleDown } from '@fortawesome/free-solid-svg-icons/faArrowCirc
 import { faAngleDown, faArrowDown, faChartArea, faKitMedical, faSwatchbook, faVirus } from '@fortawesome/free-solid-svg-icons';
 import Toast from '@/app/components/toast';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Spinner from '@/app/components/loader';
   
   // Register required Chart.js components
   ChartJS.register(LineElement,BarElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend);
@@ -28,6 +30,7 @@ import { useEffect, useState } from 'react';
 
 //Can you work on this
 const Dashboard:React.FC = () => {
+  const router = useRouter();
     const data = {
         labels: ['January', 'February', 'March', 'April', 'May', 'June','July','August','September','October','November','December'], // X-axis labels
         datasets: [
@@ -97,6 +100,7 @@ const Dashboard:React.FC = () => {
       const {score} = useScore();
       const [toast,setToast] = useState<boolean>(false);
       const [mediaquery, setMediaQuery] = useState('desktop');
+      const [loading,isLoading] = useState(false);
     const updateMediaQuery = () => {
         if (window.matchMedia('(max-width: 600px)').matches) {
           setMediaQuery('mobile');
@@ -165,7 +169,12 @@ const Dashboard:React.FC = () => {
                 <div className={styles.thirdContainer}>
                     <div className={styles.box1}>
                       {/* <img className='w-full h-full object-cover rounded brightness-75' alt='' src='/misc/competition/images/chem-1.jpg'></img> */}
-                      <button className='w-44 p-2 animate-pulse border-none rounded text-white' style={{backgroundColor:'black'}}>Continue practical</button>
+                      <button className='cursor-pointer w-44 p-2 animate-pulse border-none rounded text-white' style={{backgroundColor:'black'}} onClick={()=>{
+                        isLoading(true);
+                        setTimeout(()=>{
+                        router.push('/pages/lab');
+                        },500);
+                      }}>{loading ? (<Spinner></Spinner>) : "Continue practical"}</button>
                     </div>
                     <div className={styles.box2}>
                       <div className='w-full h-12 flex justify-between' style={{borderBottom:'1px solid rgba(0,0,0,0.1)'}}>

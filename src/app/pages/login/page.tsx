@@ -60,7 +60,7 @@ const Login: React.FC = () => {
             <div style={{
                 width:'100wh',
                 height:'100vh',
-                background:'linear-gradient(to right, blueviolet,lightblue,blueViolet)',
+                //background:'linear-gradient(to right, blueviolet,lightblue,blueViolet)',
                 backgroundImage:'url(/misc/competition/images/biology.jpg)',
                 backgroundRepeat:'no-repeat',
                 backgroundPosition:'center',
