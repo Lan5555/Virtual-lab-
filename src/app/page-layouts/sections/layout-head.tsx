@@ -9,13 +9,14 @@ interface HeaderProps {
     dropdown: boolean;
     showBars: boolean;
     name: string;
+    userName: string;
     setView:(val: boolean) => void;
     setName:(val: string) => void;
     setSearch:(val: string) => void;
     toggleSideOpen: (val: boolean) => void;
 }
 
-const LayoutHead:React.FC<HeaderProps> = ({ search, dropdown, showBars, name, toggleSideOpen, setView, setSearch, setName }) => {
+const LayoutHead:React.FC<HeaderProps> = ({ search, dropdown, showBars, name, userName, toggleSideOpen, setView, setSearch, setName }) => {
     const [mediaquery, setMediaQuery] = useState('desktop');
     const updateMediaQuery = () => {
         if (window.matchMedia('(max-width: 600px)').matches) {
@@ -35,13 +36,13 @@ const LayoutHead:React.FC<HeaderProps> = ({ search, dropdown, showBars, name, to
     return (
         <div className={styles.header}>
             { showBars ? (<FontAwesomeIcon icon={faBars} className='mr-1 my-4 ml-3' style={{ height: '25px' }} title='Open' onClick={ () => toggleSideOpen(true) }></FontAwesomeIcon>) : (<span></span>) }
-            <input type='search' placeholder='Search...' onInput={(e: any) => setSearch(e.target.value)}></input>
+            <input type='search' placeholder='Search...' defaultValue={search} onInput={(e: any) => setSearch(e.target.value)}></input>
             {mediaquery != 'mobile' && <div className={styles.Avatar1}>
                 <Icon iconName={'bell'} size1={'14pt'} onPressed={() => { } } color={''}/>
                 {mediaquery != 'mobile' && <div className={styles.Avatar}>
                     <img src='/misc/oct.jpg' alt=''></img>
                 </div>}
-                {mediaquery != 'mobile' && <p>Nicholas johnson</p>}
+                {mediaquery != 'mobile' && <p>{ userName }</p>}
                 <Icon iconName={`${name}`} size1={'15px'} onPressed={() => {
                     setView(!dropdown);
                     setName(name == 'angleDown' ? 'close' : 'angleDown');

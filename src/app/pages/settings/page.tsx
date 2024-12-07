@@ -4,11 +4,14 @@ import { AboutCard } from "@/app/components/about-card";
 import { Feedback } from "@/app/components/feedback";
 import { UsersCard } from "@/app/components/users-card";
 import Wrap from "@/app/components/wrapper";
+import { useFirebase } from "@/app/hooks/firebase";
 import PageLayout from "@/app/page-layouts/page-layout";
 import { title } from "process";
 import { useState } from "react";
 
 const Settings: React.FC = () => {
+    const { getFeedbacks, sendFeedback } = useFirebase();
+
     const userFields = [
         { label: "User ID", key: "id"},
         { label: "First name", key: "first_name"},
@@ -54,7 +57,18 @@ const Settings: React.FC = () => {
         }
     ];
     const [about, setAbout] = useState({ title: "", text: "" })
+    const [userFeedbac, setUserFeedback] = useState([])
+
     
+    const setData = async () => {
+        const [feedbackRes] = await Promise.all([
+            getFeedbacks(),
+        ])
+        if (feedbackRes.success) {
+            setUserFeedback(feedbackRes.data)
+        }
+    }
+    setData();
     return (
         <PageLayout>
             <div className="">
