@@ -7,7 +7,6 @@
     position: fixed;
     top: 0;
     left: 0;
-    overflow-y: auto;
     transition: transform 0.3s ease;
     box-shadow: 0 0.15rem 1.75rem 0 rgba(33 40 50 / 15%);
 }
@@ -109,14 +108,14 @@
     width: 70%;
     margin-left: 30px;
     border: none;
-    height: 190px;
-    background:linear-gradient(to right,black,rgba(0,0,0,0.1));
+    height: 230px;
+    background:grey;
     box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+    margin-top: 80px;
 }
 .advert img{
     width: 100%;
     height: 50%;
-    border-bottom-left-radius: 40px;
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
     /* border-radius: 10px; */
@@ -131,7 +130,7 @@
     font-size: 10pt;
     text-align: center;
     animation: swap1 5s infinite;
-    color: red;
+    color: white;
 }
 
 @keyframes swap1{
@@ -141,7 +140,19 @@
         opacity: 1;
     }
 }
-.barContainer{
+
+
+
+
+/* For screens 1024px and larger */
+@media (min-width: 1024px) {
+    .sidebar {
+      width: 18rem;
+    }
+    .content {
+      margin-left: 18rem;
+    }
+    .barContainer{
     display: flex;
     gap:50px;
     margin-left: 70px;
@@ -180,12 +191,12 @@
     position: relative;
     bottom: 3px;
 }
-
 .secContainer{
     display: flex;
     gap:50px;
     margin-left: 70px;
     margin-top: 20px;
+    
 }
 .item1{
     box-shadow: 0 0.15rem 1.75rem 0 rgba(10 20 10 / 10%);
@@ -212,33 +223,36 @@
 .box1{
     box-shadow: 0 0.15rem 1.75rem 0 rgba(10 20 10 / 10%);
     width: 500px;
-    height: 160px;
-    padding: 10px;
+    height: 180px;
     border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-image: url('/misc/competition/images/chem-1.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .box2{
     box-shadow: 0 0.15rem 1.75rem 0 rgba(10 20 10 / 10%);
     width: 230px;
-    height: 160px;
-    padding: 10px;
+    height: 180px;
     border-radius: 5px;
+    overflow: auto;
+}
+.box2::-webkit-scrollbar{
+    display: none;
 }
 .box3{
     box-shadow: 0 0.15rem 1.75rem 0 rgba(10 20 10 / 10%);
-    width: 230px;
+    width: 265px;
     height: 160px;
     padding: 10px;
     border-radius: 5px;
+    background: linear-gradient(to right,blueviolet,blueviolet,blue);
 }
 
-/* For screens 1024px and larger */
-@media (min-width: 1024px) {
-    .sidebar {
-      width: 18rem;
-    }
-    .content {
-      margin-left: 18rem;
-    }
 }
 
 /* For screens between 768px and 1024px */
@@ -247,30 +261,252 @@
       width: 15rem;
     }
     .content {
-      margin-left: 15rem;
+      margin-left: 10rem;
     }
+    .barContainer{
+    display: flex;
+    gap:50px;
+    margin-left: 70px;
+    margin-top: 20px;
+    justify-content: center;
+    align-items: center;
 }
 
+} 
+
 /* For screens between 543px and 767px */
-@media (min-width: 543px) and (max-width: 767px) {
+@media (min-width: 543px) and (max-width: 1024px) {
     .sidebar {
       width: 3.5rem;
     }
     .content {
-      margin-left: 3.5rem;
+      margin-left: 3rem;
+      overflow-x: hidden;
     }
+    .barContainer{
+    display: flex;
+    gap:10px;
+    margin-left: 70px;
+    margin-top: 20px;
+    position: relative;
+    left: -45px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.bars{
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(10 20 10 / 10%);
+    width: 160px;
+    height: 80px;
+    padding: 9px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 0;
+}
+.bars:nth-of-type(1){
+    border-left: 3px solid green;
+
+}
+.bars:nth-of-type(2){
+    border-left: 3px solid yellow;
+
+}
+.bars:nth-of-type(3){
+    border-left: 3px solid red;
+
+}
+.bars:nth-of-type(4){
+    border-left: 3px solid blue;
+
+}
+.bars p{
+    position: relative;
+    bottom: 3px;
+}
+.secContainer{
+    display: flex;
+    gap:20px;
+    margin-left: 70px;
+    margin-top: 20px;
+    position: relative;
+    left: -35px;
+}
+.item1{
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(10 20 10 / 10%);
+    width: 50%;
+    height: 250px;
+    padding: 10px;
+    border-radius: 5px;
+    
+}
+.item2{
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(10 20 10 / 10%);
+    width: 50%;
+    height: 250px;
+    padding: 10px;
+    border-radius: 5px;
+    
+}
+.thirdContainer{
+    display: flex;
+    gap:30px;
+    margin-left: 30px;
+    margin-top: 20px;
+}
+.box1{
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(10 20 10 / 10%);
+    width: 300px;
+    height: 200px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-image: url('/misc/competition/images/chem-1.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.box2{
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(10 20 10 / 10%);
+    width: 290px;
+    height: 200px;
+    border-radius: 5px;
+    overflow: auto;
+}
+.box2::-webkit-scrollbar{
+    display: none;
+}
+.box3{
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(10 20 10 / 10%);
+    width: 230px;
+    height: 180px;
+    padding: 10px;
+    border-radius: 5px;
+    background: linear-gradient(to right,blueviolet,blueviolet,blue);
+}
+
 }
 
 /* For screens smaller than 542px */
-@media screen and (max-width: 542px) {
+@media screen and (max-width:600px) {
     .sidebar {
         transform: translateX(-100%);
         position: absolute;
     }
     .content {
         margin-left: 0;
+        width:auto;
+        height:auto;
     }
     .sidebar.open {
         transform: translateX(0);
     }
+    .barContainer{
+    @apply grid grid-cols-2 mt-5 gap-2 place-items-center
+}
+.bars{
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(10 20 10 / 10%);
+    width: 150px;
+    height: 80px;
+    padding: 9px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 0;
+}
+.bars:nth-of-type(1){
+    border-left: 3px solid green;
+
+}
+.bars:nth-of-type(2){
+    border-left: 3px solid yellow;
+
+}
+.bars:nth-of-type(3){
+    border-left: 3px solid red;
+
+}
+.bars:nth-of-type(4){
+    border-left: 3px solid blue;
+
+}
+.bars p{
+    position: relative;
+    bottom: 3px;
+}
+.secContainer{
+    display: grid;
+    gap:30px;
+    margin-left: 70px;
+    margin-top: 20px;
+    
+}
+.item1{
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(10 20 10 / 10%);
+    width: 95%;
+    height: 250px;
+    padding: 10px;
+    border-radius: 5px;
+    position: relative;
+    left: -70px;
+}
+.item2{
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(10 20 10 / 10%);
+    width: 95%;
+    height: 250px;
+    padding: 10px;
+    border-radius: 5px;
+    position: relative;
+    left: -80px;
+}
+.thirdContainer{
+    display: grid;
+    gap:30px;
+    margin-top: 20px;
+    
+}
+.box1{
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(10 20 10 / 10%);
+    width: 100%;
+    height: 180px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-image: url('/misc/competition/images/chem-1.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    
+}
+.box2{
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(10 20 10 / 10%);
+    width: 100%;
+    height: 200px;
+    border-radius: 5px;
+    overflow: auto;
+    
+}
+.box2::-webkit-scrollbar{
+    display: none;
+}
+.box3{
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(10 20 10 / 10%);
+    width: 90%;
+    height: 160px;
+    padding: 10px;
+    border-radius: 5px;
+    background: linear-gradient(to right,blueviolet,blueviolet,blue);
+}
+
 }

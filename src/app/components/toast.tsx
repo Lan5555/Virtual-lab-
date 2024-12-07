@@ -13,7 +13,7 @@ interface props{
     type?:'warning' | 'info' | 'success';
 }
 
-const Toast:React.FC<props> = ({className="fixed top-10 right-2 w-72 h-24 p-2 shadow-2xl rounded bg-white  border-none flex justify-center items-center flex-col animate-slidex", text="Hello world"
+const Toast:React.FC<props> = ({className="fixed top-10 right-2 w-72 h-24 p-2 shadow-2xl rounded bg-white  border-none flex justify-center items-center flex-col animate-slidex z-30", text="Hello world"
     , textClass="text-elipsis", duration=300,
     type= 'info'
 }) => {

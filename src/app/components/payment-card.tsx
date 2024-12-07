@@ -38,6 +38,7 @@ const PaymentCard:React.FC<props> = ({header,price,limit,features, currencySymbo
             <div className={mediaquery == "desktop" || mediaquery == "tablet" ? "flex gap-2 relative top-8"
                 : ""
             }>
+                    
                     <FontAwesomeIcon icon={faInfoCircle} className="text-blue-500"></FontAwesomeIcon>
                     <h6 className="relative -top-5 text-blue-700 animate-pulse">{header}</h6>
                 </div>
@@ -61,8 +62,8 @@ const PaymentCard:React.FC<props> = ({header,price,limit,features, currencySymbo
             <br></br>
             <button  className={
                  mediaquery == "desktop" || mediaquery == "tablet" ?
-                "p-3 w-full text-center bg-green-700 text-white rounded-lg border-none hover:bg-gray-500 shadow-sm cursor-pointer"
-                : 'p-1 mt-1 border-none shadow rounded bg-green-600 text-white'
+                "p-3 w-full text-center bg-black text-white rounded-lg border-none hover:bg-gray-500 shadow-sm cursor-pointer"
+                : 'p-1 mt-1 border-none shadow rounded bg-black text-white'
             } onClick={onPressed}>
                 Get Plan
             </button>
