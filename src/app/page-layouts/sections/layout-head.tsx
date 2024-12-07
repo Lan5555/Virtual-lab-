@@ -9,13 +9,14 @@ interface HeaderProps {
     dropdown: boolean;
     showBars: boolean;
     name: string;
+    userName: string;
     setView:(val: boolean) => void;
     setName:(val: string) => void;
     setSearch:(val: string) => void;
     toggleSideOpen: (val: boolean) => void;
 }
 
-const LayoutHead:React.FC<HeaderProps> = ({ search, dropdown, showBars, name, toggleSideOpen, setView, setSearch, setName }) => {
+const LayoutHead:React.FC<HeaderProps> = ({ search, dropdown, showBars, name, userName, toggleSideOpen, setView, setSearch, setName }) => {
 
     return (
         <div className={styles.header}>
@@ -26,7 +27,7 @@ const LayoutHead:React.FC<HeaderProps> = ({ search, dropdown, showBars, name, to
                 <div className={styles.Avatar}>
                     <img src='/misc/oct.jpg' alt=''></img>
                 </div>
-                <p>Nicholas johnson</p>
+                <p>{ userName }</p>
                 <Icon iconName={`${name}`} size1={'15px'} onPressed={() => {
                     setView(!dropdown);
                     setName(name == 'angleDown' ? 'close' : 'angleDown');

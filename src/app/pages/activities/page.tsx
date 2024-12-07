@@ -3,11 +3,16 @@
 import ActivityCard from "@/app/components/activity-card";
 import TablePane from "@/app/components/table";
 import Wrap from "@/app/components/wrapper";
+import { useFirebase } from "@/app/hooks/firebase";
 import PageLayout from "@/app/page-layouts/page-layout";
-import { faTachometer } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
 
 const Activities: React.FC = () => {
+    const { getUserActivities, getScore } = useFirebase();
+    const [items, setItems] = useState([]);
+    const [scor, setScore] = useState({  title: "", items: [] });
+
+    
     const fields = [
         {
             label: "id",
@@ -22,17 +27,6 @@ const Activities: React.FC = () => {
             label: "action",
             key: "action",
         }];
-    const items = [
-        {
-            id: 1,
-            name: "Steve",
-            action: "logged in",
-        },{
-            id: 2,
-            name: "Kennedy",
-            action: "Performed pulley practical",
-        }
-    ];
 
     const score = { 
         title: "Activity Score",
@@ -48,6 +42,20 @@ const Activities: React.FC = () => {
             value: 3,
         }]
     };
+    const setData = async () => {
+        const [activities, scoreRes] = await Promise.all([
+            getUserActivities(),
+            getScore(),
+        ])
+        if (activities.success) {
+            setItems(activities.data)
+        }
+        if (scoreRes.success) {
+            setScore({ ...score, items: scoreRes.data});
+        }
+    }
+    setData();
+    
     return (
         <PageLayout>
             <div className="">
@@ -69,7 +77,7 @@ const Activities: React.FC = () => {
                             if (render === 'name') {
                                 return <div className="text-blue-700">{data[key]}</div>
                             } else if (render === 'id') {
-                                return <div className="text-red-700">{data[key]}</div>
+                                return <div className="text-red-700">{""}</div>
                             }
                         }}
                     >

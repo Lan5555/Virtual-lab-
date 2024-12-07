@@ -6,10 +6,11 @@ interface props{
     category:string,
     src:string,
     content:string,
+    userName:string,
     onPressed1:() => void;
     onPressed2:() => void;
 }
-const DropDown:React.FC<props> = ({category, src, content, onPressed1,onPressed2}) => {
+const DropDown:React.FC<props> = ({category, src, content, userName, onPressed1, onPressed2}) => {
     const divStyle:CSSProperties = {
         border:'none',
         boxShadow:'0 0.15rem 1.75rem 0 rgba(33 40 50 / 15%)',
@@ -66,7 +67,7 @@ const DropDown:React.FC<props> = ({category, src, content, onPressed1,onPressed2
         <div style={divStyle} className={styles.slideIn}>
           {checkCategory()}<br></br>
           <div style={contentStyle}>
-            <h2 style={{textAlign:'center', color:'white', fontSize:'14pt'}}>Nicholas Johnson</h2>
+            <h2 style={{textAlign:'center', color:'white', fontSize:'14pt'}}>{ userName }</h2>
           </div><br></br><br></br>
           <div style={plan}>
             <h2 style={{textAlign:'center', color:'black', fontSize:'11pt',}}>Free plan</h2>
