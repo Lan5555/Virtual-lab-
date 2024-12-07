@@ -5,6 +5,8 @@ import { faGoogle, faGoogle as google} from "@fortawesome/free-brands-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Toast from "@/app/components/toast";
+import Spinner from "@/app/components/loader";
 
 interface props {
     viewport: string;
@@ -21,20 +23,32 @@ export const SignIn:React.FC<props> = ({ viewport, isClicked, isClicked1, handle
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [icon,setIcon] = useState<IconDefinition>(faEyeSlash);
-    
+    const [Invalid,setInvalid] = useState(false);
+    const [success,showSuccess] = useState(false);
     const router = useRouter();
     const googleIcon:any = faGoogle;
+    const [loading,isLoading] = useState(false);
 
     return (
         <form 
         onSubmit={ async (event: any) => {
             event.preventDefault();
+            isLoading(true);
             const res = await signIn(email, password);
             if (res.success) {
+                showSuccess(true);
+                setTimeout(()=>{
+                showSuccess(false);
+                isLoading(false);
+                },3000);
                 router.push('/pages/dashboard');
                 logActivity(`${res.data.first_name} ${res.data.last_name} logged in`);
             } else {
-                alert(res.message)
+                setInvalid(true);
+                isLoading(false);
+                setTimeout(()=>{
+                    setInvalid(false);
+                },3000);
             }
         }}
         style={{display:'flex',
@@ -129,7 +143,7 @@ export const SignIn:React.FC<props> = ({ viewport, isClicked, isClicked1, handle
                 fontWeight:'bold',
                 cursor:'pointer'
                 //left: viewport === 'mobile' ? '45px' : '55px',
-            }}  >Log in</button>
+            }}  >{loading ? (<Spinner></Spinner>) : "Log in"}</button>
 
             <p style={{
                 fontSize: '10pt',
@@ -163,6 +177,8 @@ export const SignIn:React.FC<props> = ({ viewport, isClicked, isClicked1, handle
                 top: '15px',
                 textAlign: 'center',
             }}>{`Don't have an account?`}<a href="#" style={{ fontSize: '10pt',color:'white' }}>Register</a></p></div>
+            {Invalid && <Toast type="warning" text="Invalid Credentials"></Toast>}
+            {success && <Toast type="success" text="Welcome"></Toast>}
         </form>
     )
 }

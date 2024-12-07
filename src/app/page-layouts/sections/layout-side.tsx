@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComputer, faGear, faHome, faTachometer, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from "react";
 import Wrap from "@/app/components/wrapper";
+import Spinner from "@/app/components/loader";
 
 interface SidebarProps {
     sideIsOpen: boolean;
@@ -15,7 +16,7 @@ interface SidebarProps {
 const LayoutSide:React.FC<SidebarProps> = ({ sideIsOpen, toggleShowBars }) => {
     const router = useRouter();
     const [mediaquery, setMediaQuery] = useState('desktop');
-
+    const [loading,isLoading] = useState(false);
     const checkScreen = () => {
         const desktop = window.matchMedia('(min-width:768px)');
         const tablet = window.matchMedia('(min-width:542px)');
@@ -42,7 +43,9 @@ const LayoutSide:React.FC<SidebarProps> = ({ sideIsOpen, toggleShowBars }) => {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     });
+   useEffect(()=>{
 
+   },[loading]);
     return (
         <div>
             {sideIsOpen ? (<div className={styles.sidebar}>
@@ -61,10 +64,20 @@ const LayoutSide:React.FC<SidebarProps> = ({ sideIsOpen, toggleShowBars }) => {
                     router.push('/pages/subscription'); 
                 }}/>
                 ): <><FontAwesomeIcon icon={faWallet} className='text-center my-2 ml-2  text-gray-400  hover:text-black' style={{ height: '30px' }} title='Subscription' onClick={() => { router.push('/pages/subscription'); } }></FontAwesomeIcon><br /></>}
-                {mediaquery == 'desktop' ? (<ListTile leading={<Icon size1={''} iconName={'Computer'} onPressed={() => { } } color={''}/>} text={'Lab'} trailing={ ()=>{ 
-                    router.push('/pages/lab');
+                {mediaquery == 'desktop' ? loading ? (<Spinner></Spinner>) : (<ListTile leading={<Icon size1={''} iconName={'Computer'} onPressed={() => { } } color={''}/>} text={'Lab'} trailing={ ()=>{ 
+                    isLoading(true);
+                    setTimeout(()=>{
+                        router.push('/pages/lab');
+                    isLoading(false);
+                    },500);
                 }}/>
-                ):<><FontAwesomeIcon icon={faComputer} className='text-center my-2 ml-2  text-gray-400  hover:text-black' style={{ height: '30px', width: '32px' }} title='Lab' onClick={() => { router.push('/pages/lab'); } }></FontAwesomeIcon><br /></>}
+                ): loading ? (<Spinner></Spinner>) : (<><FontAwesomeIcon icon={faComputer} className='text-center my-2 ml-2  text-gray-400  hover:text-black' style={{ height: '30px', width: '32px' }} title='Lab' onClick={() => {
+                     isLoading(true);
+                     setTimeout(()=>{
+                    router.push('/pages/lab');
+                    isLoading(false);
+                     },500)
+                     } }></FontAwesomeIcon><br /></>)}
                 <br></br>
                 {mediaquery == 'desktop' ? (<ListTile leading={<Icon size1={''} iconName={'Gear'} onPressed={() => { } } color={''}/>} text={'Settings'} trailing={() => {
                     router.push('/pages/settings');

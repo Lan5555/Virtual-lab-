@@ -1,6 +1,6 @@
 
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core"
-import { faInfoCircle, faMarsStrokeUp, faWarning } from "@fortawesome/free-solid-svg-icons"
+import { faCheckCircle, faInfoCircle, faMarsStrokeUp, faWarning } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useEffect, useState } from "react";
 import styles from '../css/btn.module.css';
@@ -44,7 +44,7 @@ const Toast:React.FC<props> = ({className="fixed top-10 right-2 w-72 h-24 p-2 sh
         <div>
         {visible && (<div className={className}>
             <FontAwesomeIcon icon={type =='success' ? 
-                faMarsStrokeUp :
+                faCheckCircle :
                 type == 'warning' ? faWarning :
                 faInfoCircle
             } className="absolute left-5 top-4 text-gray-700 animate-pulse" style={{height:'20px',

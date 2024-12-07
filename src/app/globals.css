@@ -83,3 +83,9 @@
   height:50vh;
 }
 
+.spin{
+  border: 3px solid black;
+}
+.spin-top{
+  border-top: 3px solid white;
+}
