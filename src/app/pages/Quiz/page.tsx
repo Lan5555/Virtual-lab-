@@ -1,6 +1,7 @@
 'use client'
 import HoverBar from "@/app/components/hover-bar";
 import Quzzies from "@/app/components/quiz";
+import { shuffle } from "@/app/hooks/shuffle";
 import { faInfoCircle, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import anime from "animejs";
@@ -404,7 +405,7 @@ const QuizPage:React.FC = () => {
           </div>
         )
       }
-      
+      const shuffledQuestions = shuffle([...questions]);
     return( 
     <div style={{
       backgroundImage:'url(/misc/competition/images/biology.jpg)',
@@ -416,7 +417,7 @@ const QuizPage:React.FC = () => {
       
       {!shown && overlay()}
       {!shown && initialMessage()}
-        {shown && (<Quzzies questions={questions} />)}
+        {shown && (<Quzzies questions={shuffledQuestions} />)}
        {shown && (<HoverBar items={[faSignOutAlt]} iconClass="text-white cursor-pointer"
         runFunc1={()=> router.push('/pages/lab')}
         title="Back to lab"></HoverBar>)}
