@@ -3,7 +3,7 @@
 import React, { Suspense, useEffect, useRef, useState } from "react";
 import styles from "@/app/css/main.module.css";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { Html, OrbitControls, Text } from "@react-three/drei";
 import Model from "@/app/components/model";
 import Background1 from "@/app/components/loadimage";
 import { useRouter } from "next/navigation";
@@ -51,6 +51,7 @@ import { createXRStore, XR } from "@react-three/xr";
 import { createStore } from "@react-three/fiber/dist/declarations/src/core/store";
 import { Controller } from "three/examples/jsm/libs/lil-gui.module.min.js";
 import Notebook from "@/app/components/note-book";
+import Spinner from "@/app/components/loader";
 
 const Lab: React.FC = () => {
     const [state, setState] = useState('chem-1.jpg');
@@ -347,6 +348,7 @@ const Lab: React.FC = () => {
       const [activeDish, enableDish] = useState(true);
       const [dishLocation, setDisLocation] = useState('');
       const [soilState,setSoilState] = useState(false);
+      const [isTime,setTime] = useState<boolean>(false);
       const [dishMenu, setDishContent] = useState((
         (<div className="flex flex-col">
             <ul className="list-none relative -left-5">
@@ -463,8 +465,8 @@ const Lab: React.FC = () => {
         
         return(
             <img src={`/misc/competition/practical/${beakerState}`} alt="beaker"
-             className={beakerState == "empty-beaker.png" && mediaquery == "desktop" ? "absolute bottom-64 right-96 h-28 w-32 cursor-pointer" :
-                mediaquery == "tablet" && beakerState == "empty-beaker.png" ? "absolute bottom-52 right-72 h-20 w-20   cursor-pointer"
+             className={beakerState == "empty-beaker.png" && mediaquery == "desktop" && isTime  ? "absolute bottom-64 right-96 h-28 w-32 cursor-pointer" :
+                mediaquery == "tablet" && beakerState == "empty-beaker.png" && isTime  ? "absolute bottom-52 right-72 h-20 w-20   cursor-pointer"
                 : mediaquery == "desktop" && beakerState == "full-beaker.png" ? "absolute bottom-68 right-98 h-28 w-24  cursor-pointer box3":
                 mediaquery == "tablet" && beakerState == "full-beaker.png" ? "absolute bottom-56 right-72 h-20 w-20  cursor-pointer box3" : ''
             }
@@ -528,7 +530,21 @@ const Lab: React.FC = () => {
     },[]);
     const store = createXRStore();
     
-    
+    const setTimeToDisplay = () => {
+        setTimeout(()=>{
+        setTime(true);
+        },1000);
+    }
+    useEffect(()=>{
+        setTimeToDisplay();
+    },[]);
+    const FallBack = () => {
+        return(
+            <Html center>
+                <Spinner></Spinner>
+            </Html>
+        )
+    }
     return (
         <PageLayout>
             {mediaquery!='mobile' ? (<div className={ mediaquery == 'desktop' ? styles.container : mediaquery == 
@@ -562,7 +578,7 @@ const Lab: React.FC = () => {
                     </div>
                     <h4>Select practical</h4>
                     <select title="Available practicals">
-                    {indexNumber == 'Chemistry' ?  <option value="">Mixture between two chemicals</option> : indexNumber 
+                    {indexNumber == 'Chemistry' ?  <option value="">Mixture</option> : indexNumber 
                     == 'Physics' ? <option>Moment</option> : indexNumber
                     == 'Biology' ? <option>Inspection</option> : indexNumber == 
                     'Maths' ? <option>Cummulative frequency</option> : null
@@ -587,7 +603,7 @@ const Lab: React.FC = () => {
                     <button onClick={()=> store.enterVR()} className="p-2 bg-black animate-pulse rounded shadow text-white cursor-pointer absolute top-5 z-30 border-none">Enter VR</button>
                     <Canvas>
                        <XR store={store}>
-                        <Suspense fallback={null}>
+                        <Suspense fallback={<FallBack/>}>
                             {!isOutside ? (<Background1 imageUrl={`/misc/competition/images/${state}`} />) : 
                             (<VideoBackground path="/misc/competition/practical/forest-3463.mp4"></VideoBackground>)}
                             {isOutside && (<Sound path="/misc/competition/practical/forest.mp3"/>)}
@@ -681,21 +697,21 @@ const Lab: React.FC = () => {
 
                         {/* Chemistry */}
 
-                        {indexNumber == "Chemistry" && !isOutside && mediaquery == "desktop" ? (<Tippy content={menu2} placement="left" interactive={true}> 
+                        {indexNumber == "Chemistry" && !isOutside && mediaquery == "desktop" && isTime ? (<Tippy content={menu2} placement="left" interactive={true}> 
                         <img src="/misc/competition/practical/stirrer.png" alt="stir"
                          className="absolute bottom-44 right-96 h-32 w-32 brightness-75 cursor-pointer" title="Magnetic stirrer"></img></Tippy>)
-                        :indexNumber == "Chemistry" && !isOutside && mediaquery == "tablet" ? (<Tippy content={menu2} placement="left" interactive={true}> 
+                        :indexNumber == "Chemistry" && !isOutside && mediaquery == "tablet" && isTime ? (<Tippy content={menu2} placement="left" interactive={true}> 
                             <img src="/misc/competition/practical/stirrer.png" alt="stir"
                              className="absolute bottom-40 right-72 h-20 w-20 brightness-75 cursor-pointer" title="Magnetic stirrer"></img></Tippy>)
                              : null
                         }
 
                          {indexNumber == "Chemistry" && !isOutside && showBeacker()}
-                         {indexNumber == "Chemistry" && mediaquery == "desktop" && !isOutside ? (<Tippy content={Potassium} interactive={true} placement="top">
+                         {indexNumber == "Chemistry" && mediaquery == "desktop" && !isOutside && isTime  ? (<Tippy content={Potassium} interactive={true} placement="top">
                          <img src="/misc/competition/practical/manganate.png" alt="manganate"
                          className="absolute bottom-40 left-80 h-24 w-24 brightness-50 cursor-pointer"
                          title="Potassium manganate"></img>
-                         </Tippy>):indexNumber == "Chemistry" && mediaquery == "tablet" && !isOutside ?
+                         </Tippy>):indexNumber == "Chemistry" && mediaquery == "tablet" && !isOutside && isTime  ?
                          (<Tippy content={Potassium} interactive={true} placement="top">
                             <img src="/misc/competition/practical/manganate.png" alt="manganate"
                             className="absolute bottom-48 right-32 h-24 w-24 brightness-50 cursor-pointer"
