@@ -4,6 +4,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { div } from "three/webgpu";
 import Toast from "./toast";
+import { useRouter } from "next/navigation";
+import Tippy from "@tippyjs/react";
+import 'tippy.js/dist/tippy.css';
 
 interface props{
 index?:string
@@ -35,6 +38,16 @@ const HoverSideBar:React.FC<props> = ({index, sendLabName,model}) => {
   }
   
     const [isShown, setShown] = useState(false);
+    const router = useRouter();
+  const menu = (
+    <div className="flex flex-col">
+        <ul className="list-none relative -left-5">
+            <li onClick={()=> {
+                router.push('/pages/dashboard');
+            }}>Back to Dashboard</li>
+        </ul>
+    </div>
+)
     return (
     <>
     <div className="rounded w-64 h-4/5 bg-slate-700  fixed right-3 top-10 p-3 flex justify-center flex-col shadow-2xl" style={{
@@ -42,7 +55,9 @@ const HoverSideBar:React.FC<props> = ({index, sendLabName,model}) => {
     }}>
     <div className="flex justify-between">
     <h2 className="text-white">Options</h2>
+    <Tippy content={menu} placement="top" interactive={true}>
     <FontAwesomeIcon icon={faBars} className="text-white relative top-7 right-3"></FontAwesomeIcon>
+    </Tippy>
     </div>
     <input className="p-2 rounded-2xl bg-black border-none text-white" type="search" placeholder="Search"></input>
     <div className="flex justify-between l-b-w  h-10 items-center relative -left-3 top-3">

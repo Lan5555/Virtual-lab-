@@ -101,7 +101,8 @@ const CreateImage: React.FC<Props> = ({
         width: `${width}px`,
         height: `${height}px`,
         zIndex: 200,
-        transition: 'all 0.3s ease-in-out'
+        transition: 'all 0.3s ease-in-out',
+        cursor:'pointer'
       }}
       onClick={onclick}
       className={animationClass} // Assign the class based on callback prop

@@ -13,6 +13,7 @@ import NodeEditor from "@/app/components/nodes";
 import CreateImage from '@/app/components/create-image';
 import { element } from 'three/webgpu';
 import Plane from '@/app/components/plane';
+import { useRouter } from 'next/navigation';
 
 interface ModelData {
   Name: string;
@@ -156,7 +157,16 @@ const CreateLab: React.FC = () => {
       return [];
     }
   };
-  
+  const router = useRouter();
+  const menu = (
+    <div className="flex flex-col">
+        <ul className="list-none relative -left-5">
+            <li onClick={()=> {
+                router.push('/pages/dashboard');
+            }}>Create Lab Space</li>
+        </ul>
+    </div>
+)
   return (
     <div>
       {isTime && <Toast text="Welcome" />}

@@ -1,13 +1,16 @@
 'use client'
-
 import { AboutCard } from "@/app/components/about-card";
+import Badge from "@/app/components/badge";
 import { Feedback } from "@/app/components/feedback";
 import { UsersCard } from "@/app/components/users-card";
 import Wrap from "@/app/components/wrapper";
 import { useFirebase } from "@/app/hooks/firebase";
 import PageLayout from "@/app/page-layouts/page-layout";
+import Tippy from "@tippyjs/react";
+import { useRouter } from "next/navigation";
 import { title } from "process";
 import { useState } from "react";
+import 'tippy.js/dist/tippy.css';
 
 const Settings: React.FC = () => {
     const { getFeedbacks, sendFeedback } = useFirebase();
@@ -69,6 +72,16 @@ const Settings: React.FC = () => {
         }
     }
     setData();
+    const router = useRouter();
+    const menu = (
+        <div className="flex flex-col">
+            <ul className="list-none relative -left-5">
+                <li onClick={()=> {
+                    router.push('/pages/create-lab-space');
+                }}>Create Lab Space</li>
+            </ul>
+        </div>
+    );
     return (
         <PageLayout>
             <div className="">
@@ -77,9 +90,12 @@ const Settings: React.FC = () => {
 
             <div className="flex flex-col">
                 <div className="flex gap-3 rounded w-80 h-12 shadow justify-evenly items-center ml-2">
+                    <Tippy content={menu} placement="bottom" interactive={true}>
                     <div className="rounded shadow bg-slate-600 w-auto h-7 flex justify-center items-center p-1">
+                    <Badge text="New" color="red"></Badge>
                     <h6 className="text-white cursor-pointer">Create Lab</h6>
                     </div>
+                    </Tippy>
                     <div className="rounded shadow-2xl w-auto h-7 flex justify-center items-center p-1">
                     <h6 className="text-black cursor-pointer">Workspace</h6>
                     </div>
