@@ -16,7 +16,7 @@ import { useState } from "react";
 import 'tippy.js/dist/tippy.css';
 
 const Settings: React.FC = () => {
-    const { getFeedbacks, sendFeedback } = useFirebase();
+    const { getFeedbacks, sendFeedback, updateProfile } = useFirebase();
 
     const userFields = [
         { label: "User ID", key: "id"},

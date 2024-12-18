@@ -39,11 +39,28 @@ const CreateLab: React.FC = () => {
   const [itemValues, setItemValues] = useState({ top: 0, bottom: 0, left: 0, right: 0 });
   const [createdImages, setCreatedImages] = useState<any[]>([]);
   const [callback, setCallBackName] = useState<any>('');
+<<<<<<< HEAD
   
   const [visible, setVisible] = useState(false); // visibility state for components
  
 
 
+=======
+  const {logActivity, getUserActivities} = useFirebase();
+
+  const [visible, setVisible] = useState(false); // visibility state for components
+  const [labActions, setLabActions] = useState([]);
+
+  // use labActions
+
+  const refreshActions = async () => {
+    const response = await getUserActivities("lab");
+    if (response.success) {
+      setLabActions(response.data);
+    }
+  }
+ 
+>>>>>>> ed14cd75c4b1d011cb2e672a09cbbabc73935746
   useEffect(() => {
     const timeout = setTimeout(() => {
       setTime(false);
@@ -230,14 +247,23 @@ const CreateLab: React.FC = () => {
             onclick={()=> setVisible(prev => !prev)}
             callBack={callback}/>}
            {visible && <div className='fixed bottom-10 flex justify-center'>
+<<<<<<< HEAD
            {visible && <button className='bg-black rounded animate-pulse p-2 text-white ml-24' onClick={async()=> {
+=======
+           {visible && <button className='bg-black rounded animate-pulse p-2 text-white' onClick={ async ()=> {
+>>>>>>> ed14cd75c4b1d011cb2e672a09cbbabc73935746
               Save(modelName, itemValues.top, itemValues.bottom, itemValues.left, itemValues.right, height,width);
               setVisible(prev => !prev);
               const modelData = {...itemValues,top:0,bottom:0,left:0,right:0};
               setItemValues(modelData);
               setHeight(300);
               setWidth(300);
+<<<<<<< HEAD
               
+=======
+              await logActivity('Added and edited model', "lab");
+              refreshActions();
+>>>>>>> ed14cd75c4b1d011cb2e672a09cbbabc73935746
             }}>Save</button> }
             </div> }
         {isOpen && <HoverSideBar sendLabName={setBgName} model={handleModelChange} className='rounded w-64 h-4/5 bg-slate-700  fixed right-3 top-10 p-3 flex justify-center flex-col shadow-2xl z-50'/>}
