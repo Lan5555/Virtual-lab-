@@ -163,52 +163,8 @@ export const useFirebase = () => {
         }
     }
 
-    //Log lab activities
-    const logLabActivity = async(text:string): Promise<Res> => {
-        try{
-            const dataRef = collection(db, 'CreatedLabActivity');
-            const data = await addDoc(dataRef, {
-                name: `${user.first_name} ${user.last_name}`,
-                text,
-                user_id: user.user_id,
-                date: new Date(),
-            });
-            return {
-                success: true,
-                data,
-                message: "Activity logged",
-            }
-
-        }catch(error) {
-            return {
-                success: false,
-                message: `${error}`
-            }
-        }
-    }
-    const getLabActivity = async(): Promise<Res> => {
-        try{
-            const dataRef = collection(db, 'CreatedLabActivity');
-            const q = query(dataRef, where("user_id", "==", user.user_id));
-            const querySnapshot = await getDocs(q);
-            
-            const activities = querySnapshot.docs.map((doc) => ({ 
-                id: doc.id, 
-                name: doc.data().name,
-                action: `${doc.data().date.toDate()}: ${doc.data().text}`, 
-             }));
-            return {
-                success: true,
-                data: activities,
-                message: "Activities fetched",
-            }
-        } catch (error) {
-            return {
-                success: false,
-                message: `${error}`
-            }
-        }
-    }
+   
+    
 
     // get user activities
     const getUserActivities = async (): Promise<Res> => {
@@ -389,7 +345,6 @@ export const useFirebase = () => {
         getScore,
         sendFeedback,
         getFeedbacks,
-        logLabActivity,
-        getLabActivity
+        
     }
 }

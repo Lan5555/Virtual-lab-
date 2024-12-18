@@ -39,19 +39,11 @@ const CreateLab: React.FC = () => {
   const [itemValues, setItemValues] = useState({ top: 0, bottom: 0, left: 0, right: 0 });
   const [createdImages, setCreatedImages] = useState<any[]>([]);
   const [callback, setCallBackName] = useState<any>('');
-  const {logLabActivity,getLabActivity} = useFirebase();
-  const [labActivity, setLabActivity] = useState('');
-
+  
   const [visible, setVisible] = useState(false); // visibility state for components
-  // const fetchActivity = async() => {
-  //   const data = await getLabActivity();
-  //   if(data.success){
-      
-  // }
-  // useEffect(()=> {
-    
-    
-  // },[]);
+ 
+
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       setTime(false);
@@ -238,14 +230,14 @@ const CreateLab: React.FC = () => {
             onclick={()=> setVisible(prev => !prev)}
             callBack={callback}/>}
            {visible && <div className='fixed bottom-10 flex justify-center'>
-           {visible && <button className='bg-black rounded animate-pulse p-2 text-white' onClick={()=> {
+           {visible && <button className='bg-black rounded animate-pulse p-2 text-white ml-24' onClick={async()=> {
               Save(modelName, itemValues.top, itemValues.bottom, itemValues.left, itemValues.right, height,width);
               setVisible(prev => !prev);
               const modelData = {...itemValues,top:0,bottom:0,left:0,right:0};
               setItemValues(modelData);
               setHeight(300);
               setWidth(300);
-              logLabActivity('Added and edited model');
+              
             }}>Save</button> }
             </div> }
         {isOpen && <HoverSideBar sendLabName={setBgName} model={handleModelChange} className='rounded w-64 h-4/5 bg-slate-700  fixed right-3 top-10 p-3 flex justify-center flex-col shadow-2xl z-50'/>}
