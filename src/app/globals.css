@@ -97,7 +97,7 @@
   border-top: 3px solid white;
 }
 .react-flow__node-default {
-  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  background: transparent;
   color: #fff;
   border: 2px solid #fff;
   border-radius: 8px;

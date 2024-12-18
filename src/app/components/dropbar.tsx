@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { CSSProperties } from "react"
 import Icon from "./icons"
 import styles from '../css/btn.module.css';
@@ -77,7 +78,7 @@ const DropDown:React.FC<props> = ({category, src, content, userName, onPressed1,
            backgroundColor:'blueviolet',borderRadius:'5px', border:'none', color:'white',
             fontSize:'9pt', opacity:'0.8',cursor:'pointer'}} onClick={onPressed1}>
                 <Icon iconName={'tag'} size1={undefined} onPressed={function (): void {
-                } } color={""}></Icon> Upgrade</button>
+                } } color={""}></Icon> Log out</button>
             <button style={{position:'absolute', left:'10px',top:'85%', padding:'10px',
              backgroundColor:'blueviolet',borderRadius:'5px', border:'none', color:'white',
               fontSize:'9pt', opacity:'0.8',cursor:'pointer',}} onClick={onPressed2}>

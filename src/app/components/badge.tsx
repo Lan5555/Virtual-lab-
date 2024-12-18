@@ -4,16 +4,16 @@ interface BadgeProps {
   text: string;
   color?: string; 
   children?: ReactNode; 
-  position?:string[];
+  position?:number[];
 }
 
-const Badge: React.FC<BadgeProps> = ({ text, color = "gray", children, position = [10,5] }) => {
+const Badge: React.FC<BadgeProps> = ({ text, color = "gray", children, position = [4,null,null,null] }) => {
   return (
-    <div className={`badge-container absolute mb-${position[0]} mr-${position[1]} ml-${position[2]} mt-${position[3]}`}>
+    <div className={`badge-container relative -top-${position[0]} bottom-${position[1]} left-${position[2]} right-${position[3]}`}>
       {children}
       <h6
         className="text-xxs text-white p-[2px] rounded-3xl"
-        style={{ backgroundColor: color }}
+        style={{ backgroundColor: color}}
       >
         {text}
       </h6>

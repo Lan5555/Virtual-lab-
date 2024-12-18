@@ -5,6 +5,7 @@ import LayoutSide from "./sections/layout-side";
 import styles from '@/app/css/dashboard.module.css';
 import React from "react";
 import { useFirebase } from "../hooks/firebase";
+import { useRouter } from "next/navigation";
 
 
 const PageLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -37,11 +38,14 @@ const PageLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const handleShowBars = (val: boolean) => {
       showSideBars(val);
     }
+    const router = useRouter();
 
     return (
       <div className="main-layout">
         {state ? <DropDown userName={`${user.first_name} ${user.last_name}`} category={'avatar'} src={'/misc/oct.jpg'} content='You are currently on a free plan'
-                 onPressed1={()=>{ }} onPressed2={()=>{
+                 onPressed1={()=>{ 
+                  router.push('/pages/login');
+                 }} onPressed2={()=>{
                 toggleState();
                 handleSetName(name);
                  }}/> : null} 

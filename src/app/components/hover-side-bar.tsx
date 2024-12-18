@@ -9,12 +9,12 @@ import Tippy from "@tippyjs/react";
 import 'tippy.js/dist/tippy.css';
 
 interface props{
-index?:string
 sendLabName?: (message: string) => void;
 model?: (name: string) => void;
+className?: string;
 }
 
-const HoverSideBar:React.FC<props> = ({index, sendLabName,model}) => {
+const HoverSideBar:React.FC<props> = ({sendLabName,model, className = 'rounded w-64 h-4/5 bg-slate-700  fixed right-3 top-10 p-3 flex justify-center flex-col shadow-2xl z-50'}) => {
     const [modelOpen, setModelOpen] = useState(false);
     const [spaceOpen, setSpaceOpen] = useState(false);
     const [practicalOpen, SetPracticalOpen] = useState(false);
@@ -23,11 +23,11 @@ const HoverSideBar:React.FC<props> = ({index, sendLabName,model}) => {
     const [modelName, setModelName] = useState<string>('');
     //const [bgName, setBgName] = useState('empty-room');
 
-    // Function to handle lab selection and send lab name to parent
+    
   const handleLabSelection = (labName: string) => {
-    setName(labName); // Update the local state to show the selected lab
+    setName(labName); 
     if (sendLabName) {
-      sendLabName(labName); // Pass the selected lab to the parent component
+      sendLabName(labName); 
     }
   };
 
@@ -47,12 +47,13 @@ const HoverSideBar:React.FC<props> = ({index, sendLabName,model}) => {
             }}>Back to Dashboard</li>
         </ul>
     </div>
-)
+);
+    const getActivity = () => {
+        
+    }
     return (
     <>
-    <div className="rounded w-64 h-4/5 bg-slate-700  fixed right-3 top-10 p-3 flex justify-center flex-col shadow-2xl" style={{
-        zIndex:index,
-    }}>
+    <div className={className}>
     <div className="flex justify-between">
     <h2 className="text-white">Options</h2>
     <Tippy content={menu} placement="top" interactive={true}>
@@ -64,7 +65,7 @@ const HoverSideBar:React.FC<props> = ({index, sendLabName,model}) => {
         <div className="flex ml-4 gap-2">
         <FontAwesomeIcon icon={faPerson} className="text-white relative top-4"></FontAwesomeIcon>
         <h3 className="text-white text-sm">Models</h3>
-        <div className={`h-80 w-60 bg-slate-700 rounded absolute -left-64 transition-all duration-300 grid grid-cols-2 gap-5 overflow-auto place-items-center p-1 eliminate-bar  ${
+        <div className={`h-80 w-60 bg-slate-700 rounded absolute -left-64 transition-all duration-300 grid grid-cols-2 gap-5 overflow-auto place-items-center p-1 eliminate-bar z-50  ${
             modelOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
         }`}>
             {/* Models */}
@@ -182,7 +183,13 @@ const HoverSideBar:React.FC<props> = ({index, sendLabName,model}) => {
                 setShown(false);
             },3000);
         }}></FontAwesomeIcon>
-        <h2 className="text-white text-sm">Reset Lab</h2>
+        <h2 className="text-white text-sm cursor-pointer" onClick={()=>{
+            localStorage.clear();
+            setShown(true);
+            setTimeout(()=> {
+                setShown(false);
+            },3000);
+        }}>Reset Lab</h2>
     </div>
     </div>
     <div className="flex justify-center mt-16">
@@ -193,8 +200,7 @@ const HoverSideBar:React.FC<props> = ({index, sendLabName,model}) => {
         </div>
         {/* Recent activities */}
         <div className="p-2 w-60 h-53 overflow-auto">
-
-
+         <p></p>
         </div>
     </div>
     </div>

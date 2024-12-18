@@ -93,7 +93,7 @@ const Settings: React.FC = () => {
                     <Tippy content={menu} placement="bottom" interactive={true}>
                     <div className="rounded shadow bg-slate-600 w-auto h-7 flex justify-center items-center p-1">
                     <Badge text="New" color="red"></Badge>
-                    <h6 className="text-white cursor-pointer">Create Lab</h6>
+                    <h6 className="text-white cursor-pointer relative -left-3">Create Lab</h6>
                     </div>
                     </Tippy>
                     <div className="rounded shadow-2xl w-auto h-7 flex justify-center items-center p-1">
