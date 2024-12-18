@@ -2,11 +2,12 @@
 import { faAngleDown, faAngleLeft, faBars, faClose, faComputer, faHistory, faHouse, faPerson, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import { div } from "three/webgpu";
+import { div, element } from "three/webgpu";
 import Toast from "./toast";
 import { useRouter } from "next/navigation";
 import Tippy from "@tippyjs/react";
 import 'tippy.js/dist/tippy.css';
+import { useFirebase } from "../hooks/firebase";
 
 interface props{
 sendLabName?: (message: string) => void;
@@ -48,9 +49,8 @@ const HoverSideBar:React.FC<props> = ({sendLabName,model, className = 'rounded w
         </ul>
     </div>
 );
-    const getActivity = () => {
-        
-    }
+    
+      const [visible, setVisible] = useState(false); // visibility state for components
     return (
     <>
     <div className={className}>
@@ -200,7 +200,7 @@ const HoverSideBar:React.FC<props> = ({sendLabName,model, className = 'rounded w
         </div>
         {/* Recent activities */}
         <div className="p-2 w-60 h-53 overflow-auto">
-         <p></p>
+         
         </div>
     </div>
     </div>
