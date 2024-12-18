@@ -160,10 +160,6 @@ export const useFirebase = () => {
         }
     }
 
-<<<<<<< HEAD
-   
-    
-=======
     // log activity
     const logActivity = async (text: string, type: string): Promise<Res> => {
         try {
@@ -188,7 +184,6 @@ export const useFirebase = () => {
             }
         }
     }
->>>>>>> ed14cd75c4b1d011cb2e672a09cbbabc73935746
 
     // get user activities
     const getUserActivities = async (type?: string): Promise<Res> => {
@@ -388,10 +383,6 @@ export const useFirebase = () => {
         getScore,
         sendFeedback,
         getFeedbacks,
-<<<<<<< HEAD
-        
-=======
         updateProfile,
->>>>>>> ed14cd75c4b1d011cb2e672a09cbbabc73935746
     }
 }
