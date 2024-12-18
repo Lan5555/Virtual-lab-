@@ -100,7 +100,6 @@ const CreateImage: React.FC<Props> = ({
         bottom: `${bottom1}px`,
         width: `${width}px`,
         height: `${height}px`,
-        zIndex: 200,
         transition: 'all 0.3s ease-in-out',
         cursor:'pointer'
       }}

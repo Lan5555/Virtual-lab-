@@ -35,7 +35,7 @@ const NodeEditor: React.FC<Props> = ({ itemName, onSuccess, top, bottom, left, r
       position: { x: 250, y: 0 },
       data: { label: 'Parameters', Top: '', Bottom: '', Left: '', Right: '', Height:'', Width:'' },
       style: {
-        backgroundColor: 'grey',
+        backgroundColor: 'transparent',
         padding: '10px',
         borderRadius: '5px',
         border: 'none',
@@ -52,7 +52,7 @@ const NodeEditor: React.FC<Props> = ({ itemName, onSuccess, top, bottom, left, r
       position: { x: 100, y: 100 },
       data: { label: itemName ?? 'Item name' },
       style: {
-        backgroundColor: 'grey',
+        backgroundColor: 'transparent',
         padding: '10px',
         borderRadius: '5px',
         border: 'none',
@@ -69,7 +69,7 @@ const NodeEditor: React.FC<Props> = ({ itemName, onSuccess, top, bottom, left, r
       position: { x: 400, y: 100 },
       data: { label: 'Call back', name:''},
       style: {
-        backgroundColor: 'grey',
+        backgroundColor: 'transparent',
         padding: '10px',
         borderRadius: '5px',
         border: 'none',
@@ -200,7 +200,7 @@ const NodeEditor: React.FC<Props> = ({ itemName, onSuccess, top, bottom, left, r
           return (
             <div
       key={node.id}
-      className="absolute top-[180px] left-[30px] w-[200px] h-[350px] bg-gradient-to-br from-[#111827] to-[#1F2937] p-4 rounded-3xl shadow-2xl border-4 border-transparent hover:border-cyan-400 transform hover:scale-105 hover:rotate-3 transition-all duration-300"
+      className="absolute top-[290px] left-[50px] w-[200px] h-[350px] bg-slate-600 p-4 rounded-3xl shadow-2xl border-4 border-transparent hover:border-cyan-400 transform hover:scale-105 hover:rotate-3 transition-all duration-300"
       >
   {/* Title */}
   <div className="mb-4 text-center text-sm font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400">
@@ -215,7 +215,7 @@ const NodeEditor: React.FC<Props> = ({ itemName, onSuccess, top, bottom, left, r
           type="number"
           value={node.data[field as keyof typeof node.data] || ''}
           onChange={(event) => handleInputChange(event, node.id, field)}
-          className=" p-2 bg-transparent text-white border-2  focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md"
+          className=" p-2 bg-transparent text-white border-2  focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md border-blue-500 place"
         />
         {/* Label for the input */}
         <label
@@ -233,7 +233,7 @@ const NodeEditor: React.FC<Props> = ({ itemName, onSuccess, top, bottom, left, r
           return (
             <div
             key={node.id}
-            className="absolute bottom-[20px] right-[50px] w-[150px] h-[200px] bg-gradient-to-br from-[#111827] to-[#1F2937] p-4 rounded-3xl shadow-2xl border-4 border-transparent hover:border-cyan-400 transform hover:scale-105 hover:rotate-3 transition-all duration-300"
+            className="absolute bottom-[20px] right-[50px] w-[150px] h-[200px] bg-gradient-to-br from-[#111827] to-[#1F2937] p-4 rounded-3xl shadow-2xl border-4 border-transparent hover:border-cyan-400 transform hover:scale-105 hover:rotate-3 transition-all duration-300 z-20"
             >
         {/* Title */}
         <div className="mb-4 text-center text-sm font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400">

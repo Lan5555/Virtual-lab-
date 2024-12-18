@@ -14,6 +14,7 @@ import CreateImage from '@/app/components/create-image';
 import { element } from 'three/webgpu';
 import Plane from '@/app/components/plane';
 import { useRouter } from 'next/navigation';
+import { useFirebase } from '@/app/hooks/firebase';
 
 interface ModelData {
   Name: string;
@@ -38,9 +39,19 @@ const CreateLab: React.FC = () => {
   const [itemValues, setItemValues] = useState({ top: 0, bottom: 0, left: 0, right: 0 });
   const [createdImages, setCreatedImages] = useState<any[]>([]);
   const [callback, setCallBackName] = useState<any>('');
+  const {logLabActivity,getLabActivity} = useFirebase();
+  const [labActivity, setLabActivity] = useState('');
 
   const [visible, setVisible] = useState(false); // visibility state for components
-  
+  // const fetchActivity = async() => {
+  //   const data = await getLabActivity();
+  //   if(data.success){
+      
+  // }
+  // useEffect(()=> {
+    
+    
+  // },[]);
   useEffect(() => {
     const timeout = setTimeout(() => {
       setTime(false);
@@ -147,6 +158,12 @@ const CreateLab: React.FC = () => {
       setModelData(data);
     }
   }, []);
+  useEffect(()=> {
+    const data = getSavedModel();
+    if (data) {
+      setModelData(data);
+    }
+  },[visible]);
   
   const getSavedModel = () => {
     const savedData = localStorage.getItem('modelData');
@@ -185,10 +202,7 @@ const CreateLab: React.FC = () => {
             {display && <ShowMesh />}
             <OrbitControls enableZoom={false} />
           </Suspense>
-        </Canvas>
-        
-        {isOpen && <HoverSideBar sendLabName={setBgName} model={handleModelChange} />}
-        
+        </Canvas>        
         <HoverBar
           items={[!isOpen ? faBars : faClose, faSignOutAlt]}
           runFunc1={() => setOpen((prev) => !prev)}
@@ -204,17 +218,6 @@ const CreateLab: React.FC = () => {
             onListItemClick={() => { setDisplay(false); setShown(false); }}
           />
         )}
-        {modelName && <CreateImage source={modelSources[modelName]} 
-           top1={itemValues.top} bottom1={itemValues.bottom}
-            left1={itemValues.left} right1={itemValues.right} height={height} width={width}
-            onclick={()=> setVisible(prev => !prev)}
-            callBack={callback}/>}
-           {visible && <div className='fixed bottom-10 flex justify-center'>
-           {visible && <button className='bg-black rounded animate-pulse p-2 text-white' onClick={()=> {
-              Save(modelName, itemValues.top, itemValues.bottom, itemValues.left, itemValues.right, height,width);
-              setVisible(prev => !prev);
-            }}>Save</button> }
-            </div> }
       </div>
       {visible && displayNode()} 
       {modelData.map((item, index) => (
@@ -229,7 +232,23 @@ const CreateLab: React.FC = () => {
             width={item.width2}
           />
         ))}
-
+        {modelName && <CreateImage source={modelSources[modelName]} 
+           top1={itemValues.top} bottom1={itemValues.bottom}
+            left1={itemValues.left} right1={itemValues.right} height={height} width={width}
+            onclick={()=> setVisible(prev => !prev)}
+            callBack={callback}/>}
+           {visible && <div className='fixed bottom-10 flex justify-center'>
+           {visible && <button className='bg-black rounded animate-pulse p-2 text-white' onClick={()=> {
+              Save(modelName, itemValues.top, itemValues.bottom, itemValues.left, itemValues.right, height,width);
+              setVisible(prev => !prev);
+              const modelData = {...itemValues,top:0,bottom:0,left:0,right:0};
+              setItemValues(modelData);
+              setHeight(300);
+              setWidth(300);
+              logLabActivity('Added and edited model');
+            }}>Save</button> }
+            </div> }
+        {isOpen && <HoverSideBar sendLabName={setBgName} model={handleModelChange} className='rounded w-64 h-4/5 bg-slate-700  fixed right-3 top-10 p-3 flex justify-center flex-col shadow-2xl z-50'/>}
     </div>
   );
 };
