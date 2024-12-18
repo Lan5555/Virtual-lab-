@@ -26,6 +26,9 @@ const Activities: React.FC = () => {
         },{
             label: "action",
             key: "action",
+        },{
+            label: "type",
+            key: "type",
         }];
 
     const score = { 

@@ -1,9 +1,9 @@
 import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, User } from "firebase/auth";
-import { addDoc, collection, getDocs, getFirestore, query, where } from "firebase/firestore";
+import { addDoc, collection, doc, getDocs, getFirestore, query, updateDoc, where } from "firebase/firestore";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 
 interface AppUser {
     user_id: string | null;
@@ -11,6 +11,7 @@ interface AppUser {
     phone: string;
     first_name: string;
     last_name: string;
+    id?: string;
 }
 
 interface Res {
@@ -25,6 +26,7 @@ export const useFirebase = () => {
         phone: "",
         first_name: "",
         last_name: "",
+        id: "",
     };
 
     const [user, setUser] = useState(() => {
@@ -115,8 +117,8 @@ export const useFirebase = () => {
             } 
 
             const doc = querySnapshot.docs[0];
-            localStorage.setItem('user', JSON.stringify({ ...doc.data(), email: response.user.email }));
-            setUser({ ...doc.data(), email: `${response.user.email}` })
+            localStorage.setItem('user', JSON.stringify({ ...doc.data(), email: response.user.email, id: doc.id }));
+            setUser({ ...doc.data(), email: `${response.user.email}`, id: doc.id })
 
             return {
                 success: true,
@@ -140,20 +142,15 @@ export const useFirebase = () => {
     * fire store
     */
 
-    // log activity
-    const logActivity = async (text: string): Promise<Res> => {
+    // update profile
+    const updateProfile = async (data: AppUser): Promise<Res> => {
+        const userInfoRef = doc(db, 'user-info', user.id);
         try {
-            const activityRef = collection(db, 'activity');
-            const data = await addDoc(activityRef, {
-                name: `${user.first_name} ${user.last_name}`,
-                text,
-                user_id: user.user_id,
-                date: new Date(),
-            });
+            const response = await updateDoc(userInfoRef, { ...data });
             return {
                 success: true,
-                data,
-                message: "Activity logged",
+                data: response,
+                message: "Profile Updated",
             }
         } catch (error) {
             return {
@@ -163,44 +160,22 @@ export const useFirebase = () => {
         }
     }
 
-    //Log lab activities
-    const logLabActivity = async(text:string): Promise<Res> => {
-        try{
-            const dataRef = collection(db, 'CreatedLabActivity');
-            const data = await addDoc(dataRef, {
+    // log activity
+    const logActivity = async (text: string, type: string): Promise<Res> => {
+        try {
+            const activityRef = collection(db, 'activity');
+            const data = await addDoc(activityRef, {
                 name: `${user.first_name} ${user.last_name}`,
                 text,
                 user_id: user.user_id,
+                type,
                 date: new Date(),
             });
+            console.log(data.id);
             return {
                 success: true,
                 data,
                 message: "Activity logged",
-            }
-
-        }catch(error) {
-            return {
-                success: false,
-                message: `${error}`
-            }
-        }
-    }
-    const getLabActivity = async(): Promise<Res> => {
-        try{
-            const dataRef = collection(db, 'CreatedLabActivity');
-            const q = query(dataRef, where("user_id", "==", user.user_id));
-            const querySnapshot = await getDocs(q);
-            
-            const activities = querySnapshot.docs.map((doc) => ({ 
-                id: doc.id, 
-                name: doc.data().name,
-                action: `${doc.data().date.toDate()}: ${doc.data().text}`, 
-             }));
-            return {
-                success: true,
-                data: activities,
-                message: "Activities fetched",
             }
         } catch (error) {
             return {
@@ -211,22 +186,41 @@ export const useFirebase = () => {
     }
 
     // get user activities
-    const getUserActivities = async (): Promise<Res> => {
+    const getUserActivities = async (type?: string): Promise<Res> => {
         try {
             const activityRef = collection(db, 'activity');
-            const q = query(activityRef, where("user_id", "==", user.user_id));
-            const querySnapshot = await getDocs(q);
+            if (type) {
+                const q = query(activityRef, where("user_id", "==", user.user_id), where("type", "==", type));
+                const querySnapshot = await getDocs(q);
 
-            const activities = querySnapshot.docs.map((doc) => ({ 
-                id: doc.id, 
-                name: doc.data().name,
-                action: `${doc.data().date.toDate()}: ${doc.data().text}`, 
-             }));
-            return {
-                success: true,
-                data: activities,
-                message: "Activities fetched",
+                const activities = querySnapshot.docs.map((doc) => ({ 
+                    id: doc.id, 
+                    name: doc.data().name,
+                    action: `${doc.data().date.toDate()}: ${doc.data().text}`, 
+                    type: doc.data().type,
+                }));
+                return {
+                    success: true,
+                    data: activities,
+                    message: `${type} activities fetched`,
+                }
+            } else {
+                const q = query(activityRef, where("user_id", "==", user.user_id));
+                const querySnapshot = await getDocs(q);
+
+                const activities = querySnapshot.docs.map((doc) => ({ 
+                    id: doc.id, 
+                    name: doc.data().name,
+                    action: `${doc.data().date.toDate()}: ${doc.data().text}`, 
+                    type: doc.data().type,
+                }));
+                return {
+                    success: true,
+                    data: activities,
+                    message: "Activities fetched",
+                }
             }
+            
         } catch (error) {
             return {
                 success: false,
@@ -389,7 +383,6 @@ export const useFirebase = () => {
         getScore,
         sendFeedback,
         getFeedbacks,
-        logLabActivity,
-        getLabActivity
+        updateProfile,
     }
 }

@@ -42,7 +42,7 @@ export const SignIn:React.FC<props> = ({ viewport, isClicked, isClicked1, handle
                 isLoading(false);
                 },3000);
                 router.push('/pages/dashboard');
-                logActivity(`${res.data.first_name} ${res.data.last_name} logged in`);
+                logActivity(`${res.data.first_name} ${res.data.last_name} logged in`, 'auth');
             } else {
                 setInvalid(true);
                 isLoading(false);
