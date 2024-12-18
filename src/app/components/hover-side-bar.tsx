@@ -23,7 +23,20 @@ const HoverSideBar:React.FC<props> = ({sendLabName,model, className = 'rounded w
     const [currentState, setState] = useState(true);
     const [modelName, setModelName] = useState<string>('');
     //const [bgName, setBgName] = useState('empty-room');
+    const [labActions, setLabActions] = useState([]);
+    const {logActivity, getUserActivities} = useFirebase();
 
+  // use labActions
+
+  const refreshActions = async () => {
+    const response = await getUserActivities("lab");
+    if (response.success) {
+      setLabActions(response.data);
+    }
+  }
+  useEffect(()=> {
+    refreshActions();
+  },[]);
     
   const handleLabSelection = (labName: string) => {
     setName(labName); 
@@ -200,7 +213,9 @@ const HoverSideBar:React.FC<props> = ({sendLabName,model, className = 'rounded w
         </div>
         {/* Recent activities */}
         <div className="p-2 w-60 h-53 overflow-auto">
-         
+         {labActions.map((element,index) => 
+         <p key={element}>{element}</p>
+        )}
         </div>
     </div>
     </div>
@@ -210,4 +225,5 @@ const HoverSideBar:React.FC<props> = ({sendLabName,model, className = 'rounded w
     );
 }
 export default HoverSideBar;
+
 
