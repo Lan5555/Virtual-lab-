@@ -112,11 +112,13 @@ const Settings: React.FC = () => {
                     <h6 className="text-white cursor-pointer">Create Lab</h6>
                     </div>
                     </Tippy>
-                    <div className="rounded shadow-2xl w-auto h-7 flex justify-center items-center p-1">
+                    <div className="rounded shadow-2xl w-auto h-7 flex justify-center items-center p-1 cursor-pointer">
                     <h6 className="text-black cursor-pointer">Workspace</h6>
                     </div>
-                    <div className="rounded shadow-2xl w-auto h-7 flex justify-center items-center p-1">
-                    <h6 className="text-black cursor-pointer">Calculate points</h6>
+                    <div className="rounded shadow-2xl w-auto h-7 flex justify-center items-center p-1 cursor-pointer" onClick={()=>{
+                        setView(prev => !prev);
+                    }}>
+                    <h6 className="text-black cursor-pointer">Profile</h6>
                     </div>
                 </div>
                 <div className="flex flex-row flex-wrap">
@@ -130,9 +132,9 @@ const Settings: React.FC = () => {
                 <div>
                     <AboutCard about={about} onSave={setAbout} />
                 </div>
-                {view && <div className="rounded fixed right-6 h-4/5 w-72 p-5 shadow-2xl top-16 z-20 bg-white overflow-auto eliminate-bar">
+                {view && <div className="rounded fixed right-6 h-4/5 w-72 p-5 shadow-2xl top-16 z-20 bg-white overflow-auto eliminate-bar animate-slidex">
                 <div className="flex mt-3 justify-center items-center">
-                    <FontAwesomeIcon icon={faAngleLeft} className="relative -left-16" onClick={()=> {
+                    <FontAwesomeIcon icon={faAngleLeft} className="relative -left-16 cursor-pointer" onClick={()=> {
                         setView(prev => !prev);
                     }}></FontAwesomeIcon>
                     <h2>Edit Profile</h2>
