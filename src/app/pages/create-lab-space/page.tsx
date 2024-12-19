@@ -15,6 +15,7 @@ import { element } from 'three/webgpu';
 import Plane from '@/app/components/plane';
 import { useRouter } from 'next/navigation';
 import { useFirebase } from '@/app/hooks/firebase';
+import { push,ref,set } from 'firebase/database';
 
 interface ModelData {
   Name: string;
@@ -40,7 +41,7 @@ const CreateLab: React.FC = () => {
   const [createdImages, setCreatedImages] = useState<any[]>([]);
   const [callback, setCallBackName] = useState<any>('');
   const {logActivity, getUserActivities} = useFirebase();
-
+  const {addData} = useFirebase();
   const [visible, setVisible] = useState(false); // visibility state for components
   const [labActions, setLabActions] = useState([]);
 
@@ -238,7 +239,7 @@ const CreateLab: React.FC = () => {
             left1={itemValues.left} right1={itemValues.right} height={height} width={width}
             onclick={()=> setVisible(prev => !prev)}
             callBack={callback}/>}
-           {visible && <div className='fixed bottom-10 flex justify-center'>
+           {visible && <div className='fixed bottom-10 flex justify-center left-1/2'>
            {visible && <button className='bg-black rounded animate-pulse p-2 text-white' onClick={ async ()=> {
               Save(modelName, itemValues.top, itemValues.bottom, itemValues.left, itemValues.right, height,width);
               setVisible(prev => !prev);
@@ -246,8 +247,9 @@ const CreateLab: React.FC = () => {
               setItemValues(modelData);
               setHeight(300);
               setWidth(300);
-              await logActivity('Added and edited model', "lab");
-              refreshActions();
+              // await logActivity('Added and edited model', "lab");
+              // refreshActions();
+              addData(`Added and edited model at ${new Date()}`, 'labActivity');
             }}>Save</button> }
             </div> }
         {isOpen && <HoverSideBar sendLabName={setBgName} model={handleModelChange} className='rounded w-64 h-4/5 bg-slate-700  fixed right-3 top-10 p-3 flex justify-center flex-col shadow-2xl z-50'/>}

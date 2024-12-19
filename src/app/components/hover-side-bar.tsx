@@ -25,6 +25,7 @@ const HoverSideBar:React.FC<props> = ({sendLabName,model, className = 'rounded w
     //const [bgName, setBgName] = useState('empty-room');
     const [labActions, setLabActions] = useState([]);
     const {logActivity, getUserActivities} = useFirebase();
+    const {fetchData} = useFirebase();
 
   // use labActions
 
@@ -32,10 +33,23 @@ const HoverSideBar:React.FC<props> = ({sendLabName,model, className = 'rounded w
     const response = await getUserActivities("lab");
     if (response.success) {
       setLabActions(response.data);
+      
     }
+    
+  }
+  const fetchLabData = async() => {
+    await fetchData('labActivity').then((data) => {
+       if(data){
+        Object.keys(data).forEach((key) => {
+            setLabActions(data[key]);
+        })
+       }
+    })
   }
   useEffect(()=> {
-    refreshActions();
+    fetchLabData();
+   
+    //refreshActions();
   },[]);
     
   const handleLabSelection = (labName: string) => {
@@ -214,7 +228,7 @@ const HoverSideBar:React.FC<props> = ({sendLabName,model, className = 'rounded w
         {/* Recent activities */}
         <div className="p-2 w-60 h-53 overflow-auto">
          {labActions.map((element,index) => 
-         <p key={element}>{element}</p>
+         <p key={element} className="text-white">{element}</p>
         )}
         </div>
     </div>

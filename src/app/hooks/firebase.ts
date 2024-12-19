@@ -1,6 +1,7 @@
 import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, User } from "firebase/auth";
+import { get, getDatabase, push, ref, set } from "firebase/database";
 import { addDoc, collection, doc, getDocs, getFirestore, query, updateDoc, where } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { use, useEffect, useState } from "react";
@@ -63,7 +64,7 @@ export const useFirebase = () => {
     
     const auth = getAuth(app);
     const db = getFirestore(app);
-
+    const dbR = getDatabase(app);
     // get user
     const getUser = () => {
         return user;
@@ -370,6 +371,33 @@ export const useFirebase = () => {
         }
     });
 
+    const addData = async (data:any,location:string) => {
+        try{
+            const dataRf = ref(dbR, location);
+            const entry = push(dataRf);
+            await set(entry,data);
+            console.log('Data added successfully')
+        }catch(error){
+        console.log('Failed to add data');
+        }
+    }
+    const fetchData = async (location:string) =>{
+        try{
+            const dataRf = ref(dbR,location);
+            const snapshot = await get(dataRf);
+            if(snapshot.exists()){
+                const data = snapshot.val();
+                console.log('Fetched data');
+                return data;
+            }else{
+                console.log('No data available')
+            }
+        }catch(error){
+            console.log('Error fetching data');
+            return null;
+        }
+    }
+
     return { 
         getFirebaseApp, 
         getFirebaseAnalytics, 
@@ -384,5 +412,7 @@ export const useFirebase = () => {
         sendFeedback,
         getFeedbacks,
         updateProfile,
+        addData,
+        fetchData
     }
 }
