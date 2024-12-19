@@ -30,6 +30,7 @@ export const Register:React.FC<props> = ({ viewport, isClicked, isClicked1, hand
         email: "",
         password: "",
         phone: "",
+        country: "",
         first_name: "",
         last_name: "",
     });
@@ -41,7 +42,7 @@ export const Register:React.FC<props> = ({ viewport, isClicked, isClicked1, hand
             isLoading(true);
             const res = await createUser(data.email, data.password);
             if (res.success) {
-                addUserInfo(data.first_name, data.last_name, data.phone, res?.data.user);
+                addUserInfo(data.first_name, data.last_name, data.phone, data.country, res?.data.user);
                 setCreated(true);
                 isLoading(false);
                 setTimeout(()=>{
