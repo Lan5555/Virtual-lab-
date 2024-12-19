@@ -7,12 +7,20 @@ import { useRouter } from "next/navigation";
 import { use, useEffect, useState } from "react";
 
 interface AppUser {
-    user_id: string | null;
+    user_id?: string | null;
     email: string;
     phone: string;
     first_name: string;
     last_name: string;
+    country?: string;
     id?: string;
+}
+
+interface ProfileData {
+    phone: string;
+    first_name: string;
+    last_name: string;
+    country?: string;
 }
 
 interface Res {
@@ -27,6 +35,7 @@ export const useFirebase = () => {
         phone: "",
         first_name: "",
         last_name: "",
+        country: "",
         id: "",
     };
 
@@ -144,13 +153,14 @@ export const useFirebase = () => {
     */
 
     // update profile
-    const updateProfile = async (data: AppUser): Promise<Res> => {
+    const updateProfile = async (data: ProfileData): Promise<Res> => {
         const userInfoRef = doc(db, 'user-info', user.id);
         try {
-            const response = await updateDoc(userInfoRef, { ...data });
+            await updateDoc(userInfoRef, { ...data });
+            setUser({ ...user, ...data })
             return {
                 success: true,
-                data: response,
+                data: data,
                 message: "Profile Updated",
             }
         } catch (error) {
@@ -172,7 +182,6 @@ export const useFirebase = () => {
                 type,
                 date: new Date(),
             });
-            console.log(data.id);
             return {
                 success: true,
                 data,
@@ -231,18 +240,19 @@ export const useFirebase = () => {
     }
 
     // user info
-    const addUserInfo = async (first_name: string, last_name: string, phone: string, userRes: User): Promise<Res> => {
+    const addUserInfo = async (first_name: string, last_name: string, phone: string, country: string, userRes: User): Promise<Res> => {
         const userInfoRef = collection(db, 'user-info');
         try {
             const response = await addDoc(userInfoRef, {
                 first_name,
                 last_name,
                 phone,
+                country,
                 user_id: userRes?.uid,
             });
 
             // store user
-            const userInfo = { first_name, last_name, phone, user_id: userRes.uid, email: `${userRes.email}` };
+            const userInfo = { id: response.id, first_name, last_name, phone, country, user_id: userRes.uid, email: `${userRes.email}` };
             localStorage.setItem('user', JSON.stringify(userInfo));
             setUser(userInfo)
 

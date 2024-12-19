@@ -15,9 +15,13 @@ const PageLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [search, setSearch] = useState('');
     const [open, setIsOpen] = useState(true);
     const [showBars, showSideBars] = useState(false);
+    const [userName, setUsername] = useState('')
 
     const user = getUser();
 
+    useEffect(() => {
+      setUsername(`${user.first_name} ${user.last_name}`)
+    })
 
     const handleSetName = (name: string) => {
         setName(name == 'angleDown' ? 'close' : 'angleDown');
@@ -42,7 +46,7 @@ const PageLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
     return (
       <div className="main-layout">
-        {state ? <DropDown userName={`${user.first_name} ${user.last_name}`} category={'avatar'} src={'/misc/oct.jpg'} content='You are currently on a free plan'
+        {state ? <DropDown userName={userName} category={'avatar'} src={'/misc/oct.jpg'} content='You are currently on a free plan'
                  onPressed1={()=>{ 
                   router.push('/pages/login');
                  }} onPressed2={()=>{
@@ -51,7 +55,7 @@ const PageLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                  }}/> : null} 
         <LayoutSide sideIsOpen={open} toggleShowBars={ handleShowBars } />
         <div className={styles.content}>
-          <LayoutHead search={ search } dropdown={state} showBars={showBars} name={name} userName={`${user.first_name} ${user.last_name}`} setSearch={handleSetSearch} setName={handleSetName} setView={toggleState} toggleSideOpen={ handleSideIsOpen } />
+          <LayoutHead search={ search } dropdown={state} showBars={showBars} name={name} userName={userName} setSearch={handleSetSearch} setName={handleSetName} setView={toggleState} toggleSideOpen={ handleSideIsOpen } />
             <div>
               {React.Children.map(children, (child) =>
                 React.isValidElement(child)
