@@ -8,11 +8,11 @@ const  Notebook:React.FC<props> = ({text}) =>  {
   return (
     <div className={styles.notebook}>
       <div className={styles.cover}>
-        <h1 className='h1'>Notes</h1>
+        <h1 className='h1'>Guide</h1>
       </div>
       <div className={styles.pages}>
         <div className={styles.page}>
-          <p>{text}</p>
+          <p className='whitespace-pre-line'>{text}</p>
         </div>
       </div>
     </div>

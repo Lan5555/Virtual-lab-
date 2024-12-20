@@ -1,5 +1,4 @@
 /* styles/Notebook.module.css */
-
 .notebook {
     width: 100%;
     height: 100%;
@@ -9,7 +8,7 @@
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
     font-family: 'Arial', sans-serif;
     position: relative;
-    overflow: hidden;
+    overflow: auto;
   }
   
   .cover {
@@ -28,15 +27,16 @@
   
   .page {
     background-color: #fff;
-    padding: 15px;
+    padding: 25px;
     margin-bottom: 10px;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    height: 400px;
+    height: auto;
     position: relative;
+    
   }
   
-  .page::before {
+  /* .page::before {
     content: '';
     position: absolute;
     top: 0;
@@ -50,10 +50,10 @@
       transparent 1px,
       transparent 20px
     );
-  }
+  } */
   
   .h1 {
     color: #333;
     margin: 0;
   }
-  
+   
