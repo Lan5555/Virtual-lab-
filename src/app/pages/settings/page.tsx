@@ -21,7 +21,6 @@ const Settings: React.FC = () => {
     const router = useRouter();
     const { getFeedbacks, getUser, updateProfile } = useFirebase();
     const {isShow, showDelay} = useDelay();
-
     const [userFeedbac, setUserFeedback] = useState([])
     const [success, showSuccess] = useState(false);
     const [about, setAbout] = useState({ title: "", text: "" })
@@ -32,6 +31,7 @@ const Settings: React.FC = () => {
         phone: "",
         country: "",
     });
+
     const [view, setView] = useState(false);
 
     // dummy feedback
@@ -118,7 +118,7 @@ const Settings: React.FC = () => {
                     {/* <div className="basis-2/3">
                         <UsersCard fields={userFields} items={users} onSelected={(e) => alert(e)} />
                     </div> */}
-                    <div className="basis-1/2">
+                    <div className="basis-1/2 mt-10">
                         <AboutCard about={about} onSave={setAbout} />
                     </div>
                     <div className="basis-1/2">
@@ -134,3 +134,4 @@ const Settings: React.FC = () => {
 };
   
 export default Settings;
+

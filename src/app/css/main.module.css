@@ -125,10 +125,11 @@
     }
     
     .note{
-        height: 100vh;
+        height: 90vh;
         position: absolute;
+        top: 0;
         left: 0;
-        width: 70%;
+        width: 95%;
         animation: slideIn 0.5s ease-in-out;
         box-shadow: 0 0.15rem 1.75rem 0 rgba(33 40 50 / 15%);
         z-index: 2;
@@ -306,6 +307,7 @@
     .note{
         height: 100vh;
         position: absolute;
+        top: 0;
         left: 0;
         width: 70%;
         animation: slideIn 0.5s ease-in-out;
